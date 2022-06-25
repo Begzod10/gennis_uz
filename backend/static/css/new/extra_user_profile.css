@@ -1,0 +1,124 @@
+.main_profile {
+  display: flex;
+  width: 600px;
+  height: 300px;
+  background-color: white;
+}
+
+.user_profile {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 450px;
+  align-items: center;
+}
+
+.close_button {
+  display: none;
+}
+
+.edit_form .edit_button {
+  margin-top: 10px;
+  margin-right: 205px;
+  width: 103px;
+  padding: 4px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  background-color: indianred;
+  border-radius: 6px;
+}
+
+.edit_form .cancel_edit {
+  display: none;
+  margin-right: 205px;
+  padding: 4px;
+  margin-bottom: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: indianred;
+  width: 60px;
+  border-radius: 4px;
+}
+
+.go_to_change {
+  margin-bottom: 5px;
+  display: none;
+}
+
+.go_to_change input {
+  height: 20px;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.go_to_change input:focus {
+  outline: none;
+}
+
+.go_to_change input[type=submit] {
+  padding: 6px;
+  height: 26px;
+  border: none;
+  background-color: #00c900;
+  color: white;
+}
+
+.for_img2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.for_img2 img {
+  justify-content: center;
+  width: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.for_img2 #upload {
+  display: none;
+}
+
+.camera {
+  display: flex;
+  position: fixed;
+  width: 153px;
+  height: 30px;
+  border-radius: 0 0 50% 50%;
+  margin-top: -30px;
+  margin-left: -77px;
+}
+
+.camera .image_upload {
+  display: block;
+  position: fixed;
+  margin-left: 60px;
+}
+
+.image_upload {
+  background-image: url("/static/img/camera.png");
+  background-repeat: no-repeat;
+  background-size: 31px;
+  padding-left: 30px;
+  padding-bottom: 24px;
+  cursor: pointer;
+}
+
+.ready_photo input {
+  display: none;
+  position: fixed;
+  border: none;
+  padding: 6px;
+  background-color: #00c900;
+  color: white;
+  margin-left: 75px;
+  margin-top: -34px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=extra_user_profile.css.map */

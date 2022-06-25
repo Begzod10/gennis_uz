@@ -1,0 +1,98 @@
+.user
+  width: 100vw
+  height: 100vh
+  background-color: rgba(0, 0, 0, 0.7)
+  position: fixed
+  left: 0
+  top: 0
+  display: none
+  align-items: center
+  justify-content: center
+  transition: opacity 0.5s ease-in
+  opacity: 0
+  &_active
+    display: flex
+    opacity: 1
+
+  &_check
+    width: 30vw
+    height: 10vh
+    background-color: white
+    display: flex
+    position: relative
+    justify-content: flex-start
+
+    button
+      position: absolute
+      font-size: 20px
+      right: 0
+      top: 0
+      width: 10%
+      height: 100%
+
+    input
+      width: 90%
+
+.excuses
+  width: 100vw
+  height: 100vh
+  background-color: rgba(0, 0, 0, 0.7)
+  position: fixed
+  left: 0
+  top: 0
+  display: none
+  align-items: center
+  justify-content: center
+  transition: opacity 0.5s ease-in
+  opacity: 1
+  &_active
+    display: flex
+    opacity: 1
+  &__block
+    width: 56vw
+    height: 70vh
+    background: white
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-evenly
+    span
+      position: absolute
+      right: 0
+      top: 0
+      font-size: 40px
+      cursor: pointer
+  &__list
+    height: 240px
+    overflow: auto
+    table tr td,th
+      border: 2px solid black
+      padding: 2px
+
+.black_button
+  padding: 10px
+  border-radius: 10px
+  background: black
+  color: white
+  display: block
+  margin: 0 auto
+  width: 200px
+  text-decoration: none
+  &:hover
+    color: white
+    background: rgba(0, 0, 0, 0.81)
+    text-decoration: none
+.green_button
+  padding: 10px
+  border-radius: 10px
+  background: limegreen
+  color: white
+  display: block
+  margin: 0 auto
+  width: 200px
+  text-decoration: none
+  &:hover
+    color: white
+    background: rgba(50, 205, 50, 0.78)
+    text-decoration: none

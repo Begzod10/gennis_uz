@@ -1,0 +1,157 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/teacher/Teacher_profile.min.css">
+{% endblock %}
+{% block title %} Teacher profile {% endblock %}
+
+{% block body %}
+    <div class="Profile">
+        <div class="Profile_box">
+            <div class="Profile_box_user"><img src="../../static/img/icons/user-tie-solid.svg" alt="">Staff</div>
+            <div class="Profile_box_tools">
+                {#                        <img src="/static/img/icons/money-check-alt-solid.svg" data-img="open-modal-payment" alt="">#}
+                <img src="../../static/img/icons/edit-regular.svg" data-img="open-modal-edit" alt="">
+
+            </div>
+            <div class="Profile_box_info">
+                <div class="Profile_box_info_img">
+                    {% if staff_get.photo %}
+                        <img src="{{ staff_get.photo }}" alt="">
+                    {% else %}
+                        <img src="../../static/img/user_image.png" alt="">
+                    {% endif %}
+                </div>
+                <div class="Profile_box_info_additional">
+                    <div class="Profile_box_info_additional_fio">
+                        <div class="Profile_box_info_additional_fio_name">
+                            Имя: <span> {{ staff_get.name }}</span>
+                        </div>
+                        <div class="Profile_box_info_additional_fio_surname">
+                            Фамилия: <span>{{ staff_get.surname }}</span>
+                        </div>
+                        <div class="Profile_box_info_additional_fio_username">
+                            Пользователя: <span>{{ staff_get.username }}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="Profile_box_info_additional_info_salary_list">
+
+                        <div class="Profile_box_info_additional_info_salary_list_item">
+
+                            <a href='{{ url_for('staff_salary',staff_id=staff_id) }}'>Зарплата</a>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="Profile_box_info_additional_info">
+                        Tell number: <span>{% for phone in staff_get.phone %}{{ phone.phone }}{% endfor %}</span>
+                    </div>
+                    <div class="Profile_box_info_additional_info">
+                        Age: <span>{{ staff_get.age }}</span>
+                    </div>
+                    <div class="Profile_box_info_additional_info">
+                        Birth day: <span>{{ staff_get.born_day }}</span>
+                    </div>
+                    <div class="Profile_box_info_additional_info">
+                        Birth month: <span>{{ staff_get.born_month }}</span>
+                    </div>
+                    <div class="Profile_box_info_additional_birth_year">
+                        Birth year: <span>{{ staff_get.born_year }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block overlay %}
+
+    <div class="overlay_submit">
+        <div class="overlay_submit_modal_delete">
+            <div class="overlay_submit_modal_delete__close">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="overlay_submit_modal_delete_desc">Ti tochno hochesh ego udalit {{ staff_get.name }}</div>
+            <div class="overlay_submit_modal_delete_select">
+
+                <div class="overlay_submit_modal_delete_select_yes">
+                    Yes
+                </div>
+                <div class="overlay_submit_modal_delete_select_no">
+                    No
+                </div>
+                <form action="" method="get">
+                    <div class="delete_form">
+                        <input class="overlay_submit_modal_delete_select_yes_submit" type="submit" value="Удалить">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="overlay_change">
+        <div class="overlay_change_info_modal">
+            <div class="overlay_change_info_modal__close">
+                <span></span>
+                <span></span>
+            </div>
+
+            <select class="overlay_change_info_modal_select">
+                <option value="Изменить инфо">Изменить инфо</option>
+                <option value="Изменить пароль">Изменить пароль</option>
+            </select>
+
+            <form action=""
+                  class="overlay_change_info_modal_form info_form" method="post">
+                <div class="overlay_change_info_modal_form_desc">Name</div>
+                <input class="overlay_change_info_modal_form_input" required type="text" name="name"
+                       value="{{ staff_get.name }}">
+                <div class="overlay_change_info_modal_form_desc">Surname</div>
+                <input class="overlay_change_info_modal_form_input" required type="text" name="surname"
+                       value="{{ staff_get.surname }}">
+                <div class="overlay_change_info_modal_form_desc">Phone</div>
+                <input class="overlay_change_info_modal_form_input" required type="number" name="phone"
+                       value="{{ staff_get.phone }}">
+                <select name="education_language" class="education_language">
+                    <option value="{{ staff_get.education_language }}">{{ staff_get.education_language }}</option>
+                    {% if staff_get.education_language != "Узбекский" %}
+                        <option value="Узбекский">Узбекский</option>
+                    {% endif %}
+                    {% if staff_get.education_language != "Русский" %}
+                        <option value="Русский">Русский</option>
+                    {% endif %}
+                </select>
+                <input class="overlay_change_info_modal_form_submit" type="submit" value="Изменять">
+            </form>
+            <form action=""
+                  class="overlay_change_info_modal_form password-form" method="post">
+
+                <input type="text" class="overlay_change_info_modal_form_input" name="username"
+                       value="{{ staff_get.username }}" placeholder="Введите имя пользователя">
+                <input class="overlay_change_info_modal_form_input" required type="password" id="password"
+                       placeholder="Введите пароль">
+                <input class="overlay_change_info_modal_form_input" required type="password" name="password"
+                       id="password2"
+                       placeholder="Повторите пароль">
+                <input class="overlay_change_info_modal_form_submit" type="submit" value="Изменять">
+            </form>
+
+            {% if not staff_get.group1 %}
+                <div class="overlay_change_info_modal_delete">
+                    <input id="overlay_change_info_modal_delete_button" type="submit" value="Удалить учителя">
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% include 'jinja_templates/overlay.html' %}
+{% endblock %}
+{% block js %}
+    <script src="../../static/js/Admin_js/teacher_profile.js"></script>
+{% endblock %}

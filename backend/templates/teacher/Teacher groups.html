@@ -1,0 +1,57 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/teacher/Teacher%20group.min.css">
+{% endblock %}
+{% block title %}Teacher groups{% endblock %}
+{% block body %}
+    <div class="list_tools">
+        <div>
+
+        </div>
+        <div>
+            <div class="list_tools_location"><img src="../../static/img/icons/users-solid.svg" alt="">Группы</div>
+        </div>
+        <div>
+
+        </div>
+
+    </div>
+    <h1 style="text-align: center;color: red;border: 1px solid red">Вы получите свою зарплату до 10 числа</h1>
+    <div class="list_groups">
+
+        {% for teacher in user.teacher %}
+            {% for group in teacher.group %}
+                <a href="{{ url_for('teach_inside_group',group_id=group.id) }}">
+                    <div class="list_groups_item">
+                        <div class="list_groups_item_info">
+                            <div class="list_groups_item_info_name">Group name:
+                                <div>{{ group.name }}</div>
+                            </div>
+                            <div class="list_groups_item_info_teacher_fio">Teacher:
+                                <div>
+                                    <div class="list_groups_item_info_teacher_fio_name">
+                                        {% for teach in group.teacher %}{{ teach.user.name }}{% endfor %}</div>
+                                    <div class="list_groups_item_info_teacher_fio_surname">
+                                        {% for teach in group.teacher %}{{ teach.user.surname }}{% endfor %}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list_groups_item_di">
+                            <div class="list_groups_item_di_item">Subject: <span>{{ group.subject.name }}</span></div>
+                            <div class="list_groups_item_di_item">Type course: <span>{{ group.course_type.name }}</span>
+                            </div>
+                            <div class="list_groups_item_di_item">Cost: <span
+                                    class="list_groups_item_di_cost_number">{{ group.course_type.cost }}</span></div>
+                            <div class="list_groups_item_di_item">Students: <span
+                                    class="list_groups_item_di_cost_number">{{ group.student|length }}</span></div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="../../static/js/Admin_js/St_groups.js"></script>
+{% endblock %}

@@ -1,0 +1,283 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block title %} Gennis New Students {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/Admin_css/List%20students%20xojakent.min.css">
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="list_tools">
+        <div>
+            <form action="{{ url_for('new_students',location_id=location_id,page=1) }}" class="form" method="post">
+                <select class="list_tools_select" name="subject" id="subjects">
+                    {% if subject_name %}
+                        <option value="{{ subject_name }}">{{ subject_name }}</option>
+                    {% endif %}
+                    {% if subject_name != "Все студенты" %}
+                        <option value="Все студенты">Все студенты</option>
+                    {% endif %}
+                    {% for subject1 in subjects %}
+                        {% if subject_name != subject1.name %}
+                            <option value="{{ subject1.name }}">{{ subject1.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <input type="text" name="education_language" hidden
+                       value="{% if education_language %}{{ education_language }}{% endif %}"
+                       class="student_education_language">
+                <button class="form_button" hidden></button>
+            </form>
+        </div>
+        <div style="width: 15%">
+            <div class="list_tools_location"><img src="../../static/img/icons/map-marker-alt-solid.svg"
+                                                  alt="">{{ location.name }} {{ result }}
+            </div>
+        </div>
+
+        <div>
+
+            <div class="list_tools_search" id="search_name">
+                <input class="list_tools_search_input search_info" data-location="{{ location_id }}" type="text"
+                       required name="student"
+                       placeholder="Введите имя">
+                <div class="list_tools_search_age">
+                    <div class="list_tools_search_age_desc">Ot</div>
+                    <input class="list_tools_search_age_input  age_ot" type="text" name="age_ot" placeholder="ot">
+                    <div class="list_tools_search_age_desc">Do</div>
+                    <input class="list_tools_search_age_input age_do" type="text" name="age_do" placeholder="do">
+                    <input type="text" name="subject" hidden class="subject">
+                    <input type="text" value="Узбекский" name="education_language" hidden
+                           class="education_language">
+                </div>
+                <div class="list_tools_search_clear">
+                    <span></span>
+                    <span></span>
+                </div>
+                <img class="list_tools_search_submit_img" src="../../static/img/icons/search-solid.svg" alt="">
+                <img class="list_tools_search_settings_img" src="../../static/img/icons/cog-solid.svg" alt="">
+                <div class="list_tools_search_settings">
+                    <label for="list_tools_search_checkbox_name"><input name="for_search"
+                                                                        id="list_tools_search_checkbox_name"
+                                                                        class="list_tools_search_checkbox"
+                                                                        type="radio" checked value="for_name">For
+                        name</label>
+                    <label for="list_tools_search_checkbox_teacher"><input name="for_search"
+                                                                           id="list_tools_search_checkbox_teacher"
+                                                                           class="list_tools_search_checkbox"
+                                                                           type="radio" value="for_surname">For
+                        surname</label>
+                    <label for="list_tools_search_checkbox_username"><input name="for_search"
+                                                                            id="list_tools_search_checkbox_username"
+                                                                            class="list_tools_search_checkbox"
+                                                                            type="radio" value="for_username">For
+                        username</label>
+                    <label for="list_tools_search_checkbox_subject"><input name="for_search"
+                                                                           id="list_tools_search_checkbox_age"
+                                                                           class="list_tools_search_checkbox"
+                                                                           type="radio" value="for_age">For
+                        age</label>
+                </div>
+                <input class="list_tools_search_submit" type="submit" value="submit">
+            </div>
+            <form class="search_form" action="/search_name_new" method="post">
+            </form>
+            <select name="education_language" class="list_tools_language">
+                {% if education_language %}
+                    <option value="{{ education_language }}">{{ education_language }}</option>
+                {% endif %}
+                {% for language in languages %}
+                    {% if education_language != language.name %}
+                        <option value="{{ language.name }}">{{ language.name }}</option>
+                    {% endif %}
+                {% endfor %}
+                {% if education_language != "All" %}
+                    <option value="All">All</option>
+                {% endif %}
+            </select>
+        </div>
+
+    </div>
+    <div class="list_students">
+        {% for student in users.items %}
+
+            <a href="{{ url_for('user_profile',user_id=student.id) }}">
+                <div class="list_students_item">
+                    <div class="list_students_item_img">
+                        {% if student.photo %}
+                            <img src="{{ student.photo }}" alt="">
+                        {% else %}
+                            <img src="../../static/img/user_image.png" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="list_students_item_fio">
+                        <div class="list_students_item_fio_name">{{ student.name }}
+                            <span class="list_students_item_tooltiptext">
+                                        Имя
+                                    </span>
+                        </div>
+                        <div class="list_students_item_fio_surname">{{ student.surname }}
+                            <span class="list_students_item_tooltiptext">
+                                        Фамилия
+                                    </span>
+                        </div>
+                        <div class="list_students_item_fio_username">{% if student.username|length <10 %}
+                            {{ student.username }}{% elif student.username|length >10 %}
+                            {{ student.username[0:10] }}...{% endif %}
+
+                            <span class="list_students_item_tooltiptext">
+                                        Пользователь
+                                    </span>
+                        </div>
+                    </div>
+                    <div class="list_students_item_age">{{ student.age }}
+                        <span class="list_students_item_tooltiptext">
+                            Возраст
+                        </span>
+                    </div>
+                    {% if user.data_joined %}
+                        <div class="list_students_item_date_reg">{{ student.data_joined.strftime('%Y-%m-%d') }}
+                            <span class="list_students_item_tooltiptext">
+                            Дата регистрации
+                        </span>
+                        </div>
+                    {% endif %}
+                    {% if student.comment %}
+                        <div class="list_students_item_comment" id="comment_english">
+                            {% if student.comment %}{{ student.comment[0:10] }}...{% endif %}
+                            <span class="list_students_item_tooltiptext">
+                                <span class="list_students_item_tooltiptext_comment">{% if student.comment %}
+                                    {{ student.comment }}{% endif %}</span>
+                            </span>
+                        </div>
+                    {% else %}
+                        <div class="list_students_item_comment" id="comment_english">
+                            <span class="list_students_item_tooltiptext">
+                                Комментарий
+                            </span>
+                        </div>
+                    {% endif %}
+                    <div class="list_students_item_subjects">
+                        {% for subject in student.student %}
+                            {% for sub in subject.subject %}
+                                {% if not subject_name %}
+                                    <span class="list_students_item_subjects_subject">{{ sub.name }}</span>
+                                {% else %}
+                                    {% if  subject_name == sub.name %}
+                                        <span class="list_students_item_subjects_subject">{{ sub.name }}</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="tools">
+        <div class="pages_link">
+
+            {% for link in users.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                {% if link %}
+                    <form action="{{ url_for('new_students',location_id=location_id,page=link) }}" method="post">
+                        {% if users.page == link %}
+                            <button class="pages_link_item pages_link_item_active"
+                                    data-link="{{ link }}">{{ link }}</button>
+                        {% else %}
+                            <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                        {% endif %}
+                        <input type="text" name="subject" hidden value="{{ subject_name }}">
+                        <input type="text" name="education_language" hidden
+                               value="{% if education_language %}{{ education_language }}{% endif %}"
+                               class="student_education_language">
+                    </form>
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+
+        </div>
+        <div>
+            <div data-btn="create-gr" class="list_tools_create_gr">Create group</div>
+            <div data-btn="add-gr" class="list_tools_add_gr">Add group</div>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+{% block overlay %}
+    <div class="overlay_create_gr">
+        <div data-modal="create-gr" class="modal_create_gr">
+            <div class="modal_create_gr_close">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="modal_create_gr_info">
+                <form action="{{ url_for('prepare_create',location_id=location_id) }}" method="post">
+                    <div class="modal_create_gr_info_title">Создать группу</div>
+                    <select name="subject_name" id="" class="modal_create_gr_info_teachers subteach">
+                        <option value="">Fanni tanlang</option>
+                        {% for subject1 in subjects %}
+                            <option value="{{ subject1.name }}">{{ subject1.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <select class="teachers" name="teacher" hidden>
+
+                    </select>
+                    <div class="modal_create_gr_info_desc">Название группы</div>
+                    <input type="text" required name="group_name" class="modal_create_gr_info_input">
+                    <input type="text" name="pick_teacher" hidden class="teacher_id">
+                    <div class="error_name">This group name is already token!</div>
+                    <div class="modal_create_gr_info_desc">Тип курс</div>
+                    <select class="modal_create_gr_info_type_cource" name="type_of_course" id="type_course">
+                        {% for course_type in course_types %}
+                            <option class="course_costs" data-cost="{{ course_type.cost }}"
+                                    value="{{ course_type.id }}">{{ course_type.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <div class="modal_create_gr_info_desc">Цена курса</div>
+                    <input min="0" type="number" required name="price" class="modal_create_gr_info_input" id="price">
+                    <div class="modal_create_gr_info_desc">Доля учителя</div>
+                    <input min="0" type="number" required name="teacher_salary" class="modal_create_gr_info_input"
+                           id="">
+                    <input class="modal_create_gr_info_submit" type="submit" value="Далее">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="overlay_add_gr">
+        <div data-modal="add_gr" class="modal_add_gr">
+            <div class="modal_add_gr_close">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="modal_add_gr_info">
+                <form action="{{ url_for('prepare_add_group') }}" method="post">
+                    <div class="modal_add_gr_info_title">Добавить в группу</div>
+                    <div class="modal_add_gr_info_desc">Выберите группу :</div>
+                    <select class="modal_add_gr_info_group" name="group_id" id="add_group_select">
+                        {% for group in groups %}
+                            <option value="{{ group.id }}">{{ group.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="teacher_id" id="teacher_id" hidden>
+                    <input class="modal_add_gr_info_submit" type="submit" value="Далее">
+                </form>
+            </div>
+        </div>
+    </div>
+    {% include 'jinja_templates/overlay.html' %}
+{% endblock %}
+
+
+
+{% block js %}
+    <script src="../../static/js/Admin_js/list_students.js"></script>
+    <script src="../../static/js/Admin_js/subject.js"></script>
+    <script src="../../static/js/Admin_js/xojakent/list_students_xojakent.js"></script>
+{% endblock %}

@@ -1,0 +1,63 @@
+.reason_basic
+  display: flex
+  flex-direction: column
+  margin-top: -560px
+  margin-left: 212px
+  width: 951px
+  height: 498px
+
+.button_subjects
+  align-self: center
+
+.button_subjects button
+  margin-top: 5px
+  border: 0
+  background-color: rgb(0,152,218)
+  color: white
+
+.button_subjects .active
+  background-color: rgb(0, 86, 142)
+  color: white
+
+.tables
+  display: flex
+  flex-direction: column
+  margin-top: 10px
+  .table
+    align-self: center
+  table,tr,th,td
+    border-collapse: collapse
+    border: 2px solid black
+    padding: 4px
+
+
+#xojakent, #gazalkent, #chirchiq
+  display: none
+
+.flash
+  display: none
+  justify-content: space-evenly
+  background-color: red
+  padding: 10px
+  color: white
+  margin: 0
+
+.flash p
+  text-align: center
+
+.flash button
+  cursor: pointer
+  padding: 4px
+  border: none
+  margin-right: 100px
+
+.flash button:active
+  transform: scale(0.98)
+
+@media (max-width: 1500px)
+  .reason_basic
+    margin-top: -625px
+
+@media (max-width: 1300px)
+  .reason_basic
+    margin-top: -515px

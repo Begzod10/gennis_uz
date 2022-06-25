@@ -1,0 +1,222 @@
+<div class="nav_menu ">
+    <nav>
+        <ul class="menu">
+            {#                {% if user.accountant and not user.xojakent_admin and not user.gazalkent_admin and not user.chirchiq_admin and not user.director %}#}
+            {#                    <li><a class="menu_item" href="{{ url_for('register_worker') }}"><img src="../../static/img/icons/address-book-regular.svg" alt="">Регистрация Сотрудника</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('teachers',page=1,location=user.locations) }}"><img src="../../static/img/icons/user-tie-solid.svg" alt="">Учителя</a></li>#}
+            {#                    <li><a class="menu_item" href="/all_user"><img src="../../static/img/icons/users-solid.svg" alt="">Все Админы</a></li>#}
+            {#                    <li class="menu_item_li" id="location_list_4"><img src="../../static/img/icons/id-badge-regular.svg" alt="">Список сотрудников<img id="new_student_location_list_down_4" class="menu_item_li_down_array" src="../../static/img/icons/sort-down-solid.svg" alt="">#}
+            {#                        <ul class="menu_item_li_sub" id="new_student_location_list_4">#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('staff_list',page=1,location=1) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Ходжикент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('staff_list',page=1,location=2) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Газалкент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('staff_list',page=1,location=3) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Чирчик</a></li>#}
+            {#                        </ul>#}
+            {#                    </li>#}
+            {#                    <li class="menu_item_li" id="location_list_5"><img src="../../static/img/icons/wallet-solid.svg" alt="">Бухгалтерский учет<img id="new_student_location_list_down_5" class="menu_item_li_down_array" src="../../static/img/icons/sort-down-solid.svg" alt="">#}
+            {#                        <ul class="menu_item_li_sub" id="new_student_location_list_5">#}
+            {#                            <li><a class="menu_item_li_sub_item" href='{{ url_for('accounts',page=1,location=1) }}' ><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Ходжикент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('accounts',page=1,location=2) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Газалкент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href='{{ url_for('accounts',page=1,location=3) }}'><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Чирчик</a></li>#}
+            {#                        </ul>#}
+            {#                    </li>#}
+            {#                {% endif %}#}
+            {#                {% if user.xojakent_admin %}#}
+            {#                    <li><a class="menu_item" href="/register"><img src="../../static/img/icons/edit-regular.svg" alt="">Регистрация</a></li>#}
+            {#                    <li><a class="menu_item" href="/register_teacher"><img src="../../static/img/icons/pen-square-solid.svg" alt="">Регистрация Учителя</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('register_worker') }}"><img src="../../static/img/icons/address-book-regular.svg" alt="">Регистрация Сотрудника</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('student_subject_xojakent',page=1) }}"><img src="../../static/img/icons/user-solid.svg" alt="">Новые студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('list_deleted_students',location=1,page=1) }}"><img src="../../static/img/icons/user-slash-solid.svg" alt="">Удаленные студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('students_xojakent',page=1) }}"><img src="../../static/img/icons/user-graduate-solid%20(1).svg" alt="">Студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('new_groups_xojakent',page=1) }}"><img src="../../static/img/icons/user-friends-solid.svg" alt="">Новые группы</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('groups_xojakent',page=1) }}"><img src="../../static/img/icons/user-friends-solid.svg" alt="">Группы</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('teachers',page=1,location=user.locations) }}"><img src="../../static/img/icons/user-tie-solid.svg" alt="">Учителя</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('staff_list',page=1,location=user.locations) }}"><img src="../../static/img/icons/id-badge-regular.svg" alt="">Список сотрудников</a></li>#}
+            {#                    <li><a class="menu_item" href='{{ url_for('accounts',page=1,location=1) }}'><img src="../../static/img/icons/wallet-solid.svg" alt="">Бухгалтерский учет</a></li>#}
+            {#                {% endif %}#}
+            {#                {% if user.gazalkent_admin %}#}
+            {#                    <li><a class="menu_item" href="/register"><img src="../../static/img/icons/edit-regular.svg" alt="">Регистрация</a></li>#}
+            {#                    <li><a class="menu_item" href="/register_teacher"><img src="../../static/img/icons/pen-square-solid.svg" alt="">Регистрация Учителя</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('register_worker') }}"><img src="../../static/img/icons/address-book-regular.svg" alt="">Регистрация Сотрудника</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('student_subject_gazalkent',page=1) }}"><img src="../../static/img/icons/user-solid.svg" alt="">Новые студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('list_deleted_students',location=2,page=1) }}"><img src="../../static/img/icons/user-slash-solid.svg" alt="">Удаленные студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('students_gazalkent',page=1) }}"><img src="../../static/img/icons/user-graduate-solid%20(1).svg" alt="">Студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('new_groups_gazalkent',page=1) }}"><img src="../../static/img/icons/user-friends-solid.svg" alt="">Новые группы</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('groups_gazalkent',page=1) }}"><img src="../../static/img/icons/user-friends-solid.svg" alt="">Группы</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('teachers',page=1,location=user.locations) }}"><img src="../../static/img/icons/user-tie-solid.svg" alt="">Учителя</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('staff_list',page=1,location=user.locations) }}"><img src="../../static/img/icons/id-badge-regular.svg" alt="">Список сотрудников</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('accounts',page=1,location=2) }}"><img src="../../static/img/icons/wallet-solid.svg" alt="">Бухгалтерский учет</a></li>#}
+            {#                {% endif %}#}
+            {#                {% if user.chirchiq_admin %}#}
+            {#                    <li><a class="menu_item" href="/register"><img src="../../static/img/icons/edit-regular.svg" alt="">Регистрация</a></li>#}
+            {#                    <li><a class="menu_item" href="/register_teacher"><img src="../../static/img/icons/pen-square-solid.svg" alt="">Регистрация Учителя</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('register_worker') }}"><img src="../../static/img/icons/address-book-regular.svg" alt="">Регистрация Сотрудника</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('student_subject_chirchiq',page=1) }}"><img src="../../static/img/icons/user-solid.svg" alt="">Новые студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('list_deleted_students',location=3,page=1) }}"><img src="../../static/img/icons/user-slash-solid.svg" alt="">Удаленные студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('students_chirchiq',page=1) }}"><img src="../../static/img/icons/user-graduate-solid%20(1).svg" alt="">Студенты</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('new_groups_chirchiq',page=1) }}"><img src="../../static/img/icons/user-friends-solid.svg" alt="">Новые группы</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('groups_chirchiq',page=1) }}"><img src="../../static/img/icons/user-friends-solid.svg" alt="">Группы</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('teachers',page=1,location=user.locations) }}"><img src="../../static/img/icons/user-tie-solid.svg" alt="">Учителя</a></li>#}
+            {#                    <li><a class="menu_item" href="{{ url_for('staff_list',page=1,location=user.locations) }}"><img src="../../static/img/icons/id-badge-regular.svg" alt="">Список сотрудников</a></li>#}
+            {#                    <li><a class="menu_item" href='{{ url_for('accounts',page=1,location=3) }}'><img src="../../static/img/icons/wallet-solid.svg" alt="">Бухгалтерский учет</a></li>#}
+            {#                {% endif %}#}
+
+            <li class="menu_item_li" id="location_list_9"><img src="../../static/img/icons/edit-regular.svg" alt="">Регистрация
+                <img id="new_student_location_list_down_9" class="menu_item_li_down_array"
+                     src="../../static/img/icons/sort-down-solid.svg" alt="">
+                <ul class="menu_item_li_sub" id="new_student_location_list_9">
+                    <li><a class="menu_item" href="/register"><img src="../../static/img/icons/user-solid.svg"
+                                                                   alt="">Регистрация студентов</a>
+                    </li>
+                    <li><a class="menu_item" href="{{ url_for('register_teacher') }}"><img
+                            src="../../static/img/icons/user-solid.svg"
+                            alt="">Регистрация учителя</a>
+                    </li>
+                    <li><a class="menu_item" href="{{ url_for('register_staff') }}"><img
+                            src="../../static/img/icons/user-solid.svg"
+                            alt="">Регистрация сотрудников</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="menu_item_li" id="location_list"><img src="../../static/img/icons/user-solid.svg" alt="">Новые
+                студенты <img id="new_student_location_list_down" class="menu_item_li_down_array"
+                              src="../../static/img/icons/sort-down-solid.svg" alt="">
+                <ul class="menu_item_li_sub" id="new_student_location_list">
+                    {% for location in locations %}
+                        <li>
+                            <a class="menu_item_li_sub_item"
+                               href="{{ url_for('new_students',location_id=location.id,page=1) }}"><img
+                                    src="../../static/img/icons/map-marker-alt-solid.svg" alt="">{{ location.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+            {#                    <li class="menu_item_li" id="location_list_7"><img src="../../static/img/icons/user-slash-solid.svg" alt="">Удаленные студенты<img id="new_student_location_list_down_7" class="menu_item_li_down_array" src="../../static/img/icons/sort-down-solid.svg" alt="">#}
+            {#                        <ul class="menu_item_li_sub" id="new_student_location_list_7">#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('list_deleted_students',location=1,page=1) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Ходжикент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('list_deleted_students',location=2,page=1) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Газалкент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('list_deleted_students',location=3,page=1) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Чирчик</a></li>#}
+            {#                        </ul>#}
+            {#                    </li>#}
+            <li class="menu_item_li" id="location_list_2"><img
+                    src="../../static/img/icons/user-graduate-solid%20(1).svg" alt="">Студенты<img
+                    id="new_student_location_list_down_2" class="menu_item_li_down_array"
+                    src="../../static/img/icons/sort-down-solid.svg" alt="">
+                <ul class="menu_item_li_sub" id="new_student_location_list_2">
+                    {% for location in locations %}
+                        <li>
+                            <a class="menu_item_li_sub_item"
+                               href="{{ url_for('students',location_id=location.id,page=1) }}"><img
+                                    src="../../static/img/icons/map-marker-alt-solid.svg" alt="">{{ location.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="menu_item_li" id="location_list_6"><img src="../../static/img/icons/user-solid.svg" alt="">Новые
+                группы<img id="new_student_location_list_down_6" class="menu_item_li_down_array"
+                           src="../../static/img/icons/sort-down-solid.svg" alt="">
+                <ul class="menu_item_li_sub" id="new_student_location_list_6">
+                    {% for location in locations %}
+                        <li>
+                            <a class="menu_item_li_sub_item"
+                               href="{{ url_for('new_groups',location_id=location.id,page=1) }}"><img
+                                    src="../../static/img/icons/map-marker-alt-solid.svg" alt="">{{ location.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="menu_item_li" id="location_list_3"><img src="../../static/img/icons/user-friends-solid.svg"
+                                                               alt="">Группы<img id="new_student_location_list_down_3"
+                                                                                 class="menu_item_li_down_array"
+                                                                                 src="../../static/img/icons/sort-down-solid.svg"
+                                                                                 alt="">
+                <ul class="menu_item_li_sub" id="new_student_location_list_3">
+                    {% for location in locations %}
+                        <li>
+                            <a class="menu_item_li_sub_item"
+                               href="{{ url_for('groups',location_id=location.id,page=1) }}"><img
+                                    src="../../static/img/icons/map-marker-alt-solid.svg" alt="">{{ location.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+
+            <li class="menu_item_li" id="location_list_4"><img
+                    src="../../static/img/icons/user-tie-solid.svg" alt="">Учителя<img
+                    id="new_student_location_list_down_4"
+                    class="menu_item_li_down_array"
+                    src="../../static/img/icons/sort-down-solid.svg"
+                    alt="">
+                <ul class="menu_item_li_sub" id="new_student_location_list_4">
+                    {% for location in locations %}
+                        <li>
+                            <a class="menu_item_li_sub_item"
+                               href="{{ url_for('teachers',location_id=location.id,page=1) }}"><img
+                                    src="../../static/img/icons/map-marker-alt-solid.svg" alt="">{{ location.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="menu_item_li" id="location_list_5"><img src="../../static/img/icons/id-badge-regular.svg" alt="">Список
+                сотрудников<img id="new_student_location_list_down_5" class="menu_item_li_down_array"
+                                src="../../static/img/icons/sort-down-solid.svg" alt="">
+                <ul class="menu_item_li_sub" id="new_student_location_list_5">
+                    {% for location in locations %}
+                        <li>
+                            <a class="menu_item_li_sub_item"
+                               href="{{ url_for('staff_list',location_id=location.id,page=1) }}"><img
+                                    src="../../static/img/icons/map-marker-alt-solid.svg" alt="">{{ location.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+            {#                    <li class="menu_item_li" id="location_list_4"><img src="../../static/img/icons/user-slash-solid.svg" alt="">Отсутствует по причине<img id="new_student_location_list_down_4" class="menu_item_li_down_array" src="../../static/img/icons/sort-down-solid.svg" alt="">#}
+            {#                        <ul class="menu_item_li_sub" id="new_student_location_list_4">#}
+            {#                            <li><a class="menu_item_li_sub_item" href="/students_with_reason_xojakent"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Ходжикент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="/students_with_reason_gazalkent"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Газалкент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="/students_with_reason_chirchiq"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Чирчик</a></li>#}
+            {#                        </ul>#}
+            {#                    </li>#}
+
+            {#                    <li><a class="menu_item" href="/all_user"><img src="../../static/img/icons/users-solid.svg" alt="">Все Админы</a></li>#}
+            {#                    <li class="menu_item_li" id="location_list_8"><img src="../../static/img/icons/wallet-solid.svg" alt="">Бухгалтерский учет<img id="new_student_location_list_down_8" class="menu_item_li_down_array" src="../../static/img/icons/sort-down-solid.svg" alt="">#}
+            {#                        <ul class="menu_item_li_sub" id="new_student_location_list_8">#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('accounts',page=1,location=1) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Ходжикент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('accounts',page=1,location=2) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Газалкент</a></li>#}
+            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('accounts',page=1,location=3) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Чирчик</a></li>#}
+            {#                        </ul>#}
+            {#                    </li>#}
+            {#                    <li><a class="menu_item" href="/add_subject"><img src="../../static/img/icons/pen-square-solid.svg" alt="">Предметы</a></li>#}
+            {#                {% endif %}#}
+            {#                {% if teacher and not user %}#}
+            {#                <li><a class="menu_item" href="{{ url_for('my_group1') }}"><img src="../../static/img/icons/users-solid.svg" alt="">Мои группы</a></li>#}
+            {#                {% endif %}#}
+            {#                {% if user.survey_taker %}#}
+            {#                <li><a class="menu_item" href="{{ url_for('survey',type="created",survey_id=1) }}"><img src="../../static/img/icons/fill-solid.svg" alt="">Опрос</a></li>#}
+            {#                {% endif %}#}
+            {#                {% if user and not user.smm and not user.accountant and not user.xojakent_admin and not user.chirchiq_admin and not user.gazalkent_admin and not user.director and not user.survey_taker %}#}
+            {#                <li><a class="menu_item" href="{{ url_for('find_group') }}"><img src="../../static/img/icons/users-solid.svg" alt="">Мои группы</a></li>#}
+            {#                {% if active_survey %}#}
+            {#                <li><a class="menu_item" href="{{ url_for('fill_survey_student') }}"><img src="../../static/img/icons/fill-solid.svg" alt="">Принять участие в опросе</a></li>#}
+            {#                {% endif %}#}
+
+
+        </ul>
+    </nav>
+    <div class="exit">
+        <a class="exit_item" href="{{ url_for('log_out') }}"><img src="../../static/img/icons/sign-out-alt-solid.svg"
+                                                                  alt="">Выход</a>
+    </div>
+</div>

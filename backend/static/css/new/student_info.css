@@ -1,0 +1,372 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #0098da;
+}
+
+.basic_student_profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.for_icon {
+  position: fixed;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.for_icon img {
+  width: 70px;
+}
+
+.for_flash {
+  background-color: #00568e;
+  padding: 10px;
+  align-self: center;
+  position: fixed;
+  display: flex;
+  border-radius: 0 0 15px 15px;
+}
+
+.for_flash h1 {
+  margin: 0;
+  color: white;
+  margin-right: 10px;
+}
+
+.for_flash button {
+  width: 30px;
+  border: none;
+  color: white;
+  background-color: red;
+  cursor: pointer;
+}
+
+.student {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  align-self: center;
+  width: 550px;
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+  border-radius: 0 20px 0 20px;
+  background-color: white;
+  padding: 10px;
+}
+
+.for_student_photo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-bottom: 2px solid black;
+}
+
+.for_student_photo img {
+  width: 100px;
+  pointer-events: none;
+  user-select: none;
+  border-radius: 50%;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+}
+
+.for_student_info {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  border-right: 2px solid black;
+  height: 100%;
+}
+.for_student_info p {
+  border-bottom: 2px solid black;
+  padding: 2px;
+}
+.for_student_info p:last-child {
+  border-bottom: none;
+}
+
+.student_buttons {
+  align-self: self-start;
+  padding-right: 5px;
+  margin-left: 5px;
+}
+.student_buttons button {
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete_student_button {
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+.contract_button {
+  background-color: #00c900;
+  color: white;
+  border: none;
+}
+
+.change_info_button {
+  background-color: #3B5998;
+  color: white;
+  border: none;
+}
+
+.payment_button {
+  background-color: #e6ff00;
+  color: black;
+  border: none;
+}
+
+.give_charity_button {
+  margin-top: 5px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+.make_admin_button {
+  margin-top: 5px;
+  background-color: limegreen;
+  color: white;
+  border: none;
+}
+
+.remove_admin {
+  margin-top: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+.buttons {
+  margin-top: 5px;
+}
+
+.student_buttons button {
+  margin-left: 5px;
+}
+
+.student_group {
+  border-top: 2px solid black;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.student_group a {
+  text-decoration: none;
+}
+.student_group .group {
+  width: 130px;
+  padding: 12px;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  border-radius: 0 10px 0 10px;
+}
+.student_group .group:nth-child(1) {
+  border-left: 5px solid #3B5998;
+  border-bottom: 2px solid #3B5998;
+}
+.student_group .group:nth-child(2) {
+  border-left: 5px solid #00a700;
+  border-bottom: 2px solid #00a700;
+}
+.student_group .group:nth-child(3) {
+  border-left: 5px solid #ff2727;
+  border-bottom: 2px solid #ff2727;
+}
+.student_group .group:nth-child(1):hover {
+  background-color: #3B5998;
+  color: white;
+}
+.student_group .group:nth-child(2):hover {
+  background-color: #00a700;
+  color: white;
+}
+.student_group .group:nth-child(3):hover {
+  background-color: #ff2727;
+  color: white;
+}
+
+.setting_select select, .setting_location select {
+  display: none;
+  margin-top: 5px;
+  border: none;
+  background-color: #00c900;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.setting_location {
+  display: none;
+}
+
+.setting_location input {
+  border: none;
+  background-color: #3B5998;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 4px;
+  margin-top: 5px;
+}
+
+.student_change {
+  margin-top: 10px;
+  width: 100px;
+}
+.student_change input {
+  width: 130px;
+  color: white;
+  margin: 1px;
+  padding: 2px;
+  border: none;
+  background-color: #3B5998;
+  border-radius: 3px;
+}
+.student_change input[type=submit] {
+  margin-top: 5px;
+  border: none;
+  color: white;
+  background-color: red;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+.student_change input::placeholder {
+  color: white;
+}
+.student_change input:focus {
+  outline: none;
+}
+
+.subjects select {
+  margin-bottom: 15px;
+  width: 195px;
+  background-color: #00568e;
+  height: 30px;
+  border: none;
+  margin-top: 5px;
+  padding: 5px;
+  align-self: center;
+  border-radius: 10px;
+  color: white;
+}
+.subjects select:focus {
+  outline: none;
+}
+
+#info_form, #password_form, #payment, #charity {
+  display: none;
+}
+
+.contract {
+  margin-top: 10px;
+  display: none;
+  flex-direction: column;
+}
+.contract button {
+  background-color: #3B5998;
+  color: white;
+}
+.contract a {
+  align-self: center;
+}
+.contract input[type=date] {
+  align-self: center;
+  width: 135px;
+}
+
+.for_submit {
+  display: flex;
+  flex-direction: column;
+}
+.for_submit input[type=submit] {
+  margin-top: 8px;
+  align-self: center;
+  padding: 4px;
+  border: none;
+  cursor: pointer;
+  background-color: #00c900;
+  color: white;
+  border-radius: 4px;
+}
+
+.ot_do {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.upload_form {
+  display: flex;
+  flex-direction: column;
+}
+.upload_form h3 {
+  text-align: center;
+}
+.upload_form input {
+  align-self: center;
+}
+.upload_form input[type=submit] {
+  background-color: #00c900;
+  color: white;
+  padding: 4px;
+  margin-top: 4px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete_form {
+  margin-top: 10px;
+  display: none;
+  flex-direction: column;
+}
+.delete_form input[type=text] {
+  align-self: center;
+  border: none;
+  width: 300px;
+  background-color: #3B5998;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 2px;
+  color: white;
+}
+.delete_form input::placeholder {
+  color: white;
+}
+.delete_form input[type=submit] {
+  align-self: center;
+  width: 150px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  padding: 5px;
+  background-color: red;
+  color: white;
+  border-radius: 4px;
+}
+.delete_form input:focus {
+  outline: none;
+}
+
+@media (max-width: 576px) {
+  body {
+    background-color: white;
+  }
+}
+
+/*# sourceMappingURL=student_info.css.map */

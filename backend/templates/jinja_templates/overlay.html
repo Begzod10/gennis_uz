@@ -1,0 +1,114 @@
+<section class="overlay">
+    <div class="modal" data-modal="user-profile">
+        <div class="modal__close">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="modal_tool">
+            <div class="modal_tool_icon">
+                <img id="change_profile" src="../../static/img/icons/pencil-alt-solid.svg" alt="pencil">
+            </div>
+        </div>
+        <div class="modal__user_info">
+            <div class="modal__user_info_img">
+                <label for="upload" class="image_upload">
+                    {% if user.photo %}
+                        <img src="{{ user.photo }}" id="change_photo" alt="user img">
+                    {% else %}
+                        <img src="../../static/img/user_image.png" id="change_photo" alt="user img">
+                    {% endif %}
+                </label>
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="camera">
+                        {{ form.image( class = "upload_img",id="upload") }}
+                    </div>
+                    <div class="ready_photo">
+                        <input type="submit" value="&check;">
+                    </div>
+                </form>
+            </div>
+            <div class="modal__user_info_fio">
+                <div class="modal__user_info_fio_name">
+                    {{ user.name }}
+                </div>
+                <div class="modal__user_info_fio_surname">
+                    {{ user.surname }}
+                </div>
+                <div class="modal__user_info_fio_father_name">
+                    {{ user.otasining_ismi }}
+                </div>
+            </div>
+            {% if not user.xojakent_admin and not user.gazalkent_admin and not user.chirchiq_admin and not user.director %}
+                <div class="modal__user_info_account">
+                    Hisob:
+                    <div class="modal__user_info_account_number">{{ user.money }}</div>
+                </div>
+            {% endif %}
+            <div class="modal__user_info_username">
+                Username:
+                <div class="modal__user_info_username_info">{{ user.username }}</div>
+            </div>
+            <div class="modal__user_info_age">
+                Yosh:
+                <div class="modal__user_info_age_number">{{ user.age }}</div>
+            </div>
+            <div class="modal__user_info_phone">
+                Telefon nomer :
+                <div class="modal__user_info_phone_number">{{ user.phone }}</div>
+            </div>
+            <div class="modal__user_info_father_phone">
+                Telefon nomer-2 :
+                <div class="modal__user_info_father_phone_number">{{ user.parent_phone }}</div>
+            </div>
+            <div class="modal__user_info_subjects">
+                Учебные предметы:
+                <ol class="modal__user_info_subjects_list">
+                    <li class="modal__user_info_subjects_list_item">{{ user.subject_1 }}</li>
+                    {% if user.subject_2 %}
+                        <li class="modal__user_info_subjects_list_item">{{ user.subject_2 }}</li>
+                    {% endif %}
+                    {% if user.subject_3 %}
+                        <li class="modal__user_info_subjects_list_item">{{ user.subject_3 }}</li>
+                    {% endif %}
+                </ol>
+            </div>
+            {% if not user %}
+                <div class="modal__user_info_salary">
+                    Oylik:
+                    <ol class="modal__user_info_salary_list">
+                        <li class="modal__user_info_salary_list_item"> Xo'jakent :
+                            <div class="modal__user_info_salary_list_item_number">200 000</div>
+                            som
+                        </li>
+                        <li class="modal__user_info_salary_list_item"> Gazalkent :
+                            <div class="modal__user_info_salary_list_item_number">200 000</div>
+                            som
+                        </li>
+                        <li class="modal__user_info_salary_list_item"> Chirchik :
+                            <div class="modal__user_info_salary_list_item_number">200 000</div>
+                            som
+                        </li>
+                    </ol>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+</section>
+
+<section class="overlay-password">
+    <div class="modal-password" data-modal="user-password">
+        <div class="modal-password__close_2">
+            <span></span>
+            <span></span>
+        </div>
+        <form action="" method="post">
+            <label class="modal-password_label">Password
+                <input class="modal-password_input" type="password" required name="password"
+                       placeholder="Введите свой пароль">
+                <input class="modal-password_submit" type="submit" value="Перейти к изменению">
+            </label>
+        </form>
+    </div>
+
+</section>

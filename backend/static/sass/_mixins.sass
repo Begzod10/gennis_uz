@@ -1,0 +1,23 @@
+@import "variables"
+@mixin button
+  margin-top: 10px
+  width: 150px
+  padding: 5px
+  border: none
+  outline: none
+  border-radius: 8px
+  background-color: $gennis_second_color
+  color: $gennis_color
+  &:active
+    transform: scale(0.90)
+    background-color: $gennis_color
+    color: $gennis_second_color
+@mixin select
+  background-color: $gennis_color
+  color: $gennis_second_color
+  padding: 5px
+  outline: none
+  border-radius: 5px
+  &:focus
+    background-color: $gennis_second_color
+    color: $gennis_color

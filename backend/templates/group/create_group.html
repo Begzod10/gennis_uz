@@ -1,0 +1,147 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block title %} Create Group {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/Admin_css/Add%20new%20st%20to%20group.min.css">
+{% endblock %}
+{% block body %}
+    <div class="list_tools">
+        <div>
+            <div class="back">
+                <div class="back_btn">
+                    Back
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="list_tools_title">Выберите учеников</div>
+        </div>
+        <div>
+            <form class="search_form"
+                  action="{{ url_for('create_group',teacher=teacher,group_name=group_name,type_of_course=type_of_course,price=price,teacher_salary=teacher_salary,subject_name=subject_name,location_id=location_id) }}"
+                  method="post">
+                <div class="list_tools_search" id="search_name">
+                    <input class="list_tools_search_input" type="text" required name="student_name"
+                           placeholder="Введите имя">
+                    <div class="list_tools_search_age">
+                        <div class="list_tools_search_age_desc">Ot</div>
+                        <input class="list_tools_search_age_input" type="text" required name="age_ot" placeholder="ot">
+                        <div class="list_tools_search_age_desc">Do</div>
+                        <input class="list_tools_search_age_input" type="text" required name="age_do" placeholder="do">
+                    </div>
+                    <div class="list_tools_search_clear">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <img class="list_tools_search_submit_img" src="../../static/img/icons/search-solid.svg" alt="">
+                    <img class="list_tools_search_settings_img" src="../../static/img/icons/cog-solid.svg" alt="">
+                    <div class="list_tools_search_settings">
+                        <label for="list_tools_search_checkbox_subject"><input name="for_search"
+                                                                               id="list_tools_search_checkbox_age"
+                                                                               class="list_tools_search_checkbox"
+                                                                               type="radio" value="for_age">For
+                            age</label>
+                    </div>
+                    <input class="list_tools_search_submit" type="submit" value="submit">
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+    <div class="list_students">
+        <div class="list_students_to_check_overlay"></div>
+        <div class="list_students_checked_overlay"></div>
+        <div class="list_students_to_check list_students_to_check_active">
+            <div class="list_students_to_check_title">Выберите учеников</div>
+
+            {% for student in info %}
+                <div style="display: flex" class="list_students_item">
+                    <a href="">
+                        <div>
+                            <div class="list_students_item_img">
+                                {% if student.photo_profile %}
+                                    <img src="{{ student.photo_profile }}" alt="">
+                                {% else %}
+                                    <img src="../../static/img/user_image.png" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="list_students_item_fio">
+                                <div class="list_students_item_fio_name">{{ student.user.name }}
+                                    <span class="list_students_item_tooltiptext">
+                                    Имя
+                                </span>
+                                </div>
+                                <div class="list_students_item_fio_surname">{{ student.user.surname }}
+                                    <span class="list_students_item_tooltiptext">
+                                    Фамилия
+                                </span>
+                                </div>
+                            </div>
+                            <div class="list_students_item_age">{{ student.age }}
+                                <span class="list_students_item_tooltiptext">
+                                Возраст
+                            </span>
+
+                            </div>
+                            {% if student.user.data_joined %}
+                                <div class="list_students_item_date_reg">{{ student.user.data_joined.strftime("%Y-%m-%d") }}
+                                    <span class="list_students_item_tooltiptext">
+                                Дата регистрации
+                            </span>
+                                </div>
+                            {% endif %}
+                            <div class="list_students_item_comment" id="comment_english">
+                                {% if student.user.comment %}{{ student.user.comment[0:10] }}...{% endif %}
+                                <span class="list_students_item_tooltiptext">
+                                <span class="list_students_item_tooltiptext_comment">{% if student.user.comment %}
+                                    {{ student.comment }}{% else %} comment {% endif %}</span>
+                            </span>
+                            </div>
+
+
+                        </div>
+                    </a>
+                    <div>
+                        <div class="list_students_item_move_input"><input
+                                class="list_students_item_move_input_checkbox checkbox" data-id="{{ student.id }}"
+                                {% if student.selected %} checked{% endif %}  type="checkbox">
+                            <span class="list_students_item_tooltiptext">
+                           Tanlash
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="list_students_checked">
+            <div class="list_students_checked_title">Выбранные студенты</div>
+
+        </div>
+
+    </div>
+
+    <div class="list_tools">
+        <div></div>
+        <div>
+            <div class="list_tools_to_check list_tools_btn list_tools_btn_active ">Выберите</div>
+            <div class="list_tools_checked list_tools_btn">Выбранные</div>
+        </div>
+        <div>
+            <form action=""
+                  method="post">
+                <button data-btn="add-gr" class="list_tools_add_gr">Готово</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block overlay %}
+    {% include 'jinja_templates/overlay.html' %}
+{% endblock %}
+{% block js %}
+    <script src="/static/jquery%203.6.js"></script>
+    <script src="/static/js/Admin_js/menu_navbar.js"></script>
+    <script src="/static/js/Admin_js/flash.js"></script>
+    <script src="/static/js/Admin_js/Add_to_group.js"></script>
+    <script src="/static/js/new/create_add_group.js"></script>
+{% endblock %}

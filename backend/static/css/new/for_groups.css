@@ -1,0 +1,189 @@
+.all_students {
+  display: flex;
+  flex-direction: column;
+  margin-top: -560px;
+  margin-left: 212px;
+  width: 100%;
+  height: 498px;
+}
+
+.button_subjects {
+  align-self: center;
+}
+
+.button_subjects button {
+  margin-top: 5px;
+  border: 0;
+  background-color: #0098da;
+  color: white;
+}
+
+.button_subjects .active {
+  background-color: #00568e;
+  color: white;
+}
+
+.basic_search {
+  display: flex;
+  justify-content: space-around;
+}
+
+.search_students select {
+  margin-bottom: 15px;
+  width: 220px;
+  background-color: #00568e;
+  height: 30px;
+  border: none;
+  margin-top: 5px;
+  padding: 5px;
+  align-self: center;
+  border-radius: 10px;
+  transition: 2s;
+  color: white;
+}
+
+.search_students select:focus {
+  outline: none;
+}
+
+.search_form {
+  display: none;
+}
+
+.search_form select {
+  width: 160px;
+  background-color: #00568e;
+  height: 30px;
+  border: none;
+  margin-top: 5px;
+  padding: 5px;
+  align-self: center;
+  border-radius: 10px;
+  transition: 2s;
+  color: white;
+}
+
+.search_form select:focus {
+  outline: none;
+}
+
+.search_form input {
+  background-color: #00568e;
+  border: none;
+  margin-top: 5px;
+  padding: 5px;
+  align-self: center;
+  border-radius: 10px;
+  transition: 2s;
+  color: white;
+  height: 21px;
+}
+
+.search_form input:focus {
+  outline: none;
+}
+
+.search_form input::placeholder {
+  color: white;
+}
+
+.search_form input[type=submit] {
+  height: 30px;
+}
+
+.list_of_students {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  width: 920px;
+  height: 405px;
+  align-self: center;
+  background-color: white;
+}
+
+.list_of_students a {
+  color: black;
+  height: 180px;
+  text-decoration: none;
+}
+
+.student_card {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  border-radius: 0 0 10px 0;
+  cursor: pointer;
+}
+
+.not_teacher {
+  background-color: #ff2525;
+  color: white;
+}
+
+.student_card img {
+  align-self: center;
+  width: 80px;
+  border-radius: 50%;
+}
+
+.student_card p {
+  margin-top: 8px;
+  align-self: center;
+}
+
+.student_card:hover {
+  width: 180px;
+  height: 200px;
+  font-size: 20px;
+}
+
+@media (max-width: 1500px) {
+  .all_students {
+    margin-top: -625px;
+    margin-left: 225px;
+  }
+}
+@media (max-width: 1300px) {
+  .all_students {
+    margin-top: -515px;
+    margin-left: 120px;
+  }
+}
+@media (max-width: 576px) {
+  .all_students {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    margin-left: 0;
+  }
+
+  .list_of_students {
+    margin-left: 50px;
+  }
+  .list_of_students a {
+    color: black;
+    height: 180px;
+    text-decoration: none;
+  }
+
+  .student_card {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    border-radius: 0 0 10px 0;
+    cursor: pointer;
+  }
+  .student_card p {
+    font-size: 15px;
+  }
+}
+
+/*# sourceMappingURL=for_groups.css.map */

@@ -1,0 +1,261 @@
+.basic_subject {
+  display: flex;
+  flex-direction: column;
+}
+
+.button_subjects {
+  align-self: center;
+  margin-top: -550px;
+}
+
+.button_subjects button {
+  border: 0;
+  background-color: #0098da;
+  color: white;
+}
+
+.button_subjects .active {
+  background-color: #00568e;
+  color: white;
+}
+
+.select_subjects {
+  align-self: center;
+}
+
+.select_subjects #xojakent_subjects, #gazalkent_subjects, #chirchiq_subjects {
+  display: none;
+  margin-bottom: 15px;
+  width: 148px;
+  background-color: #00568e;
+  height: 30px;
+  border: none;
+  margin-top: 5px;
+  padding: 5px;
+  align-self: center;
+  border-radius: 10px;
+  transition: 2s;
+  color: white;
+}
+
+.select_subjects select:focus {
+  outline: none;
+}
+
+.tables {
+  align-self: center;
+  margin-left: 155px;
+  height: 371px;
+  overflow: auto;
+}
+
+.tables .all_student_xojakent, .xojakent_english, .xojakent_russian,
+.xojakent_math, .xojakent_history, .xojakent_ona_adabiyot, .xojakent_chemistry, .xojakent_physics, .xojakent_biology,
+.xojakent_nurse, .xojakent_car, .xojakent_web, .Ingliz_tili_mental_arifmetika, .Rus_tili_mental_arifmetika, .mental_arifmetika {
+  display: none;
+}
+
+.tables .all_student_gazalkent, .gazalkent_english, .gazalkent_russian,
+.gazalkent_math, .gazalkent_history, .gazalkent_ona_adabiyot, .gazalkent_chemistry, .gazalkent_physics, .gazalkent_biology,
+.gazalkent_nurse, .gazalkent_car, .gazalkent_web, .Ingliz_tili_mental_arifmetika2, .Rus_tili_mental_arifmetika2, .mental_arifmetika2 {
+  display: none;
+}
+
+.tables .all_student_chirchiq, .chirchiq_english, .chirchiq_russian,
+.chirchiq_math, .chirchiq_history, .chirchiq_ona_adabiyot, .chirchiq_chemistry, .chirchiq_physics, .chirchiq_biology,
+.chirchiq_nurse, .chirchiq_car, .chirchiq_web, .Ingliz_tili_mental_arifmetika3, .Rus_tili_mental_arifmetika3, .mental_arifmetika3 {
+  display: none;
+}
+
+.tables table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  padding: 2px;
+}
+
+.tables .checkbox {
+  margin-left: 30px;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+}
+
+footer .for_footer {
+  width: 100%;
+  height: 63px;
+  margin-top: 71px;
+  background-color: #00b1ff;
+  border-top: 2px solid black;
+}
+
+.create_add_button {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.create_add_button button {
+  margin-top: 3px;
+  margin-right: 10px;
+  height: 55px;
+  border: none;
+  background-color: #00568e;
+  color: white;
+}
+
+.create_group_modal {
+  display: none;
+  margin-top: -560px;
+  width: 1280px;
+  height: 495px;
+  background-color: rgba(194, 194, 194, 0.47);
+  backdrop-filter: blur(1px);
+}
+
+.create_group_modal #create_group_form {
+  display: none;
+}
+
+.create_group_modal #add_group_form {
+  display: none;
+}
+
+.create_group_modal .create_group_form {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 506px;
+  height: 412px;
+  margin-left: 434px;
+  background-color: white;
+  border-radius: 0 0 10px 10px;
+}
+
+.create_group_modal .create_group_form button {
+  align-self: flex-end;
+  border: none;
+  color: white;
+  background-color: red;
+  width: 50px;
+  border-radius: 0;
+}
+
+.create_group_modal .create_group_form h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.create_group_form h3 {
+  text-align: center;
+}
+
+.create_group_form select {
+  width: 258px;
+  background-color: #00568e;
+  height: 30px;
+  border: none;
+  margin-top: 5px;
+  padding: 5px;
+  align-self: center;
+  border-radius: 10px;
+  transition: 2s;
+  color: white;
+}
+
+.create_group_form .type_course {
+  width: 150px;
+}
+
+.create_group_form input {
+  background-color: #00568e;
+  width: 190px;
+  height: 30px;
+  border: none;
+  margin-top: 5px;
+  padding: 5px;
+  align-self: center;
+  border-radius: 10px;
+  transition: 2s;
+  color: white;
+}
+
+.create_group_form select, input {
+  outline: none;
+}
+
+.create_group_form input[type=number] {
+  width: 100px;
+}
+
+.create_group_form input[type=submit] {
+  align-self: flex-end;
+  background-color: green;
+  margin-top: 50px;
+  width: 100px;
+  margin-right: 10px;
+  height: 30px;
+  cursor: pointer;
+}
+
+@media (max-width: 1500px) {
+  .button_subjects {
+    margin-top: -625px;
+  }
+
+  footer .for_footer {
+    margin-left: 0;
+    margin-top: 140px;
+  }
+
+  .create_group_modal {
+    width: 100%;
+    margin-top: -634px;
+    height: 570px;
+  }
+}
+@media (max-width: 1300px) {
+  .button_subjects {
+    margin-top: -515px;
+  }
+
+  footer .for_footer {
+    margin-left: 0;
+    margin-top: 31px;
+  }
+
+  .create_group_modal {
+    width: 100%;
+    margin-top: -515px;
+    height: 452px;
+  }
+}
+@media (max-width: 576px), (max-width: 768px) {
+  .button_subjects {
+    margin-top: 0;
+  }
+
+  .tables {
+    margin-left: 0;
+  }
+  .tables table, .tables th, .tables td {
+    padding: 10px 0 10px 5px;
+    font-size: 13px;
+  }
+
+  footer .for_footer {
+    margin-left: 0;
+    width: 100%;
+    height: 63px;
+    margin-top: 0;
+    background-color: #00b1ff;
+    border-top: 2px solid black;
+  }
+
+  .create_group_modal .create_group_form {
+    margin-top: 80px;
+    margin-left: 20px;
+  }
+}
+
+/*# sourceMappingURL=subjects.css.map */

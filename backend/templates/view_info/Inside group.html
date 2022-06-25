@@ -1,0 +1,242 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/Admin_css/Inside%20group.min.css">
+    <style>
+        .debt-black input {
+            border: 1px solid black;
+        }
+
+        .black-debt {
+            background: black;
+            color: white;
+        }
+
+        .deleting_type select {
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 8px;
+            outline: none;
+            display: none;
+        }
+
+        .deleting_type2 select {
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 8px;
+            outline: none;
+        }
+    </style>
+{% endblock %}
+{% block title %} Group Profile {% endblock %}
+{% block body %}
+    <div class="group">
+        <div class="group_tools">
+            {% if not user.director %}
+                <div class="group_tools_add_st">
+                    <a href=""><img class="group_tools_add_st_btn"
+                                    src="../../static/img/icons/user-plus-solid.svg"
+                                    alt=""></a>
+                </div>
+            {% endif %}
+            <div class="group_tools_change_info">
+
+                <img class="group_tools_change_info_btn" src="../../static/img/icons/edit-regular.svg" alt="">
+
+                <img class="group_tools_change_info_close" src="../../static/img/icons/times-solid.svg" alt="">
+
+            </div>
+            <div class="group_tools_move_st">
+
+                <div class="group_tools_move_st_btn">Move to group</div>
+                <img class="group_tools_move_st_close" src="../../static/img/icons/times-solid.svg" alt="">
+
+            </div>
+            <div class="group_tools_show_att">
+                <div class="group_tools_show_att_btn"><a href="">Show
+                    attendance</a></div>
+            </div>
+        </div>
+        <div class="group_submit">
+            <a href="{{ url_for('show_groups',group_id=group.id) }}">
+                <div class="group_submit_move_btn">Переход в другую группу</div>
+            </a>
+            <div class="group_submit_delete_btn">Delete group</div>
+            {% if group.status == False %}
+                <button class="group_submit_make_btn"><a href="">Make
+                    Group</a></button>
+            {% endif %}
+            {% if group.status == True %}
+                <button class="group_submit_make_btn"><a href="">Make new
+                    group</a></button>
+            {% endif %}
+        </div>
+        <div class="group_info">
+            <form action="" method="post">
+                <div class="group_info_name">Имя группы: <span class="group_info_span">{{ group.name }}</span>
+                    <div class="group_info_name_form">
+                        <input class="group_info_name_form_input" type="text" required name="name"
+                               value="{{ group.name }}">
+                    </div>
+                </div>
+                <div class="group_info_lang">Язык обучения: <span
+                        class="group_info_span">{{ group.language.name }}</span>
+                    <div class="group_info_lang_form">
+                        <select class="group_info_teacher_form_select" name="education_language" id="">
+                            <option value="{{ group.education_language }}">{{ group.education_language }}</option>
+                            {% if group.education_language != "Узбекский" %}
+                                <option value="Узбекский">Узбекский</option>
+                            {% endif %}
+                            {% if group.education_language != "Русский" %}
+                                <option value="Русский">Русский</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                <div class="group_info_len_students">Количество студентов: <span>{{ group.student|length }}</span></div>
+                <div class="group_info_cost group_info_teacher_salary">Доля учителя: <span
+                        class="group_info_span group_info_cost_number">{{ group.teacher_salary }}</span>
+                    <div class="group_info_cost_form">
+                        <input class="group_info_cost_form_input" type="text" required name="group_teacher_salary"
+                               value="{{ group.teacher_salary }}">
+                    </div>
+                </div>
+                <div class="group_info_cost">Стоимость группы: <span
+                        class="group_info_span group_info_cost_number">{{ group.course_type.cost }}</span>
+                    <div class="group_info_cost_form">
+                        <input class="group_info_cost_form_input" type="text" required name="group_cost"
+                               value="{{ group.course_type.cost }}">
+                        <input class="group_info_cost_form_submit" type="submit" value="Изменять">
+                    </div>
+                </div>
+            </form>
+            <div class="group_info_teacher">Учитель: <span class="group_info_span">{% for teach in group.teacher %}
+                {{ teach.user.name }}{% endfor %}</span>
+                <form class="group_info_teacher_form"
+                      action=""
+                      method="post">
+                    <select class="group_info_teacher_form_select" name="names" id="teachers">
+                        {% for teacher in teachers %}
+                            {% if teacher.subject == group.subject and teacher.id != group.teacher_1 %}
+                                <option value="{{ teacher.id }}">{{ teacher.name }}/{{ teacher.surname }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <input class="group_info_teacher_form_submit" type="submit" value="Добавить">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="list_students">
+        {% for student in group.student %}
+            <div class="list_students_item_box">
+                <a href="">
+                    <div class="list_students_item">
+                        <div class="list_students_item_img">
+                            <img src="../../static/img/user_image.png" alt="">
+
+                        </div>
+                        <div class="list_students_item_fio">
+                            <div class="list_students_item_fio_name">{{ student.user.name }}
+                                <span class="list_students_item_tooltiptext">
+                                    Имя
+                                </span>
+                            </div>
+                            <div class="list_students_item_fio_surname">{{ student.user.surname }}
+                                <span class="list_students_item_tooltiptext">
+                                    Фамилия
+                                </span>
+                            </div>
+                            <div class="list_students_item_fio_username">{{ student.user.username[0:10] }}
+                                <span class="list_students_item_tooltiptext">
+                                    Пользователь
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list_students_item_account">
+                            <span class="list_students_item_account_number">{{ student.user.balance }}</span>som
+                            <span class="list_students_item_tooltiptext">
+                                Счет
+                            </span>
+                        </div>
+                    </div>
+
+                </a>
+
+                <div class="list_students_item_box_move_input"><input
+                        class="list_students_item_box_move_input_checkbox checkbox" data-id="{{ student.id }}"
+                        type="checkbox" {% if student.for_moved %} checked {% endif %}></div>
+                <div class="list_students_item_box_delete">
+                    <div class="list_students_item_box_delete_button" data-group="{{ group_id }}">&cross;</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block overlay %}
+    <div class="overlay_submit" id="for_gr">
+        <div class="overlay_submit_modal_delete" id="close_gr">
+            <div class="overlay_submit_modal_delete__close">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="overlay_submit_modal_delete_desc">Вы действительно хотите удалить группу?</div>
+            <div class="overlay_submit_modal_delete_select">
+
+                <a href="">
+                    <div class="overlay_submit_modal_delete_select_yes">
+                        Yes
+                    </div>
+                </a>
+                <div class="overlay_submit_modal_delete_select_no">
+                    No
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="overlay_submit" id="for_student">
+        <div class="overlay_submit_modal_delete">
+            <div class="overlay_submit_modal_delete__close" id="close_student">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="overlay_submit_modal_delete_desc" id="title_delete">Вы действительно хотите удалить студента?
+            </div>
+            <form class="overlay_submit_modal_delete_form fake_form" action=""
+                  method="post">
+                <div class="deleting_type">
+                    <select name="deleting_type">
+                        <option value="1">В список удаленных студентов</option>
+                        <option value="0">К новым ученикам</option>
+                    </select>
+                </div>
+                <div class="deleting_type2">
+                    <select class="select_delete" name="">
+                        <option value="Pul oilaviy sharoit">Pul oilaviy sharoit</option>
+                        <option value="O'qtuvchi yoqmadi">O'qtuvchi yoqmadi</option>
+                        <option value="Student o'qishni eplolmadi">Student o'qishni eplolmadi</option>
+                        <option value="boshqa sabab">boshqa sabab</option>
+                    </select>
+                </div>
+                <input type="text" class="input_delete" placeholder="Boshqa sabab" name="">
+                <input class="overlay_submit_modal_delete_select_yes_submit" style="visibility: visible" type="submit"
+                       value="Удалить">
+            </form>
+            <div class="overlay_submit_modal_delete_select">
+                <div class="overlay_submit_modal_delete_select_yes delete_student2">
+                    Yes
+                </div>
+                <div class="overlay_submit_modal_delete_select_no">
+                    No
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% include 'jinja_templates/overlay.html' %}
+{% endblock %}
+{% block js %}
+    <script src="../../static/js/Admin_js/inside%20group.js"></script>
+{% endblock %}

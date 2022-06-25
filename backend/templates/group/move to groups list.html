@@ -1,0 +1,79 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/Admin_css/List%20groups.min.css">
+{% endblock %}
+{% block title %}Move to group{% endblock %}
+{% block body %}
+    <div class="list_groups">
+        <div class="list_groups_title">Доступные группы</div>
+        <div class="list_students_link">
+            {% for group in new_groups %}
+
+                <a href="{{ url_for('move_group',new_group_id=group.id, old_group_id=old_group_id) }}">
+                    <div class="list_groups_item">
+                        <div class="list_groups_item_name">{{ group.name }}
+                            <span class="list_groups_item_tooltiptext">
+                                Имя группы
+                            </span>
+                        </div>
+                        <div class="list_groups_item_teacher_fio">
+                            <div class="list_groups_item_teacher_fio_name">{% for teach in group.teacher %}
+                                {{ teach.user.name }}{% endfor %}
+                                <span class="list_groups_item_tooltiptext">
+                                    Имя учителя
+                                </span>
+                            </div>
+                            <div class="list_groups_item_teacher_fio_surname">{% for teach in group.teacher %}
+                                {{ teach.user.surname }}{% endfor %}
+                                <span class="list_groups_item_tooltiptext">
+                                    Фамилия учителя
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list_groups_item_subject">{{ group.subject.name }}
+                            <span class="list_groups_item_tooltiptext">
+                                Предмет
+                            </span>
+                        </div>
+                        <div class="list_groups_item_tarif">{{ group.course_type.name }}
+                            <span class="list_groups_item_tooltiptext">
+                                Тариф
+                            </span>
+                        </div>
+                        <div class="list_groups_item_cost"><span
+                                class="list_groups_item_cost_number">{{ group.course_type.cost }}</span> som
+                            <span class="list_groups_item_tooltiptext">
+                                Стоимость
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block overlay %}
+    {% include 'jinja_templates/overlay.html' %}
+    <div class="overlay_submit">
+        <div class="overlay_submit_modal_delete">
+            <div class="overlay_submit_modal_delete__close">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="overlay_submit_modal_delete_desc">Вы действительно хотите move to group</div>
+            <div class="overlay_submit_modal_delete_select">
+                <a href="#">
+                    <div class="overlay_submit_modal_delete_select_yes">
+                        Yes
+                    </div>
+                </a>
+                <div class="overlay_submit_modal_delete_select_no">
+                    No
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="../../static/js/Admin_js/Move%20to%20group.js"></script>
+{% endblock %}

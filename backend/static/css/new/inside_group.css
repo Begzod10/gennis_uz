@@ -1,0 +1,310 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0098da;
+}
+
+.basic {
+  display: flex;
+  flex-direction: column;
+}
+
+.for_icon {
+  position: fixed;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.for_icon img {
+  width: 70px;
+}
+
+.group {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  align-self: center;
+  height: 516px;
+  background-color: white;
+  border-radius: 0 10px 0 10px;
+}
+
+.for_flash {
+  background-color: #00568e;
+  padding: 10px;
+  align-self: center;
+  position: fixed;
+  display: flex;
+  border-radius: 0 0 15px 15px;
+}
+
+.for_flash h3 {
+  margin: 0;
+  color: white;
+  margin-right: 10px;
+}
+
+.for_flash button {
+  width: 30px;
+  border: none;
+  color: white;
+  background-color: red;
+  cursor: pointer;
+}
+
+.group_name {
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+}
+.group_name h2 {
+  text-align: center;
+}
+.group_name img {
+  margin-left: 10px;
+  width: 18px;
+  cursor: pointer;
+}
+.group_name button {
+  position: fixed;
+  margin-left: 300px;
+  border: none;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.rename_name {
+  display: none;
+  align-self: center;
+}
+.rename_name input[type=text] {
+  border: none;
+  width: 120px;
+  background-color: #3B5998;
+  color: white;
+  padding: 6px;
+  border-radius: 6px;
+}
+.rename_name input[type=submit] {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 4px;
+  border-radius: 6px;
+}
+.rename_name input:focus {
+  outline: none;
+}
+
+.teacher_location {
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+.add_teacher {
+  display: flex;
+  flex-direction: row;
+}
+.add_teacher select {
+  background-color: #3B5998;
+  color: white;
+  padding: 4px;
+}
+.add_teacher input {
+  border: none;
+  background-color: #00a700;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.teach_settings {
+  display: flex;
+  flex-direction: row;
+}
+.teach_settings button {
+  padding: 4px;
+  background-color: red;
+  color: white;
+  border: none;
+  margin-left: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.message_teacher {
+  display: none;
+}
+
+.teacher_button {
+  display: flex;
+  width: 200px;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.teacher_button button {
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+}
+.teacher_button button {
+  background-color: red;
+}
+.teacher_button a button {
+  background-color: #00c900;
+}
+
+.message_group {
+  display: none;
+  align-self: flex-end;
+}
+
+.group_button {
+  display: flex;
+  width: 282px;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.group_button button {
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+}
+.group_button button {
+  background-color: red;
+}
+.group_button a button {
+  background-color: #00c900;
+}
+
+.students_location {
+  align-self: center;
+  height: 380px;
+  overflow: auto;
+}
+.students_location .transfer_button {
+  margin-top: 10px;
+  border: none;
+  background-color: limegreen;
+  padding: 4px;
+  cursor: pointer;
+  color: white;
+  border-radius: 4px;
+}
+.students_location .delete_students {
+  margin-top: 10px;
+  border: none;
+  background-color: red;
+  padding: 4px;
+  cursor: pointer;
+  color: white;
+  border-radius: 4px;
+}
+.students_location .attendance_list {
+  margin-top: 10px;
+  border: none;
+  background-color: #3B5998;
+  padding: 4px;
+  cursor: pointer;
+  color: white;
+  border-radius: 4px;
+}
+.students_location .attendance_list a {
+  text-decoration: none;
+  color: white;
+}
+.students_location table, .students_location tr {
+  border-collapse: collapse;
+  border: 2px solid black;
+}
+.students_location table td, .students_location table th, .students_location tr td, .students_location tr th {
+  border-right: 2px solid black;
+  padding: 2px;
+}
+.students_location table td input, .students_location tr td input {
+  margin-left: 15px;
+  height: 30px;
+  width: 30px;
+}
+.students_location table td button, .students_location tr td button {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  margin-left: 18px;
+}
+
+.th_transfer, .td_input, .th_delete, .td_delete {
+  display: none;
+}
+
+.move_button {
+  align-self: flex-end;
+  margin-right: 10px;
+}
+.move_button button {
+  display: none;
+  padding: 6px;
+  color: white;
+  background-color: #3B5998;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.other_groups {
+  display: flex;
+  flex-direction: column;
+}
+.other_groups h1 {
+  text-align: center;
+}
+
+.other_groups_table {
+  align-self: center;
+}
+.other_groups_table table, .other_groups_table tr {
+  border-collapse: collapse;
+  border: 2px solid black;
+}
+.other_groups_table th, .other_groups_table td {
+  padding: 6px;
+}
+.other_groups_table td a button {
+  background-color: #00a700;
+  color: white;
+  margin-left: 15px;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 576px) {
+  body {
+    background-color: white;
+  }
+
+  .group {
+    width: 100%;
+  }
+  .group .group_name button {
+    margin-left: 280px;
+  }
+}
+
+/*# sourceMappingURL=inside_group.css.map */

@@ -1,0 +1,119 @@
+.basic_payment
+  display: flex
+  flex-direction: column
+  margin-top: -560px
+  margin-left: 210px
+  width: 951px
+  height: 498px
+
+.button_subjects
+  align-self: center
+
+.button_subjects button
+  margin-top: 5px
+  border: 0
+  background-color: rgb(0,152,218)
+  color: white
+
+.button_subjects .active
+  background-color: rgb(0, 86, 142)
+  color: white
+
+.for_flash
+  background-color: rgb(0, 86, 142)
+  padding: 10px
+  align-self: center
+  position: fixed
+  display: flex
+  border-radius: 0 0 15px 15px
+
+.for_flash h2
+  margin: 0
+  color: white
+  margin-right: 10px
+
+.for_flash button
+  width: 30px
+  border: none
+  color: white
+  background-color: red
+  cursor: pointer
+
+.for_select_payment
+  display: flex
+  flex-direction: row
+  select
+    margin: 5px
+    background-color: #3B5998
+    color: white
+    border: none
+    padding: 5px
+    border-radius: 4px
+  select:focus
+    outline: none
+
+.all_info
+  display: flex
+  flex-direction: column
+
+.payment
+  align-self: center
+  .debt_list
+    height: 500px
+    overflow: auto
+  table
+    margin-left: 20px
+  table,tr,td,th
+    border: 2px solid black
+    border-collapse: collapse
+    padding: 4px
+
+.forms
+  display: flex
+  flex-direction: column
+  margin-top: 10px
+  margin-bottom: 10px
+  input
+    border: none
+    width: 200px
+    align-self: center
+    margin: 4px
+    padding: 5px
+    background-color: #3B5998
+    color: white
+    border-radius: 4px
+  input:focus
+    outline: none
+  input::placeholder
+    color: white
+  input[type=submit]
+    width: 120px
+    background-color: #00a700
+
+
+#xojakent_payment_student, #xojakent_salary,#capital_xojakent, #overhead_xojakent, #withdrawal_xojakent, #xojakent_debt, #xojakent_profit
+  display: none
+
+#gazalkent_payment_student,#gazalkent_salary, #capital_gazalkent, #overhead_gazalkent, #withdrawal_gazalkent, #gazalkent_debt, #gazalkent_profit
+  display: none
+
+#chirchiq_payment_student,#chirchiq_salary, #capital_chirchiq, #overhead_chirchiq, #withdrawal_chirchiq, #chirchiq_debt, #chirchiq_profit
+  display: none
+
+@media (max-width: 1500px)
+  .basic_payment
+    margin-top: -625px
+
+@media (max-width: 1300px)
+  .basic_payment
+    margin-top: -515px
+
+@media (max-width: 576px)
+  .basic_payment
+    width: 100%
+    margin-left: 0
+    margin-top: 0
+  .payment
+    table,tr,td,th
+      padding: 0
+      font-size: 13px

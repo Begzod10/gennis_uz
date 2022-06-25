@@ -1,0 +1,244 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../static/css/for_home/slick.css">
+    <link rel="stylesheet" href="../../static/css/teacher/Teacher%20give%20score.min.css">
+
+    <style>
+        .debt-black input {
+            border: 1px solid black;
+        }
+
+        .black-debt {
+            background: black;
+            color: white;
+        }
+
+        .date {
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 10px;
+            background: #45b3e2;
+            color: white;
+            border: none;
+        }
+    </style>
+{% endblock %}
+{% block title %} Attendance {% endblock %}
+
+{% block body %}
+    <p class="actual_att" hidden></p>
+    <div class="back">
+        <a href="{{ url_for('teach_inside_group',group_id=group.id) }}">
+            <div class="back_btn">
+                Назад
+            </div>
+        </a>
+    </div>
+
+    <div class="list_tools">
+        <div class="list_tools_title">Students</div>
+    </div>
+    <div class="list_students">
+        <div class="list_students_overflow">
+            {% for student in group.student %}
+                {% if student.ball_time == hour2 or student.ball_time <= hour2 %}
+                    <div class="list_students_item">
+                        <div class="list_students_item_info">
+                            <div class="list_students_item_img">
+                                {% if not student.user.photo %}
+                                    <img src="../../static/img/user_image.png" alt="User">
+                                {% else %}
+                                    <img src="{{ student.user.photo }}" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="list_students_item_fio">
+                                <div class="list_students_item_fio_item">
+                                    {{ student.user.name }}
+                                </div>
+                                <div class="list_students_item_fio_item">
+                                    {{ student.user.surname }}
+                                </div>
+                                <div class="list_students_item_fio_item">
+                                    <span class="list_students_item_account_number ">{{ student.user.balance }} </span>som
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list_students_item_attendance">
+                            <div class="list_students_item_attendance_btn present">&checkmark;</div>
+                            <div class="list_students_item_attendance_btn absent">&cross;</div>
+                        </div>
+
+                        <div class="list_students_item_cancel">
+                            <div class="list_students_item_cancel_btn">Отмена</div>
+                        </div>
+                        <form action="{{ url_for('make_attendance',group_id=group_id,student_id=student.id,month=month) }}"
+                              method="post">
+                            <div class="list_students_item_absent">
+
+                                {% if current_day <= 30 %}
+                                    <select class="date" name="months" id="">
+                                        <option value="{{ current_month }}">{% if current_month == 1 %}
+                                            Yanvar {% elif current_month == 2 %}Fevral{% elif current_month == 3 %}
+                                            Mart {% elif current_month == 4 %} April {% elif current_month == 5 %}
+                                            May {% elif current_month == 6 %} Iyun {% elif current_month == 7 %}
+                                            Iyul {% elif current_month == 8 %} Avgust {% elif current_month == 9 %}
+                                            Sentyabr {% elif current_month == 10 %}
+                                            Oktyabr {% elif current_month == 11 %}
+                                            Noyabr {% elif current_month == 12 %}Dekabr {% endif %}</option>
+                                        <option value="{{ old_month }}">{% if old_month == 1 %}
+                                            Yanvar {% elif old_month == 2 %}Fevral{% elif old_month == 3 %}
+                                            Mart {% elif old_month == 4 %} April {% elif old_month == 5 %}
+                                            May {% elif old_month == 6 %} Iyun {% elif old_month == 7 %}
+                                            Iyul {% elif old_month == 8 %} Avgust {% elif old_month == 9 %}
+                                            Sentyabr {% elif old_month == 10 %} Oktyabr {% elif old_month == 11 %}
+                                            Noyabr {% elif old_month == 12 %}Dekabr {% endif %}</option>
+                                    </select>
+                                {% endif %}
+
+                                <select class="date" name="days" required id="">
+                                    {% for day in day_list %}
+                                        {% if day <= current_day %}
+                                            <option value="{{ day }}">{{ day }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </select>
+                                <br>
+                                <div class="list_students_item_absent_title">Подтвердить отсутствие</div>
+                                <input type="text" name="type_attendance"
+                                       {% if type_attendance %}value="{{ type_attendance }}"{% endif %}
+                                       class="type_attendance" hidden>
+
+
+                                <button class="list_students_item_absent_btn">Подтверждать</button>
+
+
+                            </div>
+                        </form>
+                        {% if group.subject.ball_number == 3 %}
+                            <div class="list_students_item_balls">
+                                <div class="list_students_item_balls_item">
+                                    <div class="list_students_item_balls_item_title">
+                                        Домашнее задание
+                                    </div>
+                                    <div class="list_students_item_balls_item_stars">
+                                        <i id="" class="fa fa-star homework1"></i>
+                                        <i id="" class="fa fa-star homework2"></i>
+                                        <i id="" class="fa fa-star homework3"></i>
+                                        <i id="" class="fa fa-star homework4"></i>
+                                        <i id="" class="fa fa-star homework5"></i>
+                                    </div>
+                                </div>
+                                <div class="list_students_item_balls_item">
+                                    <div class="list_students_item_balls_item_title">
+                                        Словарь
+                                    </div>
+                                    <div class="list_students_item_balls_item_stars">
+                                        <i id="" class="fa fa-star dictionary1"></i>
+                                        <i id="" class="fa fa-star dictionary2"></i>
+                                        <i id="" class="fa fa-star dictionary3"></i>
+                                        <i id="" class="fa fa-star dictionary4"></i>
+                                        <i id="" class="fa fa-star dictionary5"></i>
+                                    </div>
+                                </div>
+                                <div class="list_students_item_balls_item">
+                                    <div class="list_students_item_balls_item_title">
+                                        Действия на уроке
+                                    </div>
+                                    <div class="list_students_item_balls_item_stars">
+                                        <i id="" class="fa fa-star active1"></i>
+                                        <i id="" class="fa fa-star active2"></i>
+                                        <i id="" class="fa fa-star active3"></i>
+                                        <i id="" class="fa fa-star active4"></i>
+                                        <i id="" class="fa fa-star active5"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        {% else %}
+                            <div class="list_students_item_balls">
+                                <div class="list_students_item_balls_item">
+                                    <div class="list_students_item_balls_item_title">
+                                        Домашнее задание
+                                    </div>
+                                    <div class="list_students_item_balls_item_stars">
+                                        <i class="fa fa-star homework1"></i>
+                                        <i class="fa fa-star homework2"></i>
+                                        <i class="fa fa-star homework3"></i>
+                                        <i class="fa fa-star homework4"></i>
+                                        <i class="fa fa-star homework5"></i>
+                                    </div>
+                                </div>
+                                <div class="list_students_item_balls_item">
+                                    <div class="list_students_item_balls_item_title">
+                                        Действия на уроке
+                                    </div>
+                                    <div class="list_students_item_balls_item_stars">
+                                        <i class="fa fa-star active1"></i>
+                                        <i class="fa fa-star active2"></i>
+                                        <i class="fa fa-star active3"></i>
+                                        <i class="fa fa-star active4"></i>
+                                        <i class="fa fa-star active5"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <form class="list_students_item_form"
+                              action="{{ url_for('make_attendance',group_id=group_id,student_id=student.id,month=month) }}"
+                              method="post">
+                            <div class="list_students_item_form_inputs">
+                                <input type="number" value="0" name="homework" class="homework">
+                                <input type="number" value="0" name="dictionary" class="dictionary">
+                                <input type="number" value="0" name="active" class="active">
+                                <input type="text" name="type_attendance"
+                                       {% if type_attendance %}value="{{ type_attendance }}"{% endif %}
+                                       class="type_attendance">
+                            </div>
+                            {% if current_day <= 30 %}
+                                <select class="date" name="months" id="">
+                                    <option value="{{ current_month }}">{% if current_month == 1 %}
+                                        Yanvar {% elif current_month == 2 %}Fevral{% elif current_month == 3 %}
+                                        Mart {% elif current_month == 4 %} April {% elif current_month == 5 %}
+                                        May {% elif current_month == 6 %} Iyun {% elif current_month == 7 %}
+                                        Iyul {% elif current_month == 8 %} Avgust {% elif current_month == 9 %}
+                                        Sentyabr {% elif current_month == 10 %} Oktyabr {% elif current_month == 11 %}
+                                        Noyabr {% elif current_month == 12 %}Dekabr {% endif %}</option>
+                                    <option value="{{ old_month }}">{% if old_month == 1 %}
+                                        Yanvar {% elif old_month == 2 %}Fevral{% elif old_month == 3 %}
+                                        Mart {% elif old_month == 4 %} April {% elif old_month == 5 %}
+                                        May {% elif old_month == 6 %} Iyun {% elif old_month == 7 %}
+                                        Iyul {% elif old_month == 8 %} Avgust {% elif old_month == 9 %}
+                                        Sentyabr {% elif old_month == 10 %} Oktyabr {% elif old_month == 11 %}
+                                        Noyabr {% elif old_month == 12 %}Dekabr {% endif %}</option>
+                                </select>
+                            {% endif %}
+                            <select class="date" name="days" required id="">
+                                {% for day in day_list %}
+                                    {% if day <= current_day %}
+                                        <option value="{{ day }}">{{ day }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <br>
+
+                            <input class="list_students_item_form_btn" type="submit"
+                                   value="Готово">
+
+                        </form>
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="../../static/js/for_home_js/slick.min.js"></script>
+    <script src="../../static/js/Admin_js/Teacher%20give%20score.js"></script>
+{% endblock %}

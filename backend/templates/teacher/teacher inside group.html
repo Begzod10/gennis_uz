@@ -1,0 +1,86 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/teacher/Teacher%20inside%20group.min.css">
+
+
+    <style>
+        .debt-black input {
+            border: 1px solid black;
+        }
+
+        .black-debt {
+            background: black;
+            color: white;
+        }
+    </style>
+{% endblock %}
+{% block title %} Inside Group {% endblock %}
+
+{% block body %}
+    <div class="group">
+        <div class="group_tools">
+            <div class="group_tools_item">
+                <div class="group_tools_item_btn"><a
+                        href="{{ url_for('attendance',group_id=group.id,month=month) }}">Дать
+                    оценку</a></div>
+            </div>
+            <div class="group_tools_item">
+                <div class="group_tools_item_btn"><a href="">Показать
+                    посещаемость</a></div>
+            </div>
+        </div>
+
+
+        <div class="group_info">
+            <div class="group_info_name">Имя группы: <span class="group_info_span">{{ group.name }}</span></div>
+            <div class="group_info_name">Язык обучения: <span
+                    class="group_info_span">{{ group.language.name }}</span></div>
+            <div class="group_info_teacher">Учитель: <span class="group_info_span">{% for teach in group.teacher %}
+                {{ teach.user.name }}{% endfor %}</span></div>
+            <div class="group_info_len_students">Количество студентов: <span>{{ group.student|length }}</span></div>
+        </div>
+    </div>
+
+    <div class="list_students">
+        {% for student in group.student %}
+            <a href="">
+                <div class="list_students_item_box">
+                    <div class="list_students_item_box_info">
+                        <div>
+                            <div class="list_students_item_box_info_img">
+                                {% if not student.user.photo %}
+                                    <img src="../../static/img/user_image.png" alt="">
+                                {% else %}
+                                    <img src="{{ student.user.photo }}" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="list_students_item_box_info_fio">
+                                <div class="list_students_item_box_info_fio_name">{{ student.user.name }}</div>
+                                <div class="list_students_item_box_info_fio_surname">{{ student.user.surname }}</div>
+                                <div class="list_students_item_box_info_fio_username ">{{ student.user.balance }} som</div>
+                            </div>
+                        </div>
+                        <div class="di_info">
+                            <div class="list_students_item_box_info_item">
+                                Age: <span>{{ student.user.age }}</span>
+                            </div>
+                            <div class="list_students_item_box_info_item">
+                                Phone: <span>{% for number in student.user.phone %}{{ number.phone }}{% endfor %}</span>
+                            </div>
+                            <div class="list_students_item_box_info_item">
+                                Phone parents: <span>{{ student.parent_phone }}</span>
+                            </div>
+                            <div class="list_students_item_box_info_item">
+                                Balans: <span>{{ student.balance }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="../../static/js/Admin_js/Teache%20inside%20group.js"></script>
+{% endblock %}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Gennis {% endblock %}</title>
+
+    <link rel="icon" href="{{ url_for('static', filename="img/icons/favicon.ico") }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static',filename="bootsrap/bootstrap-reboot.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename="bootsrap/bootstrap-grid.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename="css/Admin_css/Navbars.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename="bootsrap/bootstrap-grid.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename="css/Admin_css/List%20groups.min.css") }}">
+
+
+    <link rel="shortcut icon" href="../../static/img/icons/favicon.ico">
+
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+
+<header>
+    <div class="top_navbar">
+        <div class="top_navbar_logo">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <img src="../../static/img/for_home_icons/logo%20gennis%20campus.png" alt="Logo">
+            <div class="top_navbar_logo_title">
+                Gennis
+            </div>
+        </div>
+        <div class="top_navbar_info">
+            <div class="top_navbar_info_fio">
+                <div class="top_navbar_info_fio_name">{{ user.name }}</div>
+                <div class="top_navbar_info_fio_surname">{{ user.surname }}</div>
+            </div>
+            <div class="top_navbar_info_img">
+                {% if user.photo %}
+                    <img data-user="user-profile" src="{{ user.photo }}" alt="">
+                {% else %}
+                    <img data-user="user-profile" src="../../static/img/user_image.png" alt="">
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+<section class="basic">
+    {% include 'jinja_templates/show_links.html' %}
+
+    <div class="container">
+        {% include 'jinja_templates/flash.html' %}
+        {% block body %}
+
+        {% endblock %}
+    </div>
+</section>
+{% block overlay %}
+
+{% endblock %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="../../static/jquery%203.6.js"></script>
+<script src="../../static/js/Admin_js/menu_navbar.js"></script>
+<script src="../../static/js/Admin_js/flash.js"></script>
+{% block js %}
+
+{% endblock %}
+</body>
+</html>

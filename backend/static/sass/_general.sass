@@ -1,0 +1,898 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&display=swap')
+
+
+::-webkit-scrollbar
+  width: 8px
+  height: 8px
+
+
+
+::-webkit-scrollbar-track
+  background: #f1f1f1
+
+
+
+::-webkit-scrollbar-thumb
+  background: rgba(0, 0, 0, 0.69)
+
+
+
+::-webkit-scrollbar-thumb:hover
+  background: rgba(0, 0, 0, 0.69)
+
+
+*
+  font-family: 'Titillium Web', sans-serif
+  font-weight: 600
+
+a
+  text-decoration: none
+
+img
+  pointer-events: none
+  user-select: none
+
+
+.basic-page
+  min-height: 670px
+  background-color: rgb(69,179,226)
+
+
+header
+  position: relative
+  height: 62px
+  nav
+    position: fixed
+    width: 100%
+    z-index: 10
+    height: 62px
+
+
+
+.second-navbar
+  background-color: rgba(73, 73, 73, 0.64)
+  backdrop-filter: blur(20px)
+  .menu_link
+    color: rgba(255, 255, 255, 0.91)
+    &:after
+      background-color: rgba(255, 255, 255, 0.91)
+    &:hover
+      color: white
+
+
+
+
+.menu
+  margin: 0
+  display: flex
+  justify-content: space-around
+  list-style: none
+  align-items: center
+  width: 100%
+  height: 62px
+  z-index: 10
+  &_link
+    font-style: normal
+    font-weight: 600
+    font-size: 18px
+    color: #000000
+    &:after
+      content: ''
+      display: block
+      width: 0
+      background-color: black
+      height: 2px
+      transition-duration: 0.5s
+    &:hover
+      text-decoration: none
+      color: black
+      &:after
+        transition-duration: 0.5s
+        width: 100%
+  &_item
+    display: flex
+    align-items: center
+    img
+      margin-right: 5px
+      width: 22px
+      height: 22px
+
+.hamburger
+  display: none
+
+
+
+.promo
+  .container
+    display: flex
+    justify-content: space-between
+
+
+  .promo_box_2
+    user-select: none
+    pointer-events: none
+    margin-left: 50px
+    margin-top: 80px
+    img
+      width: 560px
+      height: 390px
+  &_info
+    display: none
+  &_logo
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    width: 426px
+    margin-top: 40px
+    img
+      width: 160px
+      height: 120px
+    &_title
+      margin-top: 20px
+      font-style: normal
+      font-weight: 600
+      font-size: 40px
+  &_img
+    display: none
+  &_desc
+    margin-top: 50px
+    margin-left: 27px
+    width: 416px
+    font-style: normal
+    font-weight: 600
+    font-size: 20px
+  &_btn
+    display: flex
+    align-items: center
+    justify-content: center
+    margin-top: 20px
+    margin-left: 27px
+    width: 250px
+    height: 80px
+    background-color: white
+    color: black
+    border-radius: 20px
+    font-style: normal
+    font-weight: 600
+    font-size: 33px
+    box-shadow: -12px 12px 0 0 black
+    cursor: pointer
+    transition: 0.3s
+    user-select: none
+    &:active
+      transition: 0.3s
+      margin-top: 31px
+      box-shadow: 0 0 0 0 black
+
+.gallery
+  min-height: 500px
+  padding: 57px
+  &__title
+    margin-bottom: 45px
+    text-align: center
+    color: black
+    font-style: normal
+    font-weight: 600
+    font-size: 36px
+  &__box
+    display: grid
+    grid-template-columns: repeat(6,1fr)
+    grid-auto-rows: 50px 100px
+    grid-gap: 10px
+    grid-auto-flow: dense
+    .gallery-item
+      width: 100%
+      height: 100%
+      position: relative
+      &_image
+        width: 100%
+        height: 100%
+        overflow: hidden
+        &_link
+          width: 100%
+          height: 100%
+          cursor: pointer
+          display: block
+          img
+            width: 100%
+            height: 100%
+            object-fit: cover
+            object-position: 50% 50%
+            cursor: pointer
+            transition: .5s ease-in-out
+      &:hover
+        .gallery-item_image
+          img
+            transform: scale(1.5)
+
+.w-1
+    grid-column: span 1
+
+.w-2
+    grid-column: span 2
+
+.w-3
+    grid-column: span 3
+
+.w-4
+    grid-column: span 4
+
+.w-5
+    grid-column: span 5
+
+.w-6
+    grid-column: span 6
+
+
+.h-1
+    grid-row: span 1
+
+.h-2
+    grid-row: span 2
+
+.h-3
+    grid-row: span 3
+
+.h-4
+    grid-row: span 4
+
+.h-5
+    grid-row: span 5
+
+.h-6
+    grid-row: span 6
+
+
+
+.events
+  min-height: 1032px
+  padding-top: 57px
+  background-color: rgb(69,179,226)
+
+
+  &_title
+    margin-bottom: 45px
+    text-align: center
+    color: black
+    font-style: normal
+    font-weight: 600
+    font-size: 36px
+  &_box
+    margin: 0 auto
+    position: relative
+    width: 1006px
+    height: 240px
+    margin-bottom: 45px
+    background-color: white
+  &_defiz
+    position: absolute
+    left: 568px
+    width: 27px
+    background-color: rgb(69,179,226)
+    height: 240px
+    -webkit-transform: skew(38deg)
+    transform: skew(38deg)
+
+  .minus_defiz
+    transform: skew(-38deg)
+
+  &_info
+    position: absolute
+    width: 666px
+    height: 100%
+    border-bottom: 240px solid rgb(255, 255, 255)
+    border-right: 188px solid transparent
+    &_desc
+      margin: 20px
+      position: absolute
+      color: black
+      font-style: normal
+      font-weight: 600
+      font-size: 20px
+      line-height: 30px
+    &_links
+      display: flex
+      justify-content: space-around
+      align-items: center
+      margin-top: 195px
+      margin-left: 20px
+      width: 280px
+      height: 40px
+      &_item
+        .fab
+          font-size: 30px
+        &:nth-child(1)
+          color: #bd0b93
+          &:hover
+            color: rgba(189, 11, 147, 0.43)
+            text-underline: none
+            text-decoration: none
+        &:nth-child(2)
+          color: #1144c9
+          &:hover
+            color: rgba(17, 68, 201, 0.51)
+            text-underline: none
+            text-decoration: none
+  &_btn
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100px
+    height: 30px
+    background-color: black
+    border-radius: 20px
+    font-size: 10px
+    color: white
+    cursor: pointer
+
+
+  &_img
+    margin-left: 496px
+    width: 510px
+    height: 100%
+    background-color: #000
+    img
+      width: 510px
+      height: 240px
+
+.comment
+  padding: 57px
+
+  .comment__overflow
+    position: relative
+  &__title
+    margin-bottom: 45px
+    text-align: center
+    color: #000000
+    font-style: normal
+    font-weight: 600
+    font-size: 36px
+
+  &__element
+    margin: 20px 23px 20px 23px
+    width: 350px
+    height: 442px
+    background-color: rgb(69, 226, 221)
+    border-radius: 24px 100px 24px 24px
+    box-shadow: 0 0 16px 5px rgb(69, 226, 221)
+
+    &_info
+      display: flex
+      align-items: center
+      width: 100%
+      height: 182px
+      background-color: rgb(69, 226, 221)
+      border-radius: 24px 100px 0 0
+
+      &_img
+        display: flex
+        align-items: center
+        justify-content: center
+        margin-left: 36px
+        width: 115px
+        height: 115px
+        border-radius: 100%
+        background-color: white
+        img
+          width: 120px
+          height: 120px
+      &_fio
+        margin-left: 20px
+        &_name
+          color: black
+          margin-bottom: 6px
+          font-style: normal
+          font-weight: 600
+          font-size: 20px
+        &_surname
+          color: black
+          font-style: normal
+          font-weight: 600
+          font-size: 20px
+    &_defiz
+      width: 100%
+      height: 2px
+      background-color: black
+      box-shadow: 0 0 5px 0 black
+
+    &_desc
+      padding: 30px
+      color: black
+      font-style: normal
+      font-weight: 600
+      font-size: 16px
+      line-height: 24px
+
+    &:nth-child(3n+3)
+      background-color: rgb(69, 187, 162)
+      box-shadow: 0 0 16px 5px rgb(69, 187, 162)
+      .comment__element_info
+        background-color: rgb(69, 187, 162)
+
+    &:nth-child(3n+1)
+      background-color: rgb(69, 213, 163)
+      box-shadow: 0 0 16px 5px rgb(69, 213, 163)
+      .comment__element_info
+        background-color: rgb(69, 213, 163)
+
+
+
+
+  .slick-prev, .slick-next
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+    left: -34px
+    border: none
+    background-color: rgba(255, 255, 255, 0)
+    &:focus
+      outline: none
+      border: none
+      background-color: rgba(255, 255, 255, 0)
+    img
+      width: 30px
+      height: 30px
+  .slick-next
+    right: -34px
+    left: auto
+
+.subject
+  background-color: rgb(69,179,226)
+  min-height: 630px
+  padding: 57px
+  position: relative
+  &__hamburger
+    display: none
+  &_title
+    margin-bottom: 45px
+    text-align: center
+    color: black
+    font-style: normal
+    font-weight: 600
+    font-size: 36px
+  .container
+    display: flex
+    justify-content: space-evenly
+    position: relative
+  &__list
+    width: 300px
+    height: 640px
+    background-color: white
+    border-radius: 10px
+    nav
+      height: 100%
+
+    &_menu
+      height: 640px
+      color: #000000
+      list-style: none
+      padding: 10px 5px
+      &_item
+        cursor: pointer
+        margin: 20px
+        &:after
+          content: ''
+          display: block
+          width: 0
+          background-color: #000000
+          height: 2px
+          transition-duration: 0.5s
+        &:hover
+          text-decoration: none
+          &:after
+            transition-duration: 0.5s
+            width: 100%
+        &_title
+          text-align: center
+          font-size: 26px
+          border-bottom: 2px solid black
+          font-style: normal
+          font-weight: 600
+  &__box
+    margin: 20px 0
+    width: 800px
+    height: 500px
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-evenly
+    overflow: scroll
+    overflow-x: hidden
+    &::-webkit-scrollbar-track
+      background: white
+    &_item
+      margin: 10px 0
+      background-color: white
+      width: 300px
+      height: 470px
+      border-radius: 10px
+      &_title
+        display: flex
+        justify-content: center
+        align-items: center
+        height: 70px
+        color: #000000
+        font-style: normal
+        font-weight: 600
+        font-size: 36px
+      &_info
+        position: relative
+        height: 330px
+        &_price
+          position: absolute
+          top: -70px
+          left: -10px
+          width: 320px
+          height: 50px
+          display: flex
+          justify-content: center
+          align-items: center
+          color: white
+          background-color: #5C5C5C
+          z-index: 1
+          box-shadow: 0 11px 18px 0 #000
+          border-radius: 0 0 7px 7px
+          &:before,
+          &:after
+            content: ''
+            display: block
+            position: absolute
+            background-color: black
+            z-index: -1
+            border: 5px solid #3e3b3b
+            border-top-color: rgb(69,179,226)
+            border-left-color: rgb(69,179,226)
+          &:before
+            left: 0
+            top: -10px
+          &:after
+            border-left-color: #3e3b3b
+            right: 0
+            top: -10px
+            border-right-color: rgb(69,179,226)
+        &_column_sides
+          margin-top: 61px
+          height: 275px
+          display: flex
+          justify-content: center
+          flex-direction: column
+          align-items: center
+          ul
+            height: 254px
+            list-style: none
+            color: #000000
+            display: flex
+            flex-direction: column
+            justify-content: center
+            li
+              margin-bottom: 2px
+              font-size: 16px
+              &:before
+                margin-top: 2px
+                left: 30px
+                content: ''
+                display: block
+                position: absolute
+                width: 21px
+                height: 20px
+                background-image: url("/static/img/for_home_icons/check_blue 1.png")
+        &_phone
+          display: flex
+          justify-content: center
+          align-items: center
+          height: 50px
+          &_btn
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 180px
+            height: 43px
+            background-color: #5C5C5C
+            box-shadow: 5px 6px 12px 1px #000
+            border-radius: 10px
+            color: white
+
+
+.display_none
+  display: none
+
+.active_subject_item
+  &:after
+    width: 100%
+    content: ''
+    background-color: #000000
+    height: 2px
+    transition-duration: 0.5s
+
+.map
+  height: 630px
+  position: relative
+  &_locations
+    position: absolute
+    width: 300px
+    height: 130px
+    background-color: rgb(69,179,226)
+    bottom: 0
+    left: 50%
+    transform: translate(-50%)
+    &_title
+      text-align: center
+      margin: 10px
+      color: black
+      font-size: 20px
+      font-weight: 600
+
+    &_list
+      color: black
+      display: flex
+      flex-direction: column
+      align-items: center
+      font-style: normal
+      font-weight: 600
+      &_item
+        cursor: pointer
+        &:after
+          content: ''
+          display: block
+          width: 0
+          height: 2px
+          background-color: black
+        &:active
+
+          color: white
+          user-select: none
+
+          &:after
+            content: ''
+            display: block
+            width: 100%
+            height: 2px
+            background-color: white
+
+.footer
+  background-color: black
+  &_wrapper
+    display: flex
+    >div
+      height: auto
+      width: 50%
+      &:first-child
+        border-right: 2px solid white
+  &_info
+    display: flex
+    flex-direction: column
+    margin: 20px 100px
+    &_title
+      font-size: 25px
+      color: white
+    &_subtitle
+      margin: 20px 0 5px
+      font-size: 20px
+      color: white
+    &_desc
+
+      font-size: 15px
+      color: white
+    &_phone
+      margin: 10px 0 0
+      font-size: 15px
+      color: white
+  &_social
+    height: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    &_copyright
+      margin: 20px 0 0 0
+      &_title
+        font-size: 35px
+        color: white
+      &_devider
+        width: 100%
+        height: 2px
+        background-color: white
+    &_links
+      margin: 20px 0 0 0
+      &_item
+        margin:  0 20px
+        .fab
+          font-size: 35px
+        &:nth-child(1)
+          color: #bd0b93
+          &:hover
+            color: rgba(189, 11, 147, 0.43)
+            text-underline: none
+            text-decoration: none
+        &:nth-child(2)
+          color: #1144c9
+          &:hover
+            color: rgba(17, 68, 201, 0.51)
+            text-underline: none
+            text-decoration: none
+    &_creator
+      display: none
+
+.pageup
+  display: none
+  position: fixed
+  bottom: 40px
+  right: 40px
+  width: 35px
+  height: 35px
+
+  img
+    width: 100%
+
+.overlay
+  display: none
+  width: 100%
+  height: 100%
+  top: 0
+  position: fixed
+  background-color: rgba(0, 0, 0, 0.76)
+  z-index: 20
+
+  .modal
+    position: relative
+    width: 600px
+    display: none
+    margin: 50px auto
+    padding: 20px
+    background-color: rgb(36, 130, 167)
+    border-radius: 20px
+    &__close
+      position: absolute
+      right: -37px
+      top: -30px
+      color: rgba(255, 255, 255, 0.82)
+      font-size: 40px
+      cursor: pointer
+
+    &__title
+      font-size: 36px
+      color: rgba(255, 255, 255, 0.82)
+      text-align: center
+      border-bottom: 1px solid rgba(255, 255, 255, 0.82)
+    &__info
+      padding: 20px
+
+
+      &_desc
+        margin-bottom: 30px
+        color: rgba(255, 255, 255, 0.82)
+        font-size: 18px
+
+      &_img
+        position: relative
+        width: 100%
+        height: 200px
+        &:after
+          content: ''
+          display: block
+          position: absolute
+          top: 0
+          left: 0
+          border-top: 0 solid transparent
+          border-left: 30px solid rgb(36, 130, 167)
+          border-bottom: 30px solid transparent
+        &:before
+          content: ''
+          display: block
+          position: absolute
+          bottom: 0
+          right: 0
+          border-bottom: 0 solid transparent
+          border-right: 50px solid rgb(36, 130, 167)
+          border-top: 50px solid transparent
+        img
+          width: 100%
+          height: 200px
+
+      &_link
+        margin: 10px 0
+        display: flex
+        justify-content: center
+        >div
+          padding: 2px
+          width: 40%
+          display: flex
+          justify-content: space-around
+          background-color: #c2c2c2
+          position: relative
+          &:after
+            content: ''
+            display: block
+            position: absolute
+            top: 0
+            left: 0
+            border-top: 0 solid transparent
+            border-left: 10px solid rgb(36, 130, 167)
+            border-bottom: 10px solid transparent
+          &:before
+            content: ''
+            display: block
+            position: absolute
+            bottom: 0
+            right: 0
+            border-bottom: 0 solid transparent
+            border-right: 15px solid rgb(36, 130, 167)
+            border-top: 15px solid transparent
+        &_item
+          .fab
+            font-size: 27px
+          &:nth-child(1)
+            color: #bd0b93
+            &:hover
+              color: rgba(189, 11, 147, 0.43)
+              text-underline: none
+              text-decoration: none
+          &:nth-child(2)
+            color: #1144c9
+            &:hover
+              color: rgba(17, 68, 201, 0.51)
+              text-underline: none
+              text-decoration: none
+
+
+
+
+.load
+  display: block
+  position: fixed
+  z-index: 100
+  top: 0
+  left: 0
+  width: 100%
+  height: 100vh
+  background-color: rgb(69,179,226)
+  &__box
+    width: 100%
+    height: 100vh
+    overflow: hidden
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    &_logo
+      position: relative
+      width: 100%
+      height: 120px
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      img
+        position: absolute
+        left: 50%
+        transform: translateX(-50%)
+        width: 160px
+        height: 120px
+        animation-name: to_left
+        animation-duration: 2s
+    &_title
+      position: absolute
+      top: 130px
+      right: 35%
+      margin-left: 30px
+      height: 50px
+      font-size: 36px
+      color: black
+      font-weight: 600
+      animation-name: to_right
+      animation-duration: 2s
+
+
+@keyframes to_left
+  from
+    left: -100%
+  to
+    left: 50%
+
+@keyframes to_right
+  from
+    right: -100%
+  to
+    right: 39%
+
+#event_2,#event_3
+  display: none

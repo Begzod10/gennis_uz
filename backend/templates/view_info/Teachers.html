@@ -1,0 +1,131 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/teacher/Teachers.min.css">
+{% endblock %}
+{% block title %} Teachers {% endblock %}
+{% block body %}
+    <div class="list_tools">
+        <div>
+            <form action="{{ url_for('teachers',page=1,location_id=location.id) }}" method="post">
+                <select name="education_language" class="list_tools_language education_language">
+                    {% if education_language %}
+                        <option value="{{ education_language }}">{{ education_language }}</option>
+                    {% endif %}
+                    {% for language in languages %}
+                        {% if education_language != language.name %}
+                            <option value="{{ language.name }}">{{ language.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <button hidden class="form_button"></button>
+            </form>
+        </div>
+        <div>
+            <div>{{ location.name }}</div>
+        </div>
+        <div>
+            <form class="search_form" action="" method="post">
+                <div class="list_tools_search" id="search_name">
+                    <input class="list_tools_search_input" type="text" required name="teacher_name"
+                           placeholder="Введите имя">
+                    <div class="list_tools_search_clear">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <img class="list_tools_search_submit_img" src="../../static/img/icons/search-solid.svg" alt="">
+                    <img class="list_tools_search_settings_img" src="../../static/img/icons/cog-solid.svg" alt="">
+                    <div class="list_tools_search_settings">
+                        <label for="list_tools_search_checkbox_name"><input name="for_search"
+                                                                            id="list_tools_search_checkbox_name"
+                                                                            class="list_tools_search_checkbox"
+                                                                            type="radio"
+                                                                            checked value="for_name">For name</label>
+                        <label for="list_tools_search_checkbox_surname"><input name="for_search"
+                                                                               id="list_tools_search_checkbox_surname"
+                                                                               class="list_tools_search_checkbox"
+                                                                               type="radio" value="for_surname">For
+                            surname</label>
+                        <label for="list_tools_search_checkbox_username"><input name="for_search"
+                                                                                id="list_tools_search_checkbox_username"
+                                                                                class="list_tools_search_checkbox"
+                                                                                type="radio" value="for_username">For
+                            username</label>
+                    </div>
+                    <input class="list_tools_search_submit" type="submit" value="submit">
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="list_teachers">
+        {% for teacher in teachers.items %}
+            <a {% for teach in teacher.teacher %} href="{{ url_for('teacher_profile',teacher_id=teach.id) }} {% endfor %}">
+                <div class="list_teachers_item">
+                    <div class="list_teachers_item_info">
+                        <div class="list_teachers_item_img">
+                            {% if teacher.photo %}
+                                <img src="{{ teacher.photo }}" alt="">
+                            {% else %}
+                                <img src="../../static/img/user_image.png" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="list_teachers_item_fio">
+                            <div class="list_teachers_item_fio_name">{{ teacher.name }}
+                                <span class="list_teachers_item_tooltiptext">
+                                        Имя
+                                    </span>
+                            </div>
+                            <div class="list_teachers_item_fio_surname">{{ teacher.surname }}
+                                <span class="list_teachers_item_tooltiptext">
+                                        Фамилия
+                                    </span>
+                            </div>
+                            <div class="list_teachers_item_fio_username">{{ teacher.username }}
+                                <span class="list_teachers_item_tooltiptext">
+                                        Пользователь
+                                    </span>
+                            </div>
+                        </div>
+                        <div class="list_teachers_item_subject">
+                            {% for teach in teacher.teacher %}{% for sub in teach.subject %}{{ sub.name }}{% endfor %}{% endfor %}
+                            <span class="list_teachers_item_tooltiptext">
+                                    subject
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="tools">
+        <div class="pages_link">
+            {% for link in teachers.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                {% if link %}
+                    <form action="{{ url_for('teachers',page=1,location_id=location.id) }}" method="post">
+                        {% if teachers.page == link %}
+                            <button class="pages_link_item pages_link_item_active"
+                                    data-link="{{ link }}">{{ link }}</button>
+                        {% else %}
+                            <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                        {% endif %}
+
+                        <input type="text" name="education_language" hidden
+                               value="{% if education_language %}{{ education_language }}{% else %}Узбекский{% endif %}"
+                               class="student_education_language">
+                    </form>
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block overlay %}
+    {% include 'jinja_templates/overlay.html' %}
+{% endblock %}
+{% block js %}
+    <script src="../../static/js/Admin_js/Teachers.js"></script>
+{% endblock %}

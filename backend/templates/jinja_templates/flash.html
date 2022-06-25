@@ -1,0 +1,17 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="flash">
+                <div class="flash_info">
+                    <div class="flash_info_desc">{{ message }}</div>
+                    <div class="flash_info_close">&cross;</div>
+                </div>
+                <div class="flash_timer">
+                    <div class="flash_timer_load">
+                        <div class="flash_timer_load_line"></div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}

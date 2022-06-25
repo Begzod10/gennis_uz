@@ -1,0 +1,126 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/teacher/Teacher_sl_py.min.css">
+
+    <link rel="stylesheet" href="../../static/sass/Admin%20sass/extrra_student_profile.min.css">
+{% endblock %}
+{% block title %} Salary info{% endblock %}
+{% block body %}
+    <div class="list_tools">
+        <div>
+
+        </div>
+        <div>
+            <div class="list_tools_location"></div>
+        </div>
+        <div>
+
+            <div class="change">
+                <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="times"
+                        class="svg-inline--fa fa-times fa-w-11 edit_close"
+                        role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 352 512">
+                    <path fill="#e83939"
+                          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z">
+                    </path>
+                </svg>
+
+            </div>
+            {% if not staff_salary.status %}
+                <img src="../../static/img/icons/hand-holding-usd-solid.svg" data-img="open-modal-payment" alt="">
+            {% endif %}
+
+        </div>
+
+    </div>
+    <div class="list_salary">
+        <form class="list_salary_form" action=""
+              method="post">
+            <div class="list_salary_form_number">{{ staff.user.name }} {{ staff.user.surname }} ning shu
+                oydagi {{ staff_salary.month.date.strftime("%h") }} qolgan oyligi:
+                <span>{{ staff_salary.remaining_salary }} va olingan oylik {{ staff_salary.taken_money }}</span></div>
+            <label class="number_salary_input sums" for="number_salary"><input id="number_salary"
+                                                                               value="{{ staff_salary.salary }}"
+                                                                               name="teacher_salary"
+                                                                               type="number"></label>
+            <input class="submit_salary" type="submit" placeholder="Submit">
+        </form>
+        <div class="list_salary_table_list">
+            <table>
+                <tr>
+                    <th>Зарплата</th>
+                    <th>Причина</th>
+                    <th>Type</th>
+                    <th>Дата</th>
+                </tr>
+                {#                {% for salary in teacher_salary %}#}
+                {#                    <form action="" method="post">#}
+                {#                        <tr>#}
+                {#                            <td>{{ salary.payment }}</td>#}
+                {#                            <td>{{ salary.reason }}</td>#}
+                {#                            <td>#}
+                {#                                <a href="">#}
+                {#                                    {% if salary.payment_type == "bank" %}#}
+                {#                                        click{% elif salary.payment_type == "real_bank" %}#}
+                {#                                        bank {% else %} {{ salary.payment_type }} {% endif %}</a>#}
+                {#                            </td>#}
+                {#                            <td>{{ salary.payment_data.strftime("%m-%d") }}</td>#}
+                {#                            {% if user.director or user.accountant %}#}
+                {#                                <td>#}
+                {#                                    <button class="salary_delete">Delete</button>#}
+                {#                                </td>#}
+                {#                            {% endif %}#}
+                {#                        </tr>#}
+                {#                    </form>#}
+                {#                {% endfor %}#}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block overlay %}
+
+
+    <div class="overlay_change">
+        <div class="overlay_change_payment_modal">
+            <div class="overlay_change_payment_modal__close">
+                <span></span>
+                <span></span>
+            </div>
+
+            <form class="overlay_change_payment_modal_form salary-form"
+                  action="{{ url_for('staff_salary_give',salary_id=staff_salary.id) }}"
+                  method="post">
+                <h2>Зарплата</h2>
+                <div class="overlay_change_payment_modal_form_radios">
+                    <label><input required type="radio" class="overlay_change_payment_modal_form_radios_item cash"
+                                  name="location">Cash</label>
+                    <label><input required type="radio" class="overlay_change_payment_modal_form_radios_item click"
+                                  name="location">Click</label>
+                    <label><input required type="radio" class="overlay_change_payment_modal_form_radios_item bank"
+                                  name="location">Bank</label>
+                </div>
+                <input type="text" hidden name="payment_type" class="payment_type">
+                <br>
+                <input type="text" class="overlay_change_payment_modal_form_input" name="reason" placeholder="Причина">
+                <input class="overlay_change_payment_modal_form_input sums" type="number" name="staff_salary"
+                       placeholder="Сумма">
+                <input class="overlay_change_payment_modal_form_submit" type="submit" value="Дать зарплату">
+            </form>
+        </div>
+    </div>
+    <section class="user">
+        <div class="user_check">
+            <button>&cross;</button>
+            <label class="controller_password" for="user_check"></label>
+            <input id="user_check" data-user_id="{{ user.id }}" type="password" placeholder="Подтвердите свой пароль">
+        </div>
+    </section>
+{% endblock %}
+{% block js %}
+
+    <script src="../../static/js/teacher/Teacher_salary_loc.js"></script>
+{% endblock %}

@@ -1,0 +1,512 @@
+$basic_color: #45b3e2
+
+body
+  &::-webkit-scrollbar
+    width: 10px
+    cursor: pointer
+
+  &::-webkit-scrollbar-track
+    box-shadow: inset 0 0 5px grey
+    cursor: pointer
+
+  &::-webkit-scrollbar-thumb
+    background: rgba(0, 0, 0, 0.57)
+    cursor: pointer
+
+  &::-webkit-scrollbar-thumb:hover
+    background: $basic_color
+    cursor: pointer
+@keyframes flash
+  from
+    width: 100%
+  to
+    width: 0
+
+.survey
+  position: relative
+  overflow: hidden
+
+  &__warning
+    text-align: center
+
+    span
+      font-family: "Droid Serif", "DejaVu Serif", "STIX", serif
+
+  &__flash
+    display: flex
+    flex-direction: column
+    position: absolute
+    top: 10px
+    left: 50%
+    transform: translateX(-50%)
+    background-color: rgba(69, 179, 226, .56)
+    backdrop-filter: blur(10px)
+    border-radius: 10px 10px 0 0
+    z-index: 600
+    height: 50px
+    animation-name: fadeInUp
+    -webkit-animation-name: fadeInUp
+    animation-duration: 1s
+    box-shadow: 0 0 12px 3px #45b3e2
+    padding: 5px
+    justify-content: space-around
+
+    span
+      margin-left: 10px
+      cursor: pointer
+      color: red
+
+    &__block
+      width: 0
+      height: 2px
+      background: white
+      animation-name: flash
+      animation-duration: 3s
+      animation-iteration-count: 1
+      animation-timing-function: linear
+
+
+  textarea
+
+    &::-webkit-scrollbar
+      width: 10px
+      cursor: pointer
+
+    &::-webkit-scrollbar-track
+      box-shadow: inset 0 0 5px grey
+      cursor: pointer
+
+    &::-webkit-scrollbar-thumb
+      background: rgba(0, 0, 0, 0.57)
+      cursor: pointer
+
+    &::-webkit-scrollbar-thumb:hover
+      background: $basic_color
+      cursor: pointer
+
+  &__buttons
+    display: flex
+    justify-content: center
+    position: relative
+    margin-top: 20px
+
+    &_btn
+      margin: 5px
+      border: none
+      outline: none
+      padding: 5px
+      border-radius: 10px
+
+      a
+        text-decoration: none
+        color: black
+
+    &_active
+      background: $basic_color
+      color: white
+
+      a
+        color: white
+
+  &__title
+    text-align: left
+    font-size: 40px
+    margin-bottom: 10px
+
+
+  &__form
+    display: flex
+    justify-content: center
+    &_extra
+      display: none
+      flex-direction: column
+      height: 130px
+      justify-content: space-around
+      align-items: center
+    &_name
+      display: none
+      width: 500px
+      justify-content: space-around
+      flex-direction: column
+      align-items: center
+      height: 350px
+      background: $basic_color
+      border-radius: 10px
+      &_active
+        width: 570px
+        height: 510px
+
+      input[type=text]
+        border-radius: 10px
+        border: none
+        outline: none
+        padding: 5px
+
+      select:not([multiple])
+        padding: 5px
+        border: none
+        outline: none
+        border-radius: 10px
+        background: white
+        color: black
+
+      textarea
+        width: 90%
+        text-align: center
+        height: 200px
+        resize: none
+        outline: none
+        border-radius: 10px
+        border: none
+
+      input[type=submit]
+        border-radius: 10px
+        border: none
+        outline: none
+        padding: 5px
+        background: white
+        color: black
+
+        &:active
+          transform: scale(0.9)
+
+
+    &_block
+      display: none
+      width: 500px
+      justify-content: space-around
+      flex-direction: column
+      align-items: center
+      height: 400px
+      background: $basic_color
+      border-radius: 10px
+
+
+      select:not([multiple])
+        padding: 5px
+        border: none
+        outline: none
+        border-radius: 10px
+        background: white
+        color: black
+
+      input[type=text]
+        width: 70px
+        height: 30px
+        outline: none
+        border: none
+        border-radius: 10px
+
+      textarea
+        width: 90%
+        text-align: center
+        height: 200px
+        resize: none
+        outline: none
+        border-radius: 10px
+        border: none
+
+      input[type=submit]
+        border: none
+        outline: none
+        background: white
+        color: black
+        padding: 5px
+        border-radius: 10px
+
+        &:active
+          transform: scale(0.9)
+
+      &_active
+        width: 800px
+        height: 600px
+
+        textarea
+          width: 70%
+
+    &_select
+      width: 160px
+      display: flex
+      justify-content: space-between
+      align-items: center
+
+      div
+        cursor: pointer
+        background: white
+        display: flex
+        justify-content: center
+        align-items: center
+        padding: 5px
+        border-radius: 10px
+
+        img
+          width: 16px
+
+  &__created
+    display: none
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+    &_surveys
+      display: flex
+      justify-content: space-around
+      width: 600px
+      margin-bottom: 40px
+      height: 70px
+      overflow: auto
+      flex-wrap: wrap
+
+      & > div
+        background: #efefef
+        padding: 5px
+        border-radius: 10px
+        height: 35px
+
+        a
+          text-decoration: none
+          color: black
+
+      &_active
+        background: $basic_color !important
+
+        a
+          color: white !important
+
+    &_name
+      display: flex
+      align-items: center
+      font-size: 25px
+
+      img
+        margin-left: 10px
+        width: 30px
+        cursor: pointer
+
+
+    &_list
+      display: flex
+      flex-direction: column
+      height: 240px
+      overflow: auto
+      &::-webkit-scrollbar
+        width: 10px
+        cursor: pointer
+
+      &::-webkit-scrollbar-track
+        box-shadow: inset 0 0 5px grey
+        cursor: pointer
+
+      &::-webkit-scrollbar-thumb
+        background: rgba(0, 0, 0, 0.57)
+        cursor: pointer
+
+      &::-webkit-scrollbar-thumb:hover
+        background: $basic_color
+        cursor: pointer
+
+    &_box
+      display: flex
+      width: 900px
+      height: 150px
+      align-items: center
+      justify-content: space-around
+      border-bottom: 1px solid black
+      margin-bottom: 10px
+      &_active
+        background: $basic_color
+
+      a
+        display: flex
+        justify-content: space-around
+        width: 100%
+        text-decoration: none
+        color: black
+
+    &_description
+      display: flex
+      width: 550px
+      height: 100px
+      overflow: auto
+
+    &_info
+      width: 50px
+      height: 50px
+      cursor: pointer
+
+      img
+        width: 90%
+        height: 90%
+
+  &__overlay
+    display: none
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    width: 100vw
+    height: 100vh
+    position: fixed
+    top: 0
+    left: 0
+    background: rgba(0, 0, 0, 0.71)
+    &_labels
+      width: 100%
+    &_active
+      display: flex
+    &_extra
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: space-around
+      height: 125px
+    &_block
+      width: 620px
+      height: 430px
+      background: white
+      display: none
+      flex-direction: column
+      align-items: center
+      justify-content: space-around
+      border-radius: 10px
+      &_active
+        height: 480px
+        position: absolute
+        bottom: 2%
+
+      form
+        width: 90%
+        display: flex
+        flex-direction: column
+        align-items: center
+
+      label
+        input.survey_number
+          width: 70px
+          height: 30px
+
+      select:not([multiple])
+        padding: 5px
+        border: none
+        outline: none
+        border-radius: 10px
+        background: $basic_color
+        color: white
+
+      textarea
+        width: 90%
+        text-align: center
+        height: 200px
+        resize: none
+        outline: none
+        border-radius: 10px
+
+      ::-webkit-scrollbar
+        width: 10px
+        cursor: pointer
+
+      ::-webkit-scrollbar-track
+        box-shadow: inset 0 0 5px grey
+        cursor: pointer
+
+      ::-webkit-scrollbar-thumb
+        background: rgba(0, 0, 0, 0.57)
+        cursor: pointer
+
+      ::-webkit-scrollbar-thumb:hover
+        background: $basic_color
+        cursor: pointer
+
+      .buttons
+        width: 440px
+        display: flex
+        justify-content: space-around
+
+        button
+          border: none
+          outline: none
+          background: white
+          color: black
+          padding: 5px
+          border-radius: 10px
+          background: $basic_color
+
+          &:active
+            transform: scale(0.9)
+
+        button:nth-child(2)
+          background: red
+
+    &_main
+      margin-top: 20px
+      display: none
+      flex-direction: column
+      width: 700px
+      height: 440px
+      background: white
+      border-radius: 10px
+      align-items: center
+      justify-content: space-around
+      &_active
+        width: 700px
+        height: 590px
+      input[type=text]
+        border-radius: 10px
+        border: none
+        outline: none
+        padding: 5px
+        background: $basic_color
+        color: white
+
+      select:not([multiple])
+        padding: 5px
+        border: none
+        outline: none
+        border-radius: 10px
+        background: $basic_color
+        color: white
+      textarea
+        width: 90%
+        text-align: center
+        height: 200px
+        resize: none
+        outline: none
+        border-radius: 10px
+      input[type=submit]
+        border: none
+        outline: none
+        color: white
+        padding: 5px
+        border-radius: 10px
+        background: $basic_color
+
+        &:active
+          transform: scale(0.9)
+
+  &_active
+    display: flex
+.splide, .splide2
+  margin: 20px
+  display: none
+
+  &_active
+    display: initial
+.splide__arrow--next, .splide__arrow--prev
+  display: none
+
+.splide2 .splide__pagination__page.is-active
+  background: #0f0c0c
+.splide2
+  textarea
+    height: 130px
+
+.divcheckbox
+  width: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  input
+    margin-left: 18px
+    width: 20px
+    height: 20px
+  label
+    margin: 0

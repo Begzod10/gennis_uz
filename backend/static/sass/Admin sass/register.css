@@ -1,0 +1,253 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("/static/img/back 5.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.register {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.register__edu_language {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+.register__edu_language select {
+  background-color: #00568e;
+  color: white;
+  padding: 5px;
+  outline: none;
+  border-radius: 5px;
+}
+.register__edu_language select:focus {
+  background-color: white;
+  color: #00568e;
+}
+.register_block {
+  width: 350px;
+  height: 609px;
+  overflow: auto;
+}
+.register_block::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.register_block::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.register_block::-webkit-scrollbar-thumb {
+  background: #00568e;
+}
+.register_block::-webkit-scrollbar-thumb:hover {
+  background: #00568e;
+}
+.register_block_title {
+  font-size: 30px;
+  text-align: center;
+  margin: 15px 0;
+  color: white;
+}
+.register_block_logo {
+  display: none;
+}
+.register_block_logo img {
+  display: block;
+  margin: 10px auto;
+  width: 100px;
+}
+.register_block_inputs {
+  display: flex;
+  flex-direction: column;
+}
+.register_block_inputs input[type=text], .register_block_inputs [type=number], .register_block_inputs [type=password] {
+  align-self: center;
+  width: 300px;
+  margin-bottom: 10px;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  background-color: #00568e;
+  color: white;
+}
+.register_block_inputs input[type=text]:focus, .register_block_inputs [type=number]:focus, .register_block_inputs [type=password]:focus {
+  background-color: white;
+  color: #00568e;
+}
+.register_block_inputs input[type=text]:focus::placeholder, .register_block_inputs [type=number]:focus::placeholder, .register_block_inputs [type=password]:focus::placeholder {
+  color: #00568e;
+}
+.register_block_inputs input[type=text]::placeholder, .register_block_inputs [type=number]::placeholder, .register_block_inputs [type=password]::placeholder {
+  color: white;
+}
+.register_block_inputs input[type=submit] {
+  margin-top: 10px;
+  width: 150px;
+  background-color: #00568e;
+  color: white;
+  outline: none;
+  padding: 5px;
+  border: none;
+  align-self: center;
+  border-radius: 5px;
+}
+.register_block_inputs input[type=submit]:active {
+  background-color: white;
+  color: #00568e;
+  transform: scale(0.9);
+}
+.register_block_inputs label {
+  color: #f73a3a;
+  font-weight: normal;
+  align-self: center;
+}
+.register_block_info_label {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  color: white;
+}
+.register_block_label {
+  display: flex;
+  justify-content: center;
+  color: #f73a3a;
+  font-weight: normal;
+}
+.register_block_date {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.register_block_date select {
+  width: 100px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #00568e;
+  color: white;
+  outline: none;
+}
+.register_block_date select:focus {
+  background-color: white;
+  color: #00568e;
+}
+.register_block_show_password {
+  display: flex;
+  width: 245px;
+  justify-content: space-around;
+  align-items: center;
+  height: 20px;
+  margin-bottom: 10px;
+}
+.register_block_show_password input {
+  width: 20px;
+  height: 20px;
+}
+.register_block_show_password label {
+  color: white;
+}
+.register_block_location {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  height: 20px;
+  align-items: center;
+}
+.register_block_location input {
+  width: 24px;
+  height: 24px;
+  outline: none;
+}
+.register_block_location label {
+  color: white;
+}
+.register_block_subjects {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.register_block_subjects_subject {
+  margin-bottom: 10px;
+}
+.register_block_subjects_subject select {
+  background-color: #00568e;
+  color: white;
+  padding: 5px;
+  outline: none;
+  border-radius: 5px;
+}
+.register_block_subjects_subject select:focus {
+  background-color: white;
+  color: #00568e;
+}
+.register_block_subjects_subject button {
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #00568e;
+  color: white;
+}
+.register_block_subjects_subject button:active {
+  transform: scale(0.9);
+  background-color: white;
+  color: #00568e;
+}
+
+.username, .username2 {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  body {
+    background-image: none;
+    background-color: #0098da;
+  }
+
+  .register {
+    display: flex;
+    justify-content: center;
+  }
+  .register_block_logo {
+    display: block;
+  }
+}
+@media (max-width: 768px) {
+  body {
+    background-image: none;
+    background-color: #0098da;
+  }
+
+  .register {
+    display: flex;
+    justify-content: center;
+  }
+  .register_block_logo {
+    display: block;
+  }
+}
+@media (max-width: 576px) {
+  body {
+    background-image: none;
+    background-color: #0098da;
+  }
+
+  .register {
+    display: flex;
+    justify-content: center;
+  }
+  .register_block_logo {
+    display: block;
+  }
+}
+
+/*# sourceMappingURL=register.css.map */

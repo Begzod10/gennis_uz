@@ -1,0 +1,50 @@
+$basic_color: #45b3e2
+body
+  background: $basic_color
+  &::-webkit-scrollbar
+        width: 10px
+        cursor: pointer
+
+  &::-webkit-scrollbar-track
+    box-shadow: inset 0 0 5px grey
+    cursor: pointer
+
+  &::-webkit-scrollbar-thumb
+    background: rgba(0, 0, 0, 0.57)
+    cursor: pointer
+
+  &::-webkit-scrollbar-thumb:hover
+    background: $basic_color
+    cursor: pointer
+
+.aholi
+  .logo
+    display: flex
+    align-items: center
+    align-self: flex-start
+    width: 100px
+    height: 100px
+
+    &_img
+      width: 50px
+      height: 50px
+    p
+      margin: 0
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  h1
+    color: white
+
+  &_text
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    h3
+      color: white
+
+      &:last-child
+        align-self: flex-end
+        margin-top: 40px

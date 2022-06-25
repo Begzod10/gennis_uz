@@ -1,0 +1,507 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/Admin_css/User_profile.min.css">
+    <link rel="stylesheet" href="../../static/sass/Admin%20sass/extrra_student_profile.min.css">
+{% endblock %}
+{% block title %} Student Profile {% endblock %}
+{% block body %}
+    <div class="Profile">
+        <div class="Profile_box">
+            <div class="Profile_box_user"><img src="../../static/img/icons/user-solid.svg" alt="">User</div>
+            <div class="Profile_box_tools" style="width: 130px">
+                {% if not user.accountant %}
+                    {#                    {% if student.combined_payment %}#}
+                    {#                        {% if student.money <= student.combined_payment %}#}
+                    <img src="../../static/img/icons/wpforms-brands.svg" alt="" class="form_excuse">
+                    {#                        {% endif %}#}
+                    {#                    {% endif %}#}
+                    <img src="../../static/img/icons/money-check-alt-solid.svg" data-img="open-modal-payment" alt="">
+
+                    <img src="../../static/img/icons/edit-regular.svg" data-img="open-modal-edit" alt="">
+                {% endif %}
+            </div>
+            <div class="Profile_box_info">
+                <div class="Profile_box_info_img">
+                    {% if st.photo %}
+                        <img src="{{ st.photo }}" alt="">
+                    {% else %}
+                        <img src="../../static/img/user_image.png" alt="">
+                    {% endif %}
+                    <div class="Profile_box_info_img_fio">
+                        <div class="Profile_box_info_img_fio_name">
+                            {{ st.name }}
+                        </div>
+                        <div class="Profile_box_info_img_fio_surname">
+                            {{ st.surname }}
+                        </div>
+                    </div>
+                </div>
+                <div class="Profile_box_info_additional_info">
+                    <div class="Profile_box_info_additional_info_questions_list">
+                        <div class="Profile_box_info_additional_info_questions_list_item">
+                            Father name:
+                        </div>
+                        <div class="Profile_box_info_additional_info_questions_list_item">
+                            Username:
+                        </div>
+                        <div class="Profile_box_info_additional_info_questions_list_item">
+                            Account:
+                        </div>
+                        <div class="Profile_box_info_additional_info_questions_list_item">
+                            Age:
+                        </div>
+                        <div class="Profile_box_info_additional_info_questions_list_item">
+                            Tell number:
+                        </div>
+                        <div class="Profile_box_info_additional_info_questions_list_item">
+                            Tell parent number:
+                        </div>
+                        <div class="Profile_box_info_additional_info_questions_list_item">
+                            Birth date:
+                        </div>
+                        {% if shartnoma %}
+                            <div class="Profile_box_info_additional_info_questions_list_item">
+                                Shartnoma:
+                            </div>
+                        {% endif %}
+                        <div class="Profile_box_info_additional_info_questions_list_item">
+                            Combined Payment
+                        </div>
+                    </div>
+                    <div class="Profile_box_info_additional_info_answers_list">
+                        <div class="Profile_box_info_additional_info_answers_list_item">
+                            {{ st.father_name }}
+                        </div>
+                        <div class="Profile_box_info_additional_info_answers_list_item">
+                            {{ st.username }}
+                        </div>
+                        {% if not error %}
+                            <div class="Profile_box_info_additional_info_answers_list_item">
+                                <a href="">{{ st.balance }}</a>
+                            </div>
+                        {% else %}
+                            <div class="Profile_box_info_additional_info_answers_list_item">
+                                {{ st.student.student }}
+                            </div>
+                        {% endif %}
+                        <div class="Profile_box_info_additional_info_answers_list_item">
+                            {{ st.age }}
+                        </div>
+                        <div class="Profile_box_info_additional_info_answers_list_item">
+
+                            {% for number in st.phone %}{{ number.phone }}{% endfor %}
+                        </div>
+                        <div class="Profile_box_info_additional_info_answers_list_item">
+                            {{ st.parent_phone }}
+                        </div>
+                        <div class="Profile_box_info_additional_info_answers_list_item">
+                            {{ st.born_day }}-{{ st.born_month }}-{{ st.born_year }}
+                        </div>
+                        {% if shartnoma %}
+                            <div class="Profile_box_info_additional_info_answers_list_item">
+                                {{ shartnoma.do }}
+                            </div>
+                        {% endif %}
+                        <div class="Profile_box_info_additional_info_answers_list_item">
+                            <a href="">{{ st.combined_payment }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="Profile_box_others">
+                {% if not st.xojakent_admin and not st.gazalkent_admin and not st.chirchiq_admin and total %}
+                    <div class="Profile_box_others_rating">
+                    <div class="Profile_box_others_rating_all">
+                        All rating: <span class="Profile_box_others_rating_all_span">{% if total %}
+                        {{ total }}{% endif %}{% if total and total2 %}{{ combine_ball2 }}{% endif %}
+                        {% if total and total2 and total3 %}{{ combine_ball3 }}{% endif %}</span>
+                        <div class="Profile_box_others_rating_all_bar">
+                            <div class="Profile_box_others_rating_all_bar_line"></div>
+                        </div>
+                    </div>
+                    {% if group_name1 and total %}
+                        <div class="Profile_box_others_rating_subject">
+                            {{ group_name1.subject }}: <span data-subject="1"
+                                                             class="Profile_box_others_rating_subject_span ">{{ total }}</span>
+                            <div class="Profile_box_others_rating_subject_bar">
+                                <div data-subject="1" class="Profile_box_others_rating_subject_bar_line"></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if group_name2 and total2 %}
+                        <div class="Profile_box_others_rating_subject">
+                            {{ group_name2.subject }}: <span data-subject="2"
+                                                             class="Profile_box_others_rating_subject_span">{{ total2 }}</span>
+                            <div class="Profile_box_others_rating_subject_bar">
+                                <div data-subject="2" class="Profile_box_others_rating_subject_bar_line"></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if group_name3 and total3 %}
+                        <div class="Profile_box_others_rating_subject">
+                            {{ group_name3.subject }}: <span data-subject="3"
+                                                             class="Profile_box_others_rating_subject_span">{{ total3 }}</span>
+                            <div class="Profile_box_others_rating_subject_bar">
+                                <div data-subject="3" class="Profile_box_others_rating_subject_bar_line"></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                </div>
+                <div class="Profile_box_others_groups">
+                    {% for group in student_get.group %}
+                        <a href="">
+                            <div class="Profile_box_others_group">
+                                <div class="Profile_box_others_group_item">
+                                    Group: <span>{{ group.name }}</span>
+                                </div>
+                                <div class="Profile_box_others_group_item">
+                                    Teacher: <span>{% for teach in group.teacher %}
+                                    {{ teach.user.name }}{% endfor %}</span>
+                                </div>
+                                <div class="Profile_box_others_group_item">
+                                    Cost: <span>{{ group.course_type.cost }}</span>
+                                </div>
+                                <div class="Profile_box_others_group_item">
+                                    Students: <span>{{ group.student|length }}</span>
+                                </div>
+                                <div class="Profile_box_others_group_item">
+                                    Fani: <span>{{ group.subject.name }}</span>
+                                </div>
+                                <div class="Profile_box_others_group_item">
+                                    type: <span>{{ group.course_type.name }}</span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block overlay %}
+    <div class="overlay_submit">
+        <div class="overlay_submit_modal_delete">
+            <div class="overlay_submit_modal_delete__close">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="overlay_submit_modal_delete_desc">Вы действительно хотите удалить студента?</div>
+            <form class="overlay_submit_modal_delete_form" action=""
+                  method="get">
+                <input class="overlay_submit_modal_delete_select_yes_submit" style="visibility: visible" type="submit"
+                       value="Удалить">
+            </form>
+            <div class="overlay_submit_modal_delete_select">
+                <div class="overlay_submit_modal_delete_select_yes">
+                    Yes
+                </div>
+                <div class="overlay_submit_modal_delete_select_no">
+                    No
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="overlay_admin">
+        <div class="overlay_admin_modal">
+            <div class="overlay_admin_modal__close">
+                <span></span>
+                <span></span>
+            </div>
+            <form class="overlay_admin_modal_form" action="" method="post">
+                <select name="location" id="location">
+                    <option value="Ходжикент">Ходжикент</option>
+                    <option value="Газалкент">Газалкент</option>
+                    <option value="Чирчик">Чирчик</option>
+                </select>
+                <input type="submit" value="Сделать администратором">
+            </form>
+        </div>
+    </div>
+
+
+    <div class="overlay_change">
+        <div class="overlay_change_info_modal">
+            <div class="overlay_change_info_modal__close">
+                <span></span>
+                <span></span>
+            </div>
+
+            <select class="overlay_change_info_modal_select">
+                <option value="Изменить инфо">Изменить инфо</option>
+                <option value="Изменить пароль">Изменить пароль</option>
+                <option value="Контракт">Контракт</option>
+            </select>
+
+            <form action=""
+                  class="overlay_change_info_modal_form info_form" method="post">
+                <div class="overlay_change_info_modal_form_desc">Name</div>
+                <input class="overlay_change_info_modal_form_input" required type="text" name="name"
+                       value="{{ st.name }}">
+                <div class="overlay_change_info_modal_form_desc">Surname</div>
+                <input class="overlay_change_info_modal_form_input" required type="text" name="surname"
+                       value="{{ st.surname }}">
+                <div class="overlay_change_info_modal_form_desc">Phone</div>
+                <input class="overlay_change_info_modal_form_input" required type="number" name="phone"
+                       value="{{ st.phone }}">
+                <div class="overlay_change_info_modal_form_desc">Parent Phone</div>
+                <input class="overlay_change_info_modal_form_input" required type="number" name="parent_phone"
+                       value="{{ st.parent_phone }}">
+                <div class="overlay_change_info_modal_form_desc">Comment</div>
+                <input class="overlay_change_info_modal_form_input" type="text" name="comment"
+                       value="{{ st.comment }}">
+                <div class="overlay_change_info_modal_form_desc">Язык обучения</div>
+                <select name="education_language" class="education_language">
+                    <option value="{{ st.education_language }}">{{ st.education_language }}</option>
+                    {% if st.education_language != "Узбекский" %}
+                        <option value="Узбекский">Узбекский</option>
+                    {% endif %}
+                    {% if st.education_language != "Русский" %}
+                        <option value="Русский">Русский</option>
+                    {% endif %}
+                </select>
+                <div class="overlay_change_info_modal_form_desc">Предметы</div>
+                {% if not st.group1 %}
+                    <select name="subject_1">
+                        {% if st.subject_1 %}
+                            <option value="{{ st.subject_1 }}">{{ st.subject_1 }}</option>
+                        {% endif %}
+                        <option value="Первый предмет">Первый предмет</option>
+                        {% for subject in subjects %}
+                            {% if st.subject_1 != subject.subject_name and st.subject_2 != subject.subject_name and st.subject_3 != subject.subject_name %}
+                                <option value="{{ subject.subject_name }}">{{ subject.subject_name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                {% if not st.group2 %}
+                    <select name="subject_2">
+                        {% if st.subject_2 %}
+                            <option value="{{ st.subject_2 }}">{{ st.subject_2 }}</option>
+                        {% endif %}
+                        <option value="Второй предмет">Второй предмет</option>
+                        {% for subject in subjects %}
+                            {% if st.subject_1 != subject.subject_name and st.subject_2 != subject.subject_name and st.subject_3 != subject.subject_name %}
+                                <option value="{{ subject.subject_name }}">{{ subject.subject_name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                {% if not st.group3 %}
+                    <select name="subject_3">
+                        {% if st.subject_3 %}
+                            <option value="{{ st.subject_3 }}">{{ st.subject_3 }}</option>
+                        {% endif %}
+                        <option value="Третий предмет">Третий предмет</option>
+                        {% for subject in subjects %}
+                            {% if st.subject_1 != subject.subject_name and st.subject_2 != subject.subject_name and st.subject_3 != subject.subject_name %}
+                                <option value="{{ subject.subject_name }}">{{ subject.subject_name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                <input class="overlay_change_info_modal_form_submit" type="submit" value="Изменять">
+            </form>
+
+            <form action=""
+                  class="overlay_change_info_modal_form password-form" method="post">
+                <input class="overlay_change_info_modal_form_input" required type="password" id="password"
+                       placeholder="Введите пароль">
+                <input class="overlay_change_info_modal_form_input" required type="password" name="password"
+                       id="password2"
+                       placeholder="Повторите пароль">
+                <input class="overlay_change_info_modal_form_submit" type="submit" value="Изменять">
+            </form>
+            {% if not st.bad_debtor %}
+                <a class="black_button" href="">Добавить в
+                    черный список</a>
+            {% endif %}
+            {% if st.bad_debtor %}
+                <a class="green_button" href="">Удалить из
+                    черного
+                    списка</a>
+            {% endif %}
+
+            {#            <div class="overlay_change_info_modal_contract">#}
+            {#                {% if student.group1 and shartnoma %}#}
+            {#                    <a href="">#}
+            {#                        <button>Показать контракт</button>#}
+            {#                    </a>#}
+            {#                {% endif %}#}
+            {#                <form class="overlay_change_info_modal_contract_form"#}
+            {#                      action="" method="post">#}
+            {#                    <div class="overlay_change_info_modal_contract_form_inputs">#}
+            {#                        <div class="overlay_change_info_modal_contract_form_inputs_ot">Ot#}
+            {#                            <input type="date" name="ot" value="{{ shartnoma.ot }}">#}
+            {#                        </div>#}
+            {#                        <div class="overlay_change_info_modal_contract_form_inputs_do">Do#}
+            {#                            <input type="date" name="do" value="{{ shartnoma.do }}">#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {##}
+            {#                    <input class="overlay_change_info_modal_contract_form_submit" type="submit" value="Продлить">#}
+            {##}
+            {#                </form>#}
+            {#                <form class="overlay_change_info_modal_contract_upload"#}
+            {#                      action="" method="post"#}
+            {#                      enctype="multipart/form-data">#}
+            {#                    <div class="overlay_change_info_modal_contract_desc">Загрузить фото контракта</div>#}
+            {#                    {{ form.csrf_token }}#}
+            {#                    {{ form.image(class = "form-control-file") }}#}
+            {#                    <input type="submit" value="Загрузить">#}
+            {#                </form>#}
+            {#            </div>#}
+            <div class="overlay_change_info_modal_delete">
+                {% if not st.group1 %}
+                    <input id="overlay_change_info_modal_delete_button" type="submit" value="Удалить студент">
+                {% endif %}
+                {% if user.director %}
+                    <input id="overlay_change_info_modal_delete_button_admin" type="submit"
+                           value="Сделать администратором ">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="overlay_change_payment_modal" style="height: 400px">
+            <div class="overlay_change_payment_modal__close">
+                <span></span>
+                <span></span>
+            </div>
+            <select class="overlay_change_payment_modal_select">
+                <option value="salary">Оплата</option>
+                <option value="debt">Charity</option>
+                <option value="discount">Discount</option>
+            </select>
+            <br>
+            <form class="overlay_change_payment_modal_form salary-form"
+                  action="{{ url_for('get_payment',user_id=user_id) }}"
+                  method="post">
+                <h2>Оплата</h2>
+                <br>
+                <div class="overlay_change_payment_modal_form_radios">
+                    <label><input required type="radio" class="overlay_change_payment_modal_form_radios_item" id="Cash"
+                                  name="location">Cash</label>
+                    <label><input required type="radio" class="overlay_change_payment_modal_form_radios_item" id="Click"
+                                  name="location">Click</label>
+                    <label><input required type="radio" class="overlay_change_payment_modal_form_radios_item" id="Bank"
+                                  name="location">Bank</label>
+                </div>
+                <br>
+                <div>
+                    <select name="group_id">
+                        <option value="">Choose group</option>
+                        {% for attendance in attendance_history %}
+                            <option value="{{ attendance.id }}">{{ attendance.group.subject.name }}/{{ attendance.month.date.strftime("%h") }}/
+                                {% if not attendance.remaining_debt %}
+                                    {{ attendance.total_debt }}{% else %}
+                                    {{ attendance.remaining_debt }}{% endif %}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
+                <input type="text" name="type_payment" class="type_payment" hidden>
+                <br>
+                <input class="overlay_change_payment_modal_form_input sums" type="number" required name="payment_sum"
+                       placeholder="Сумма">
+                <br>
+                <input class="overlay_change_payment_modal_form_submit" type="submit" value="Оплачено">
+            </form>
+
+            <form class="overlay_change_payment_modal_form discount_form"
+                  action="" method="post">
+                <h2>Discount</h2>
+
+                <input type="text" name="type_payment" class="type_payment" hidden>
+                <input class="overlay_change_payment_modal_form_input sums" type="number" required name="pay"
+                       placeholder="Сумма">
+                <input class="overlay_change_payment_modal_form_submit" type="submit" value="Оплачено">
+            </form>
+
+            <form class="overlay_change_payment_modal_form debt-form "
+                  action="{{ url_for('discount',student_id=student_get.id) }}"
+                  method="post">
+                {#                <h2>Charity</h2>#}
+                <select style="width: 200px" name="group_id">
+                    {% for gr in student_get.group %}
+                        <option value="{{ gr.id }}">{{ gr.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="discount" placeholder="Discount sum">
+                <input class="overlay_change_payment_modal_form_submit" type="submit" value="Дат благотворительность">
+            </form>
+        </div>
+        <div class="attendance-modal">
+            <div class="attendance-modal__close">
+                <span></span>
+                <span></span>
+            </div>
+            <form class="attendance-modal__form " action=""
+                  method="post">
+                <select class="attendance-modal__select" name="subject">
+                    {% for subject in subjects %}
+                        <option value="{{ subject.subject_name }}">{{ subject.subject_name }}</option>
+                    {% endfor %}
+                </select>
+                <input class="attendance-modal__input" type="number" name="group_cost" placeholder="Стоимость группы">
+                <input class="attendance-modal__input" type="number" name="discount" placeholder="Скидка">
+                <input class="attendance-modal__submit" type="submit" value="Оплачено">
+            </form>
+
+        </div>
+    </div>
+
+
+    {% include 'jinja_templates/overlay.html' %}
+
+
+
+    <section class="user" id="user">
+        <div class="user_check">
+            <button>&cross;</button>
+            <label class="controller_password" for="user_check"></label>
+            <input id="user_check" data-user_id="{{ user.id }}" type="password" placeholder="Подтвердите свой пароль">
+            <input type="password" data-user_id="{{ user.id }}" class="user_check_password"
+                   placeholder="Подтвердите свой пароль">
+        </div>
+    </section>
+
+    <section class="excuses">
+        <div class="excuses__block">
+            <span class="excuses_close">&cross;</span>
+            <form class="excuses__form" method="post" action="">
+                <input type="text" name="reason" placeholder="причина">
+                <input type="date" required name="date">
+                <input type="submit" value="Подтверждать">
+            </form>
+            <div class="excuses__list">
+                <table>
+                    <tr>
+                        <th>Причина</th>
+                        <th>Дата</th>
+                        <th>Delete</th>
+                    </tr>
+                    {#                    {% for excuse in student_excuses %}#}
+                    {#                        <tr>#}
+                    {#                            <td>{{ excuse.excuse }}</td>#}
+                    {#                            <td>{{ excuse.till.strftime("%Y-%m-%d") }}</td>#}
+                    {#                            <td>#}
+                    {#                                <a href="{{ url_for('delete_excuse',excuse_id=excuse.id,student_id=student_id) }}">Delete</a>#}
+                    {#                            </td>#}
+                    {#                        </tr>#}
+                    {#                    {% endfor %}#}
+
+                </table>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
+{% block js %}
+
+    <script src="../../static/js/Admin_js/user_profile.js"></script>
+{% endblock %}

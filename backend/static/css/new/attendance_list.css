@@ -1,0 +1,192 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.list_attendance {
+  display: flex;
+  flex-direction: column;
+}
+.list_attendance h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.list_attendance .for_present_absent {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+.list_attendance .for_present_absent .attendance_table {
+  height: 300px;
+  overflow: auto;
+}
+.list_attendance .for_present_absent .attendance_table table, .list_attendance .for_present_absent .attendance_table tr, .list_attendance .for_present_absent .attendance_table td, .list_attendance .for_present_absent .attendance_table th {
+  border-collapse: collapse;
+  border: 2px solid black;
+  font-size: 18px;
+  padding: 4px;
+}
+.list_attendance .for_present_absent #present table {
+  background-color: #39ff39;
+}
+.list_attendance .for_present_absent #absent table {
+  background-color: lightcoral;
+}
+.list_attendance .for_present_absent #absent table input[type=checkbox] {
+  width: 30px;
+  height: 30px;
+  margin-top: 4px;
+}
+.list_attendance .for_present_absent #absent .checks {
+  display: none;
+}
+.list_attendance .for_present_absent #absent .question_mark {
+  cursor: pointer;
+}
+
+.extra {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.for_icon {
+  position: fixed;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.for_icon img {
+  width: 70px;
+}
+
+.reason_form {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+}
+.reason_form label {
+  margin-bottom: 10px;
+}
+.reason_form textarea {
+  resize: none;
+  width: 285px;
+  height: 150px;
+  padding: 5px;
+}
+.reason_form input[type=file] {
+  align-self: center;
+}
+.reason_form input[type=submit] {
+  margin-top: 10px;
+  width: 115px;
+  border: none;
+  outline: none;
+  background-color: #3B5998;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.ready_button {
+  align-self: center;
+}
+.ready_button button {
+  display: none;
+  width: 115px;
+  border: none;
+  outline: none;
+  background-color: limegreen;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.for_flash {
+  background-color: #00568e;
+  padding: 10px;
+  align-self: center;
+  position: fixed;
+  display: flex;
+  border-radius: 0 0 15px 15px;
+}
+
+.for_flash h1 {
+  margin: 0;
+  color: white;
+  margin-right: 10px;
+}
+
+.for_flash button {
+  width: 30px;
+  border: none;
+  color: white;
+  background-color: red;
+  cursor: pointer;
+}
+
+.reason_img_paragraph {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+.reason_img_paragraph img {
+  width: 222px;
+}
+.reason_img_paragraph img:hover {
+  width: 1000px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+.buttons button {
+  border: none;
+  outline: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+}
+.buttons button a {
+  text-decoration: none;
+  color: white;
+}
+.buttons button:nth-child(1) {
+  background-color: limegreen;
+}
+.buttons button:nth-child(2) {
+  background-color: red;
+}
+
+@media (max-width: 576px) {
+  .for_icon {
+    margin-top: 2px;
+  }
+  .for_icon img {
+    width: 50px;
+  }
+
+  .list_attendance h1 {
+    font-size: 20px;
+  }
+  .list_attendance .for_present_absent .attendance_table {
+    margin-top: 10px;
+    height: 280px;
+  }
+  .list_attendance .for_present_absent .attendance_table table, .list_attendance .for_present_absent .attendance_table tr, .list_attendance .for_present_absent .attendance_table td, .list_attendance .for_present_absent .attendance_table th {
+    border-collapse: collapse;
+    border: 1px solid black;
+    font-size: 11px;
+    padding: 1px;
+  }
+}
+
+/*# sourceMappingURL=attendance_list.css.map */

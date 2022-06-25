@@ -1,0 +1,143 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/Admin_css/List%20groups.min.css">
+{% endblock %}
+{% block title %}
+    New groups
+{% endblock %}
+{% block body %}
+    <div class="list_tools">
+        <div>
+            <form action="{{ url_for('new_groups',page=1,location_id=location.id) }}" method="post">
+                <select name="education_language" class="list_tools_language education_language">
+                    {% if education_language %}
+                        <option value="{{ education_language }}">{{ education_language }}</option>
+                    {% endif %}
+                    {% for language in languages %}
+                        {% if education_language != language.name %}
+                            <option value="{{ language.name }}">{{ language.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <button hidden class="form_button"></button>
+            </form>
+        </div>
+        <div>
+            <div class="list_tools_location"><img src="../../static/img/icons/map-marker-alt-solid.svg"
+                                                  alt="">{{ location.name }}
+            </div>
+        </div>
+        <div>
+            <form class="search_form" action="" method="post">
+                <div class="list_tools_search" id="search_name">
+
+                    <input class="list_tools_search_input input_value" type="text" required name="group_name"
+                           placeholder="Введите имя" data-location="{{ location.id }}">
+                    <select class="list_tools_search_select subject_select" name="group_subject">
+                        <option value="">Fanni tanlang</option>
+                        {% for subject in subjects %}
+                            <option value="{{ subject.id }}">{{ subject.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="list_tools_search_clear">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <img class="list_tools_search_submit_img" src="../../static/img/icons/search-solid.svg" alt="">
+                    <img class="list_tools_search_settings_img" src="../../static/img/icons/cog-solid.svg" alt="">
+                    <div class="list_tools_search_settings">
+                        <label for="list_tools_search_checkbox_name"><input name="for_search"
+                                                                            id="list_tools_search_checkbox_name"
+                                                                            class="list_tools_search_checkbox"
+                                                                            type="radio"
+                                                                            checked value="for_name">For name</label>
+                        <label for="list_tools_search_checkbox_teacher"><input name="for_search"
+                                                                               id="list_tools_search_checkbox_teacher"
+                                                                               class="list_tools_search_checkbox"
+                                                                               type="radio" value="for_teacher">For
+                            teacher
+                            name</label>
+                        <label for="list_tools_search_checkbox_subject"><input name="for_search"
+                                                                               id="list_tools_search_checkbox_subject"
+                                                                               class="list_tools_search_checkbox"
+                                                                               type="radio" value="for_subject">For
+                            subject</label>
+                    </div>
+                    <input class="list_tools_search_submit" type="submit" value="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="list_groups" data-status="{{ status }}">
+        {% for group in groups.items %}
+            <a href="{{ url_for('group_profile',group_id=group.id) }}">
+                <div class="list_groups_item">
+                    <div class="list_groups_item_name">{{ group.name }}
+                        <span class="list_groups_item_tooltiptext">
+                            Имя
+                        </span>
+                    </div>
+                    <div class="list_groups_item_teacher_fio">
+                        <div class="list_groups_item_teacher_fio_name">
+                            {% for teach in group.teacher %}{{ teach.user.name }}{% endfor %}
+                            <span class="list_groups_item_tooltiptext">
+                                Имя учителя
+                            </span>
+                        </div>
+                        <div class="list_groups_item_teacher_fio_surname">
+                            {% for teach in group.teacher %}{{ teach.user.surname }}{% endfor %}
+                            <span class="list_groups_item_tooltiptext">
+                                Фамилия учителя
+                            </span>
+                        </div>
+                    </div>
+                    <div class="list_groups_item_subject">{{ group.subject.name }}
+                        <span class="list_groups_item_tooltiptext">
+                            Предмет
+                        </span>
+                    </div>
+                    <div class="list_groups_item_tarif">{{ group.course_type.name }}
+                        <span class="list_groups_item_tooltiptext">
+                            Тариф
+                        </span>
+                    </div>
+                    <div class="list_groups_item_cost"><span
+                            class="list_groups_item_cost_number">{{ group.course_type.cost }}</span>
+                        <span class="list_groups_item_tooltiptext">
+                            Стоимость
+                        </span>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="tools">
+        <div class="pages_link">
+            {% for link in groups.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                {% if link %}
+                    <form action="{{ url_for('new_groups',location_id=location.id,page=link) }}" method="post">
+                        {% if groups.page == link %}
+                            <button class="pages_link_item pages_link_item_active"
+                                    data-link="{{ link }}">{{ link }}</button>
+                        {% else %}
+                            <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                        {% endif %}
+
+                        <input type="text" name="education_language" hidden
+                               value="{% if education_language %}{{ education_language }}{% else %}Узбекский{% endif %}"
+                               class="student_education_language">
+                    </form>
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block overlay %}
+    {% include 'jinja_templates/overlay.html' %}
+{% endblock %}
+{% block js %}
+    <script src="../../static/js/Admin_js/xojakent/list%20groups.js"></script>
+{% endblock %}

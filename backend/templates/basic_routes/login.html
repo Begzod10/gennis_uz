@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="shortcut icon" href="../../static/img/icons/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../static/bootsrap/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="../../static/bootsrap/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../../static/css/Admin_css/Navbars.min.css">
+    <link rel="stylesheet" href="../../static/css/Admin_css/login.min.css">
+    <title>Gennis Campus</title>
+</head>
+<body>
+<form action="{{ url_for('login') }}" method="post" class="for_input">
+    <div class="container">
+        <div class="login">
+            <div class="login_form">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="flash">
+                                <div class="flash_info">
+                                    <div class="flash_info_desc">{{ message }}</div>
+                                    <div class="flash_info_close">&cross;</div>
+                                </div>
+                                <div class="flash_timer">
+                                    <div class="flash_timer_load">
+                                        <div class="flash_timer_load_line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="login_form_header">Login {% if user %} hello {% endif %}</div>
+                <div class="login_form_logo"><img src="../../static/img/png.png" alt=""></div>
+                <div class="login_form_inputs">
+                    <input type="text" name="username" required placeholder="Введите имя пользователя">
+                    <input type="password" id="password" name="password" required placeholder="Введите пароль">
+                    <div class="login_form_inputs_password">
+                        <input type="checkbox" class="checkbox">
+                        <label>Показать пароль</label>
+                    </div>
+                    <input type="submit" value="Login">
+                </div>
+                <div class="login__register">
+                    <div class="login__text">Если у вас нет учетной записи?</div>
+                    <div class="login__button">
+                        <a href="{{ url_for('register') }}">
+                            <div>Регистр</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="../../static/jquery%203.6.js"></script>
+<script src="../../static/js/Admin_js/for_login.js"></script>
+<script src="../../static/js/Admin_js/menu_navbar.js"></script>
+</body>
+</html>
