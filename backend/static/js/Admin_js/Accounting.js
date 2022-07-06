@@ -124,42 +124,19 @@ window.addEventListener('DOMContentLoaded', () => {
         capital_button_bank = document.querySelector('.capital_button_bank');
 
     const payment_type = document.querySelectorAll('.payment_type'),
-        button_cash = document.querySelector('.button_cash'),
-        button_bank = document.querySelector('.button_bank'),
-        button_real_bank = document.querySelector('.button_real_bank'),
+        button_cash = document.querySelectorAll('.button_cash'),
+
         month_list = document.querySelector('.month_list'),
         debt_month = document.querySelector('.debt_month');
 
-    if (button_bank) {
-        button_bank.addEventListener('click', () => {
+    button_cash.forEach(button => {
+        button.addEventListener('click', () => {
             payment_type.forEach(item => {
-                item.value = "bank";
+
+                item.value = button.dataset.name;
             })
-            button_bank.classList.add('list_tools_money_btn_active');
-            button_cash.classList.remove('list_tools_money_btn_active');
-            button_real_bank.classList.remove('list_tools_money_btn_active')
         })
-    }
-    if (button_cash) {
-        button_cash.addEventListener('click', () => {
-            payment_type.forEach(item => {
-                item.value = "cash";
-            })
-            button_bank.classList.remove('list_tools_money_btn_active');
-            button_cash.classList.add('list_tools_money_btn_active');
-            button_real_bank.classList.remove('list_tools_money_btn_active')
-        })
-    }
-    if (button_real_bank) {
-        button_real_bank.addEventListener('click', () => {
-            payment_type.forEach(item => {
-                item.value = "real_bank";
-            })
-            button_bank.classList.remove('list_tools_money_btn_active');
-            button_cash.classList.remove('list_tools_money_btn_active');
-            button_real_bank.classList.add('list_tools_money_btn_active')
-        })
-    }
+    })
     if (month_list && debt_month) {
         month_list.addEventListener('click', () => {
             debt_month.value = month_list.value;
@@ -220,7 +197,7 @@ window.addEventListener('DOMContentLoaded', () => {
     radio_bank.forEach(item => {
         item.addEventListener('click', () => {
             type_of_data.forEach(data => {
-                data.value = "real_bank";
+                data.value = "click";
                 value = data.value;
                 console.log(data.value)
             })
@@ -292,17 +269,19 @@ window.addEventListener('DOMContentLoaded', () => {
         type_of_item = document.querySelector('.Type_of_item'),
         sum = document.querySelector('.sum'),
         year = new Date().getFullYear(),
-        location = document.querySelector('.location');
+        location = document.querySelector('#location');
     document.querySelector('.overhead_form').onsubmit = function (e) {
+        console.log(location.dataset.location)
         e.preventDefault();
-        console.log(value)
-        fetch('/overhead/' + location.value, {
+
+        fetch('/add_overhead/' + location.dataset.location, {
             method: 'POST',
             body: JSON.stringify({
-                'type_of_item': type_of_item.value,
+                'name_item': type_of_item.value,
                 'sum': sum.value,
-                'date': `${year}-${overhead_month.value}-${day.value}`,
-                'type_of_data': value
+                'month': overhead_month.value,
+                'type_of_data': value,
+                'day': day.value
             }),
             headers: {
                 'Content-Type': 'application/json'

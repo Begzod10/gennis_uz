@@ -66,7 +66,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.payment_type').value = "cash";
     })
     document.querySelector('.bank').addEventListener('click', () => {
-        document.querySelector('.payment_type').value = "real_bank";
+        document.querySelector('.payment_type').value = "click";
     })
     document.querySelector('.click').addEventListener('click', () => {
         document.querySelector('.payment_type').value = "bank";

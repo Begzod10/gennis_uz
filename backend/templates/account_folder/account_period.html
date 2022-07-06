@@ -1,0 +1,14 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block title %} Account Period {% endblock %}
+
+
+{% block body %}
+<div class="account">
+    <h2>Account period</h2>
+    <form action="{{ url_for('period_details') }}" method="post">
+        <input type="date" name="from">
+        <input type="date" name="to">
+        <input type="submit" value="Update">
+    </form>
+</div>
+{% endblock %}

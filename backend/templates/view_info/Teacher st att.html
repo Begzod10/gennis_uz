@@ -1,0 +1,74 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/teacher/Teacher%20gr%20att.min.css">
+{% endblock %}
+{% block body %}
+    <div class="list_tools">
+        <div class="list_tools_title">{{ student.name }} attendance <span>Total Ball: {{ total }}</span></div>
+        <div class="list_tools_btns">
+            <div class="list_tools_btns_item arrival_btn list_tools_btns_item_active">приходил(а)</div>
+            <div class="list_tools_btns_item absence_btn">не приходил(а)</div>
+        </div>
+    </div>
+
+    <div class="list_att">
+        <div class="list_att_tables">
+            <div class="list_att_tables_item arrival list_att_tables_item_active">
+                <table style="text-align: center">
+                    <tr>
+                        <th>Домашнее задание</th>
+                        <th>Словарь</th>
+                        <th>Действия на уроке</th>
+                        <th>Средний бал</th>
+                        <th>Дата</th>
+                        {% if not attendance_student_history.status %}
+                            <th>Kun ochir</th>
+                        {% endif %}
+
+                    </tr>
+                    {% for att in student_attendances_present %}
+                        <tr>
+                            <td>{{ att.homework }}</td>
+                            <td>{{ att.dictionary }}</td>
+                            <td>{{ att.activeness }}</td>
+                            <td>{{ att.average_ball }}</td>
+                            <td>{{ att.day.date.strftime('%d') }}</td>
+                            {% if not attendance_student_history.status %}
+                                <td>
+                                    <a href="{{ url_for('attendance_delete',attendance_id=att.id,student_id=student.id,group_id=att.group_id,main_attendance=attendance.id) }}">&cross;</a>
+                                </td>
+                            {% endif %}
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="list_att_tables_item absence ">
+
+                <table style="text-align: center">
+                    <tr>
+                        <th>Дата</th>
+                        {% if not attendance_student_history.status %}
+                            <th>Kun ochir</th>
+                        {% endif %}
+                    </tr>
+                    {% for att in student_attendances_absent %}
+                        <tr>
+                            <td>{{ att.day.date.strftime('%d') }}</td>
+                            {% if not attendance_student_history %}
+                                <td>
+                                    <a href="{{ url_for('attendance_delete',attendance_id=att.id,student_id=student.id,group_id=att.group_id,main_attendance=attendance.id) }}">&cross;</a>
+                                </td>
+                            {% endif %}
+
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="../../static/js/Admin_js/Show_att.js"></script>
+{% endblock %}

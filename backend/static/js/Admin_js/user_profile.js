@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
         type_payment.value = "cash";
     })
     bank.addEventListener('click', () => {
-        type_payment.value = "real_bank";
+        type_payment.value = "click";
     })
     click.addEventListener('click', () => {
         type_payment.value = "bank";

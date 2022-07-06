@@ -28,16 +28,17 @@ class CalendarYear(db.Model):
     attendance_history_teacher = relationship("AttendanceHistoryTeacher", backref="year",
                                               order_by="AttendanceHistoryTeacher.id")
     month = relationship("CalendarMonth", backref="year", order_by="CalendarMonth.id")
+    accounting_period = relationship("AccountingPeriod", backref="year", order_by="AccountingPeriod.id")
     teacher_salary_id = relationship("TeacherSalary", backref="year", order_by="TeacherSalary.id")
     attendance = relationship("Attendance", backref="year", order_by="Attendance.id")
     location = relationship('Locations', backref="year", order_by="Locations.id")
     student_payment = relationship('StudentPayments', backref="year", order_by="StudentPayments.id")
     teacher_cash = relationship('TeacherSalaries', backref="year", order_by="TeacherSalaries.id")
-    discount = relationship('StudentDiscount', backref="year", order_by="StudentDiscount.id")
+    charity = relationship('StudentCharity', backref="year", order_by="StudentCharity.id")
     stuff_salary = relationship('StaffSalary', backref="year", order_by="StaffSalary.id")
     staff_given_salary = relationship("StaffSalaries", backref="year", order_by="StaffSalaries.id")
     overhead_data = relationship('Overhead', backref="year", order_by="Overhead.id")
-    capital_data = relationship('CapitalExpenditure', backref="year", order_by="CapitalExpenditure.id")
+    accounting = relationship("AccountingInfo", backref="year", order_by="AccountingInfo.id")
 
 
 class CalendarMonth(db.Model):
@@ -57,11 +58,26 @@ class CalendarMonth(db.Model):
     location = relationship('Locations', backref="month", order_by="Locations.id")
     student_payment = relationship('StudentPayments', backref="month", order_by="StudentPayments.id")
     teacher_cash = relationship('TeacherSalaries', backref="month", order_by="TeacherSalaries.id")
-    discount = relationship('StudentDiscount', backref="month", order_by="StudentDiscount.id")
+    charity = relationship('StudentCharity', backref="month", order_by="StudentCharity.id")
     stuff_salary = relationship('StaffSalary', backref="month", order_by="StaffSalary.id")
     staff_given_salary = relationship("StaffSalaries", backref="month", order_by="StaffSalaries.id")
     overhead_data = relationship('Overhead', backref="month", order_by="Overhead.id")
-    capital_data = relationship('CapitalExpenditure', backref="month", order_by="CapitalExpenditure.id")
+    accounting = relationship("AccountingInfo", backref="month", order_by="AccountingInfo.id")
+
+
+class AccountingPeriod(db.Model):
+    __tablename__ = "accountingperiod"
+    id = Column(Integer, primary_key=True)
+    from_date = Column(DateTime)
+    to_date = Column(DateTime)
+    student_payments = relationship("StudentPayments", backref="period", order_by="StudentPayments.id")
+    teacher_salaries = relationship("TeacherSalaries", backref="period", order_by="TeacherSalaries.id")
+    staff_salaries = relationship("StaffSalaries", backref="period", order_by="StaffSalaries.id")
+    overhead = relationship("Overhead", backref="period", order_by="Overhead.id")
+    day = relationship('CalendarDay', backref="period", order_by="CalendarDay.id")
+    charity = relationship('StudentCharity', backref="period", order_by="StudentCharity.id")
+    year_id = Column(Integer, ForeignKey('calendaryear.id'))
+    month_id = Column(Integer, ForeignKey('calendarmonth.id'))
 
 
 class CalendarDay(db.Model):
@@ -71,14 +87,14 @@ class CalendarDay(db.Model):
     month_id = Column(Integer, ForeignKey('calendarmonth.id'))
     users = db.relationship("Users", backref="day", order_by="Users.id")
     groups = db.relationship("Groups", backref="day", order_by="Groups.id")
-    attendance = relationship("Attendance", backref="day", order_by="Attendance.id")
+    attendance = relationship("AttendanceDays", backref="day", order_by="AttendanceDays.id")
     location = relationship('Locations', backref="day", order_by="Locations.id")
     student_payment = relationship('StudentPayments', backref="day", order_by="StudentPayments.id")
     teacher_cash = relationship('TeacherSalaries', backref="day", order_by="TeacherSalaries.id")
-    discount = relationship('StudentDiscount', backref="day", order_by="StudentDiscount.id")
+    charity = relationship('StudentCharity', backref="day", order_by="StudentCharity.id")
     staff_given_salary = relationship("StaffSalaries", backref="day", order_by="StaffSalaries.id")
     overhead_data = relationship('Overhead', backref="day", order_by="Overhead.id")
-    capital_data = relationship('CapitalExpenditure', backref="day", order_by="CapitalExpenditure.id")
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
 
 
 class Locations(db.Model):
@@ -101,7 +117,9 @@ class Locations(db.Model):
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
     overhead_data = relationship('Overhead', backref="location", order_by="Overhead.id")
-    capital_data = relationship('CapitalExpenditure', backref="location", order_by="CapitalExpenditure.id")
+    attendance_days_get = relationship("AttendanceDays", backref="location", order_by="AttendanceDays.id")
+    accounting = relationship("AccountingInfo", backref="location", order_by="AccountingInfo.id")
+    charity = relationship('StudentCharity', backref="location", order_by="StudentCharity.id")
 
 
 class EducationLanguage(db.Model):
@@ -178,7 +196,7 @@ class Students(db.Model):
     student_payment = relationship('StudentPayments', backref="student", order_by="StudentPayments.id")
     attendance_history = relationship("AttendanceHistoryStudent", backref="student",
                                       order_by="AttendanceHistoryStudent.id")
-    discount = relationship('StudentDiscount', backref="student", order_by="StudentDiscount.id")
+    charity = relationship('StudentCharity', backref="student", order_by="StudentCharity.id")
     history_group = relationship('StudentHistoryGroups', backref="student", order_by="StudentHistoryGroups.id")
 
 
@@ -194,6 +212,7 @@ class Teachers(db.Model):
     attendance_location = relationship("TeacherSalary", backref="teacher", order_by="TeacherSalary.id")
     history_group = relationship('StudentHistoryGroups', backref="teacher", order_by="StudentHistoryGroups.id")
     teacher_cash = relationship('TeacherSalaries', backref="teacher", order_by="TeacherSalaries.id")
+    attendance_days_get = relationship("AttendanceDays", backref="teacher", order_by="AttendanceDays.id")
 
 
 db.Table('student_subject',
@@ -218,6 +237,14 @@ class Subjects(db.Model):
                                               order_by="AttendanceHistoryStudent.id")
     attendance_history_teacher = relationship("AttendanceHistoryTeacher", backref="subject",
                                               order_by="AttendanceHistoryTeacher.id")
+    subject_level = relationship('SubjectLevels', backref="subject", order_by="SubjectLevels.id")
+
+
+class SubjectLevels(db.Model):
+    __tablename__ = "subjectlevels"
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    subject_id = Column(Integer, ForeignKey('subjects.id'))
 
 
 db.Table('student_group',
@@ -252,8 +279,9 @@ class Groups(db.Model):
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
     student_payment = relationship('StudentPayments', backref="group", order_by="StudentPayments.id")
     teacher_id = Column(Integer)
-    discount = relationship('StudentDiscount', backref="group", order_by="StudentDiscount.id")
+    charity = relationship('StudentCharity', backref="group", order_by="StudentCharity.id")
     history_group = relationship('StudentHistoryGroups', backref="group", order_by="StudentHistoryGroups.id")
+    attendance_days_get = relationship("AttendanceDays", backref="group", order_by="AttendanceDays.id")
 
 
 class StudentHistoryGroups(db.Model):
@@ -271,6 +299,7 @@ class Professions(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     staff = db.relationship("Staff", backref="profession", order_by="Staff.id")
+    staff_salaries = db.relationship("StaffSalaries", backref="profession", order_by="StaffSalaries.id")
 
 
 class Attendance(db.Model):
@@ -280,24 +309,35 @@ class Attendance(db.Model):
     student_id = Column(Integer, ForeignKey('students.id'))
     teacher_id = Column(Integer, ForeignKey('teachers.id'))
     group_id = Column(Integer, ForeignKey('groups.id'))
-    calendar_day = Column(Integer, ForeignKey('calendarday.id'))
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
     course_id = Column(Integer, ForeignKey('coursetypes.id'))
-    homework = Column(Integer)
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    attendance_days_get = relationship("AttendanceDays", backref="attendance", order_by="AttendanceDays.calendar_day")
+
+
+class AttendanceDays(db.Model):
+    __tablename__ = "attendancedays"
+    id = Column(Integer, primary_key=True)
+    student_id = Column(Integer, ForeignKey('students.id'))
+    attendance_id = Column(Integer, ForeignKey('attendance.id'))
+    calendar_day = Column(Integer, ForeignKey('calendarday.id'))
+    status = Column(Integer, default=False)
     activeness = Column(Integer)
     dictionary = Column(Integer)
+    homework = Column(Integer)
     average_ball = Column(Integer)
-    status = Column(Boolean, default=False)
     balance_per_day = Column(Integer)
     salary_per_day = Column(Integer)
-    location_id = Column(Integer, ForeignKey('locations.id'))
     balance_with_discount = Column(Integer)
     discount_per_day = Column(Integer)
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    teacher_id = Column(Integer, ForeignKey('teachers.id'))
+    group_id = Column(Integer, ForeignKey('groups.id'))
 
 
-class StudentDiscount(db.Model):
-    __tablename__ = "studentdiscount"
+class StudentCharity(db.Model):
+    __tablename__ = "studentcharity"
     id = Column(Integer, primary_key=True)
     student_id = Column(Integer, ForeignKey('students.id'))
     discount = Column(Integer)
@@ -305,6 +345,8 @@ class StudentDiscount(db.Model):
     calendar_day = Column(Integer, ForeignKey('calendarday.id'))
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    location_id = Column(Integer, ForeignKey('locations.id'))
 
 
 class AttendanceHistoryStudent(db.Model):
@@ -373,6 +415,8 @@ class StaffSalary(db.Model):
 
 
 # accounting
+
+
 class PaymentTypes(db.Model):
     __tablename__ = "paymenttypes"
     id = Column(Integer, primary_key=True)
@@ -380,7 +424,7 @@ class PaymentTypes(db.Model):
     student_payments = relationship('StudentPayments', backref="payment_type", order_by="StudentPayments.id")
     teacher_salaries = relationship('TeacherSalaries', backref="payment_type", order_by="TeacherSalaries.id")
     overhead_data = relationship('Overhead', backref="payment_type", order_by="Overhead.id")
-    capital_data = relationship('CapitalExpenditure', backref="payment_type", order_by="CapitalExpenditure.id")
+    accounting = relationship("AccountingInfo", backref="payment_type", order_by="AccountingInfo.id")
 
 
 class StudentPayments(db.Model):
@@ -395,6 +439,8 @@ class StudentPayments(db.Model):
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
     payment_sum = Column(Integer)
     payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    payment = Column(Boolean)
 
 
 class TeacherSalaries(db.Model):
@@ -409,6 +455,7 @@ class TeacherSalaries(db.Model):
     calendar_day = Column(Integer, ForeignKey('calendarday.id'))
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
 
 
 class StaffSalaries(db.Model):
@@ -423,6 +470,8 @@ class StaffSalaries(db.Model):
     calendar_day = Column(Integer, ForeignKey('calendarday.id'))
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    profession_id = Column(Integer, ForeignKey("professions.id"))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
 
 
 class Overhead(db.Model):
@@ -435,15 +484,22 @@ class Overhead(db.Model):
     calendar_day = Column(Integer, ForeignKey('calendarday.id'))
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
 
 
-class CapitalExpenditure(db.Model):
-    __tablename__ = "capitalexpenditure"
+class AccountingInfo(db.Model):
+    __tablename__ = "accountinginfo"
     id = Column(Integer, primary_key=True)
-    item_sum = Column(Integer)
-    item_name = Column(String)
-    payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
-    location_id = Column(Integer, ForeignKey('locations.id'))
-    calendar_day = Column(Integer, ForeignKey('calendarday.id'))
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    all_payments = Column(Integer)
+    all_teacher_salaries = Column(Integer)
+    all_staff_salaries = Column(Integer)
+    all_overhead = Column(Integer)
+    all_capital = Column(Integer)
+    current_cash = Column(Integer)
+    old_cash = Column(Integer)
+    all_discount = Column(Integer)
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))

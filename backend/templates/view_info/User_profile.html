@@ -379,7 +379,7 @@
             </select>
             <br>
             <form class="overlay_change_payment_modal_form salary-form"
-                  action="{{ url_for('get_payment',user_id=user_id) }}"
+                  action="{{ url_for('get_payment',user_id=user_id,status=True) }}"
                   method="post">
                 <h2>Оплата</h2>
                 <br>
@@ -413,17 +413,25 @@
             </form>
 
             <form class="overlay_change_payment_modal_form discount_form"
-                  action="" method="post">
+                  action="{{ url_for('get_payment',user_id=user_id,status=False) }}" method="post">
                 <h2>Discount</h2>
 
-                <input type="text" name="type_payment" class="type_payment" hidden>
-                <input class="overlay_change_payment_modal_form_input sums" type="number" required name="pay"
+                <select name="group_id">
+                    <option value="">Choose group</option>
+                    {% for attendance in attendance_history %}
+                        <option value="{{ attendance.id }}">{{ attendance.group.subject.name }}/{{ attendance.month.date.strftime("%h") }}/
+                            {% if not attendance.remaining_debt %}
+                                {{ attendance.total_debt }}{% else %}
+                                {{ attendance.remaining_debt }}{% endif %}</option>
+                    {% endfor %}
+                </select>
+                <input class="overlay_change_payment_modal_form_input sums" type="number" required name="payment_sum"
                        placeholder="Сумма">
                 <input class="overlay_change_payment_modal_form_submit" type="submit" value="Оплачено">
             </form>
 
             <form class="overlay_change_payment_modal_form debt-form "
-                  action="{{ url_for('discount',student_id=student_get.id) }}"
+                  action="{{ url_for('charity',student_id=student_get.id) }}"
                   method="post">
                 {#                <h2>Charity</h2>#}
                 <select style="width: 200px" name="group_id">

@@ -182,6 +182,21 @@
                     {% endfor %}
                 </ul>
             </li>
+            <li class="menu_item_li" id="location_list_8"><img src="../../static/img/icons/wallet-solid.svg" alt="">Бухгалтерский
+                учет<img id="new_student_location_list_down_8" class="menu_item_li_down_array"
+                         src="../../static/img/icons/sort-down-solid.svg" alt="">
+                <ul class="menu_item_li_sub" id="new_student_location_list_8">
+                    {% for location in locations %}
+                        <li>
+                            <a class="menu_item_li_sub_item"
+                               href="{{ url_for('account_info',location=location.id,page=1) }}"><img
+                                    src="../../static/img/icons/map-marker-alt-solid.svg" alt="">{{ location.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
             {#                    <li class="menu_item_li" id="location_list_4"><img src="../../static/img/icons/user-slash-solid.svg" alt="">Отсутствует по причине<img id="new_student_location_list_down_4" class="menu_item_li_down_array" src="../../static/img/icons/sort-down-solid.svg" alt="">#}
             {#                        <ul class="menu_item_li_sub" id="new_student_location_list_4">#}
             {#                            <li><a class="menu_item_li_sub_item" href="/students_with_reason_xojakent"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Ходжикент</a></li>#}
@@ -191,13 +206,7 @@
             {#                    </li>#}
 
             {#                    <li><a class="menu_item" href="/all_user"><img src="../../static/img/icons/users-solid.svg" alt="">Все Админы</a></li>#}
-            {#                    <li class="menu_item_li" id="location_list_8"><img src="../../static/img/icons/wallet-solid.svg" alt="">Бухгалтерский учет<img id="new_student_location_list_down_8" class="menu_item_li_down_array" src="../../static/img/icons/sort-down-solid.svg" alt="">#}
-            {#                        <ul class="menu_item_li_sub" id="new_student_location_list_8">#}
-            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('accounts',page=1,location=1) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Ходжикент</a></li>#}
-            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('accounts',page=1,location=2) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Газалкент</a></li>#}
-            {#                            <li><a class="menu_item_li_sub_item" href="{{ url_for('accounts',page=1,location=3) }}"><img src="../../static/img/icons/map-marker-alt-solid.svg" alt="">Чирчик</a></li>#}
-            {#                        </ul>#}
-            {#                    </li>#}
+            {#
             {#                    <li><a class="menu_item" href="/add_subject"><img src="../../static/img/icons/pen-square-solid.svg" alt="">Предметы</a></li>#}
             {#                {% endif %}#}
             {#                {% if teacher and not user %}#}

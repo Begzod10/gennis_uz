@@ -1,0 +1,56 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/Admin_css/Show%20att%20in%20group.min.css">
+{% endblock %}
+{% block body %}
+    <div class="list_tools">
+        <div class="list_tools_archive">
+            <div class="list_tools_archive_btn"><a href="">Archive
+                attendance</a></div>
+        </div>
+    </div>
+
+    <div class="list_att">
+        <div class="list_att_tables">
+            <div class="list_att_tables_item arrival list_att_tables_item_active">
+                <table style="text-align: center">
+                    <tr>
+                        <th><span>Имя</span><span>Фамилия</span></th>
+                        {% for date in days %}
+                            <th>{{ date.date.strftime("%d") }}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for student in attendances_list %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('student_attendances',student_id=student.student_id,group_id=student.group_id) }}"><span>{{ student.student.user.name }}</span><span>{{ student.student.user.name }}</span></a>
+                            </td>
+                            {% if  student.attendance_days_get %}
+                                {% for day in student.attendance_days_get %}
+
+                                    <td>
+                                    {{ day.day.date }}
+                                        {% if day.status == 1 %}
+                                            <img src="../../static/img/icons/check.svg" alt="">
+                                        {% elif day.status == 0 %}
+                                            <img src="../../static/img/icons/times.svg" alt="">
+                                        {% endif %}
+                                    </td>
+
+                                {% endfor %}
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block overlay %}
+    {% include 'jinja_templates/overlay.html' %}
+{% endblock %}
+

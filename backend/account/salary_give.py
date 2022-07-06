@@ -11,10 +11,11 @@ def salary_give_teacher(salary_id):
     salary_sum = teacher_salary
     teacher_cash = TeacherSalary.query.filter(TeacherSalary.id == salary_id).first()
     payment_type_id = PaymentTypes.query.filter(PaymentTypes.name == payment_type).first()
+    accounting_period = AccountingPeriod.query.order_by(desc(AccountingPeriod.id)).first()
     add = TeacherSalaries(payment_sum=teacher_salary, reason=reason, payment_type_id=payment_type_id.id,
                           salary_id=salary_id, teacher_id=teacher_cash.teacher_id, location_id=teacher_cash.location_id,
                           calendar_month=calendar_month.id, calendar_day=calendar_day.id,
-                          calendar_year=calendar_year.id)
+                          calendar_year=calendar_year.id, account_period_id=accounting_period.id)
     db.session.add(add)
     db.session.commit()
 
@@ -72,7 +73,29 @@ def salary_give_teacher(salary_id):
                 {'remaining_salary': 0, "taken_money": attendance_teacher.total_salary, 'status': True})
             db.session.commit()
         salary_sum = result
-        print(salary_sum)
+    accounting_info = AccountingInfo.query.filter(AccountingInfo.payment_type_id == payment_type_id.id,
+                                                  AccountingInfo.location_id == add.location_id,
+                                                  AccountingInfo.calendar_month == calendar_month.id,
+                                                  AccountingInfo.calendar_year == calendar_year.id,
+                                                  AccountingInfo.account_period_id == accounting_period.id).first()
+    if not accounting_info:
+        accounting_info = AccountingInfo(payment_type_id=payment_type_id.id, location_id=add.location_id,
+                                         all_staff_salaries=teacher_salary, calendar_month=calendar_month.id,
+                                         calendar_year=calendar_year.id, account_period_id=accounting_period.id)
+        db.session.add(accounting_info)
+        db.session.commit()
+    else:
+
+        if accounting_info.all_teacher_salaries:
+            teachers_salaries = accounting_info.all_teacher_salaries + teacher_salary
+        else:
+            teachers_salaries = teacher_salary
+        AccountingInfo.query.filter(AccountingInfo.id == accounting_info.id).update({
+            'all_teacher_salaries': teachers_salaries
+        })
+        db.session.commit()
+        update_account(accounting_info.id)
+
     return redirect(url_for('inside_teacher_salary', salary_id=salary_id))
 
 
@@ -82,12 +105,15 @@ def staff_salary_give(salary_id):
     staff_salary = int(request.form.get('staff_salary'))
     payment_type = request.form.get('payment_type')
     staff_salary_info = StaffSalary.query.filter(StaffSalary.id == salary_id).first()
+    staff = Staff.query.filter(Staff.id == staff_salary_info.staff_id).first()
+    accounting_period = AccountingPeriod.query.order_by(desc(AccountingPeriod.id)).first()
+    print(payment_type)
     payment_type_id = PaymentTypes.query.filter(PaymentTypes.name == payment_type).first()
     add = StaffSalaries(payment_sum=staff_salary, reason=reason, payment_type_id=payment_type_id.id,
-                        salary_id=salary_id,
+                        salary_id=salary_id, profession_id=staff.profession_id,
                         location_id=staff_salary_info.location_id, calendar_day=calendar_day.id,
                         calendar_month=calendar_month.id, calendar_year=calendar_year.id,
-                        staff_id=staff_salary_info.staff_id)
+                        staff_id=staff_salary_info.staff_id, account_period_id=accounting_period.id)
     db.session.add(add)
     db.session.commit()
     if not staff_salary_info.remaining_salary:
@@ -107,4 +133,25 @@ def staff_salary_give(salary_id):
         StaffSalary.query.filter(StaffSalary.id == salary_id).update(
             {'remaining_salary': 0, 'taken_money': staff_salary_info.total_salary, 'status': True})
         db.session.commit()
+    accounting_info = AccountingInfo.query.filter(AccountingInfo.payment_type_id == payment_type_id.id,
+                                                  AccountingInfo.location_id == add.location_id,
+                                                  AccountingInfo.calendar_month == calendar_month.id,
+                                                  AccountingInfo.calendar_year == calendar_year.id,
+                                                  AccountingInfo.account_period_id == accounting_period.id).first()
+    if not accounting_info:
+        accounting_info = AccountingInfo(payment_type_id=payment_type_id.id, location_id=add.location_id,
+                                         all_staff_salaries=staff_salary, calendar_month=calendar_month.id,
+                                         calendar_year=calendar_year.id, account_period_id=accounting_period.id)
+        db.session.add(accounting_info)
+        db.session.commit()
+    else:
+        if accounting_info.all_staff_salaries:
+
+            all_staff_salaries = accounting_info.all_staff_salaries + staff_salary
+        else:
+            all_staff_salaries = staff_salary
+        AccountingInfo.query.filter(AccountingInfo.id == accounting_info.id).update(
+            {'all_staff_salaries': all_staff_salaries})
+        db.session.commit()
+        update_account(accounting_info.id)
     return redirect(url_for('inside_salary_staff', salary_id=salary_id))

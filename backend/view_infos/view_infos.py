@@ -286,6 +286,71 @@ def group_profile(group_id):
     return render_template('view_info/Inside group.html', locations=locations, user=user, form=form, group=group)
 
 
+@app.route('/attendances/<int:group_id>')
+def attendances(group_id):
+    user = get_current_user()
+    form = PhotoForm()
+    locations = Locations.query.order_by('id').all()
+    attendances_list = Attendance.query.filter(Attendance.group_id == group_id,
+                                               Attendance.calendar_month == calendar_month.id,
+                                               Attendance.calendar_year == calendar_year.id,
+                                               ).order_by('id').all()
+    days_list = []
+    for days in attendances_list:
+        attendance_days = AttendanceDays.query.filter(AttendanceDays.attendance_id == days.id).all()
+
+        for day in attendance_days:
+            days_list.append(day.calendar_day)
+    days_list = list(dict.fromkeys(days_list))
+    calendar_days = CalendarDay.query.filter(CalendarDay.id.in_([day_id for day_id in days_list])).order_by(
+        CalendarDay.date).all()
+    already_list = []
+    # for gr in attendances_list:
+    #     added_to_existing = False
+    #
+    #     for merged in already_list:
+    #         if merged.student_id == gr.student_id:
+    #             added_to_existing = True
+    #             break
+    #         if added_to_existing:
+    #             break
+    #     if not added_to_existing:
+    #         already_list.append(gr)
+
+    return render_template('teacher/show att.html', user=user, form=form, attendances_list=attendances_list,
+                           locations=locations, days=calendar_days)
+
+
+@app.route('/student_attendances/<int:student_id>/<int:group_id>')
+def student_attendances(student_id, group_id):
+    user = get_current_user()
+    form = PhotoForm()
+    student = Students.query.filter(Students.id == student_id).first()
+    attendance_student_history = AttendanceHistoryStudent.query.filter(
+        AttendanceHistoryStudent.student_id == student_id, AttendanceHistoryStudent.calendar_month == calendar_month.id,
+        AttendanceHistoryStudent.calendar_year == calendar_year.id,
+        AttendanceHistoryStudent.group_id == group_id).first()
+    attendance = Attendance.query.filter(Attendance.student_id == student_id,
+                                         Attendance.group_id == group_id,
+                                         Attendance.calendar_year == calendar_year.id,
+                                         Attendance.calendar_month == calendar_month.id).first()
+    student_attendances_present = AttendanceDays.query.filter(AttendanceDays.student_id == student_id,
+                                                              AttendanceDays.group_id == group_id,
+                                                              AttendanceDays.attendance_id == attendance.id,
+                                                              AttendanceDays.status == 1).order_by(
+        AttendanceDays.calendar_day).all()
+    student_attendances_absent = AttendanceDays.query.filter(AttendanceDays.student_id == student_id,
+                                                             AttendanceDays.group_id == group_id,
+                                                             AttendanceDays.attendance_id == attendance.id,
+                                                             AttendanceDays.status == 0).order_by(
+        AttendanceDays.calendar_day).all()
+    locations = Locations.query.order_by('id').all()
+    return render_template('view_info/Teacher st att.html', user=user, form=form, student=student,
+                           student_attendances_present=student_attendances_present, locations=locations,
+                           student_attendances_absent=student_attendances_absent, attendance=attendance,
+                           attendance_student_history=attendance_student_history)
+
+
 @app.route('/teacher_profile/<int:teacher_id>')
 def teacher_profile(teacher_id):
     user = get_current_user()

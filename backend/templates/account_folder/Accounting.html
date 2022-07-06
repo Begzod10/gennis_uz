@@ -1,0 +1,870 @@
+{% extends 'jinja_templates/clone.html' %}
+{% block css %}
+    <link rel="stylesheet" href="../../static/css/Admin_css/Accounting.min.css">
+    <link rel="stylesheet" href="../../static/sass/Admin%20sass/extrra_student_profile.min.css">
+    <style>
+        .debt-black input {
+            border: 1px solid black;
+        }
+
+        .black-debt {
+            background: black;
+            color: white;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="list_tools">
+        <div>
+            <form action="{{ url_for('account_info',page=1,location=location) }}" method="post">
+                <select class="list_tools_select education_language" name="accounting_type">
+                    <option value="{{ accounting_type }}">{{ accounting_type }}</option>
+                    {% if user.director or user.accountant %}
+                        {% if accounting_type != "Бухгалтерский учет" %}
+                            <option value="Бухгалтерский учет">Бухгалтерский учет</option>
+                        {% endif %}
+                    {% endif %}
+                    {% if accounting_type != "Оплата студентов" %}
+                        <option value="Оплата студентов">Оплата студентов</option>
+                    {% endif %}
+                    {% if accounting_type != "Зарплаты" %}
+                        <option value="Зарплаты">Зарплаты</option>
+                    {% endif %}
+                    {% if accounting_type != "Студенты с долгами" %}
+                        <option value="Студенты с долгами">Студенты с долгами</option>
+                    {% endif %}
+                    {% if accounting_type != "Список скидок" %}
+                        <option value="Список скидок">Список скидок</option>
+                    {% endif %}
+
+                    {% if accounting_type != "Накладные расходы" %}
+                        <option value="Накладные расходы">Накладные расходы</option>
+                    {% endif %}
+                    {% if user.director or user.accountant %}
+                        {% if accounting_type != "Капитальные затраты" %}
+                            <option value="Капитальные затраты">Капитальные затраты</option>
+                        {% endif %}
+                    {% endif %}
+
+                </select>
+                <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                <input type="text" value="{{ debt_status }}" hidden class="debt_status" name="debt_status">
+                <input type="text" name="accounting_type" value="{{ accounting_type }}" hidden class="debt_month">
+                <input type="text" name="payment_type" value="{% if payment_type %}{{ payment_type }}{% endif %}"
+                       hidden class="payment_type">
+                <input type="text" name="year" hidden value="{{ year.strftime("%Y") }}">
+                <input type="text" name="month" hidden value="{{ month.strftime("%m") }}">
+                <input type="text" name="day" hidden value="{{ day.strftime("%d") }}">
+                <input type="text" name="type_salary" hidden value="{{ type_salary }}" class="type_salary">
+                <button hidden class="form_button"></button>
+            </form>
+            <div class="card_balance">Current Cash : {{ accounting_info.current_cash }}</div>
+        </div>
+        <div>
+            <div data-location="{{ location }}" id="location" class="list_tools_location"><img
+                    src="../../static/img/icons/map-marker-alt-solid.svg" alt="">
+                {{ location_name.name }} {{ result }}
+            </div>
+        </div>
+        <div>
+            <div class="list_tools_filters">
+                <span>Фильтры</span>
+            </div>
+
+            <div class="list_tools_filters-box">
+                <div class="top_navbar_box">
+                    <div class="close_filters">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                {% if student_debts or student_new %}
+                    <div class="items">
+                        <h2 class="title">Тип долга</h2>
+                        <label class="debt_btn debt-red" for="debt-red">
+                            <input name="contact" class="debt-input" id="debt-red" type="radio"
+                                    {% if debt_status == "red" %} checked {% endif %}>
+                            Red debt
+                        </label>
+                        <label class="debt_btn debt-yellow" for="debt-yellow">
+                            <input name="contact" class="debt-input" id="debt-yellow" type="radio"
+                                    {% if debt_status == "yellow" %} checked {% endif %}>
+                            Yellow debt
+                        </label>
+                        <label class="debt_btn debt-black" for="debt-black">
+                            <input name="contact" class="debt-input" id="debt-black" type="radio"
+                                    {% if debt_status == "black" %} checked {% endif %}>
+                            Black debt
+                        </label>
+                    </div>
+                {% endif %}
+                {% if accounting_type == "Зарплаты" %}
+                    <div class="items">
+                        <h2 class="title">Месяцы</h2>
+                        <label class="debt_btn debt-red" for="debt-red">
+                            <input name="contact" class="debt-input" id="input-teacher" type="radio"
+                                    {% if type_salary == "teacher" %} checked {% endif %}>
+                            Учитель
+                        </label>
+                        <label class="debt_btn debt-yellow" for="debt-yellow">
+                            <input name="contact" class="debt-input" id="input-staff" type="radio"
+                                    {% if type_salary == "staff" %} checked {% endif %}>
+                            Сотрудник
+                        </label>
+                    </div>
+                {% endif %}
+                {% if type_salary == "staff" %}
+                    <div class="items">
+                        <h2 class="title">Тип соутриников</h2>
+                        <form action="{{ url_for('account_info',page=1,location=location) }}" method="post">
+                            <select class="list_tools_select job_form" name="job" id="">
+                                <option value="{{ job.id }}">{{ job.name }}</option>
+                                {% for mt in professions %}
+                                    {% if mt.id != job.id %}
+                                        <option value="{{ mt.id }}">{{ mt.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                            <input type="text" name="year" hidden value="{{ year.strftime("%Y") }}">
+                            <input type="text" name="month" hidden value="{{ month.strftime("%m") }}">
+                            <input type="text" name="day" hidden value="{{ day.strftime("%d") }}">
+                            <button class="job_button" hidden></button>
+                        </form>
+                    </div>
+                {% endif %}
+                <div class="items">
+                    <h2 class="title">Years</h2>
+                    <form action="{{ url_for('account_info',page=1,location=location) }}" method="post">
+                        <select class="list_tools_select month_form" name="year">
+
+                            {% if year %}
+                                <option value="{{ year.strftime("%Y") }}">{{ year.strftime("%Y") }}</option>
+                            {% endif %}
+                            {% for mt in other_years %}
+                                <option value="{{ mt.date.strftime('%Y') }}">{{ mt.date.strftime('%Y') }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                        <input type="text" name="payment_type"
+                               value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                               class="payment_type">
+                        <input type="text" name="accounting_type" hidden
+                               value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                               class="student_education_language">
+                        <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                               class="type_salary">
+                        <input type="text" name="month" hidden value="{{ month.strftime("%m") }}">
+                        <input type="text" name="day" hidden value="{{ day.strftime("%d") }}">
+                        <button class="month_button" hidden></button>
+                    </form>
+                </div>
+                <div class="items">
+                    <h2 class="title">Месяцы</h2>
+                    <form action="{{ url_for('account_info',page=1,location=location) }}" method="post">
+                        <select class="list_tools_select month_form" name="month">
+                            {% if month %}
+                                <option value="{{ month.strftime("%m") }}">{{ month.strftime("%h") }}</option>
+                            {% endif %}
+                            {% for mt in other_months %}
+                                <option value="{{ mt.date.strftime('%m') }}">{{ mt.date.strftime('%h') }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                        <input type="text" name="payment_type"
+                               value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                               class="payment_type">
+                        <input type="text" name="accounting_type" hidden
+                               value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                               class="student_education_language">
+                        <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                               class="type_salary">
+                        <input type="text" name="year" hidden value="{{ year.strftime("%Y") }}">
+                        <input type="text" name="day" hidden value="{{ day.strftime("%d") }}">
+                        <button class="month_button" hidden></button>
+                    </form>
+                </div>
+
+
+                <div class="items">
+                    <h2 class="title">Дни</h2>
+                    <form action="{{ url_for('account_info',page=1,location=location) }}" method="post">
+                        <select class="list_tools_select payment_data_form" name="day">
+                            {% if day %}
+                                <option value="{{ day.strftime("%d") }}">{{ day.strftime("%d") }}</option>
+                            {% endif %}
+                            {% for mt in other_days %}
+                                <option value="{{ mt.date.strftime('%d') }}">{{ mt.date.strftime('%d') }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" hidden value="{{ extra_month }}" name="extra_month">
+                        <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                        <input type="text" name="payment_type"
+                               value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                               class="payment_type">
+                        <input type="text" name="accounting_type" hidden
+                               value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                               class="student_education_language">
+                        <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                               class="type_salary">
+                        <input type="text" name="year" hidden value="{{ year.strftime("%Y") }}">
+                        <input type="text" name="month" hidden value="{{ month.strftime("%m") }}">
+                        <button class="payment_data_button" hidden></button>
+                    </form>
+                </div>
+
+                {% if teachers_red %}
+                    <div class="items">
+                        <h2 class="title">Список учителей</h2>
+                        <form action="{{ url_for('account_info',page=1,location=location) }}" method="post">
+                            <select class="list_tools_select month_form" name="teacher" id="">
+                                {% if teacher_self %}
+                                    <option value="{{ teacher_self.id }}">{{ teacher_self.name }} {{ teacher_self.surname }}</option>
+
+                                    {% for teach in teachers_red %}
+                                        {% if teacher_self.id != teach.id %}
+                                            <option value="{{ teach.id }}">{{ teach.name }} {{ teach.surname }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% for teach in teachers_red %}
+                                        <option value="{{ teach.id }}">{{ teach.name }} {{ teach.surname }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                            <input type="text" hidden name="debt_status" value="{{ debt_status }}">
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                            <button class="month_button" hidden></button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if teachers_yellow %}
+                    <div class="items">
+                        <h2 class="title">Список учителей</h2>
+                        <form action="{{ url_for('account_info',page=1,location=location) }}" method="post">
+                            <select class="list_tools_select teacher_form" name="teacher" id="">
+                                {% if teacher_self %}
+                                    <option value="{{ teacher_self.id }}">{{ teacher_self.name }} {{ teacher_self.surname }}</option>
+
+                                    {% for teach in teachers_yellow %}
+                                        {% if teacher_self.id != teach.id %}
+                                            <option value="{{ teach.id }}">{{ teach.name }} {{ teach.surname }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% for teach in teachers_yellow %}
+                                        <option value="{{ teach.id }}">{{ teach.name }} {{ teach.surname }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                            <input type="text" hidden name="debt_status" value="{{ debt_status }}">
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                            <button class="teach_button" hidden></button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if xojakent_salary or student_payments or accounting_type == "Накладные расходы" or accounting_type == "Капитальные затраты" or accounting_type == "Бухгалтерский учет" or accounting_type == "Зарплаты" %}
+                    <div class="items">
+                        <h2 class="title">Тип денег</h2>
+                        {% for item in payment_types %}
+                            <div class="list_tools_money_btn button_cash {% if payment_type == item.name %} list_tools_money_btn_active {% endif %}"
+                                 data-name="{{ item.name }}">
+                                {{ item.name }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if student_debts %}
+                    <div class="items">
+                        <h2 class="title">Получить excel файл </h2>
+                        <a href="">
+                            <div class="list_tools_money_btn list_tools_money_btn_active">Получить</div>
+                        </a>
+                    </div>
+                {% endif %}
+                {% if xojakent_payment %}
+                    <div class="items">
+                        <h2 class="title">Получить excel файл </h2>
+                        <a href="">
+                            <div class="list_tools_money_btn list_tools_money_btn_active">Получить</div>
+                        </a>
+                    </div>
+                {% endif %}
+
+                <div class="items">
+                    <h2 class="title">Инкассация</h2>
+                    <div class="list_tools_money_btn  "><a
+                            href="">Войти в инкасацию</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="confirm-overlay">
+                <div class="confirm-box">
+                    <h2 class="confirm-title">Siz rostan ham yuborishni xohlaysizmi ?</h2>
+                    <div class="confirm-yes_no">
+                        <a href=""><span>Ha</span></a>
+                        <span class="confirm-yes_no-noItem">Yoq</span>
+                    </div>
+                </div>
+            </div>
+            {% if accounting_type == "Накладные расходы" %}
+                <div class="list_tools_form_btn for_overhead">
+                    Добавить
+                </div>
+            {% endif %}
+            {% if accounting_type == "Капитальные затраты" %}
+                <div class="list_tools_form_btn for_capital">
+                    Добавить
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+    <div class="list_accounting_tables">
+        {% if student_discounts %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Скидка</th>
+
+                </tr>
+
+                {% for payment in student_discounts.items %}
+
+                    <tr>
+                        <td>{{ payment.student.user.name }}</td>
+                        <td>{{ payment.student.user.surname }}</td>
+                        <td>{{ payment.discount }}</td>
+                        <td>
+                            <a href="">
+                                <button>&cross;</button>
+                            </a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if student_payments %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Платеж</th>
+                    <th>Дата платежа</th>
+
+                    <th>Udalit</th>
+
+                </tr>
+                {% for payment in student_payments.items %}
+
+                    <tr>
+                        <td>{{ payment.student.user.name }}</td>
+                        <td>{{ payment.student.user.surname }}</td>
+                        <td>
+                            <a href="">{{ payment.payment_sum }}</a>
+                        </td>
+                        <td>{{ payment.day.date.strftime('%Y-%m-%d') }}</td>
+
+                        <td>
+                            <a class="delete_payment"
+                               href="{{ url_for('delete_payment',payment_id=payment.id) }}">&cross;</a>
+                        </td>
+
+
+                    </tr>
+
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if teacher_salaries %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Зарплата</th>
+                    <th>Получено</th>
+                </tr>
+                {% for salary in teacher_salaries.items %}
+                    <tr>
+                        <td>{{ salary.teacher.user.name }}</td>
+                        <td>{{ salary.teacher.user.surname }}</td>
+                        <td>
+                            <a href="">{{ salary.payment_sum }}</a>
+                        </td>
+                        <td>{{ salary.day.date.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if staff_salaries %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Зарплата</th>
+                    <th>Получено</th>
+                </tr>
+                {% for salary in staff_salaries.items %}
+                    <tr>
+                        <td>{{ salary.staff.user.name }}</td>
+                        <td>{{ salary.staff.user.surname }}</td>
+                        <td>
+                            <a href="">{{ salary.payment_sum }}</a>
+                        </td>
+                        <td>{{ salary.day.date.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if student_debts %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Телефон номер</th>
+                    <th>Баланс</th>
+
+                </tr>
+                {% for student in student_debts.items %}
+                    <tr>
+                        <td><a href="{{ url_for('student_info',student_id=student.id) }}">{{ loop.index }}
+                            / {{ student.name }}</a></td>
+                        <td>{{ student.surname }}</td>
+                        <td>{{ student.phone }}</td>
+                        <td class="">{{ student.money }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if student_new %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Телефон номер</th>
+                    <th>Баланс</th>
+
+                </tr>
+                {% for student in student_new %}
+                    <tr>
+                        <td><a href="{{ url_for('student_info',student_id=student['id']) }}">{{ loop.index }}
+                            / {{ student['name'] }}</a></td>
+                        <td>{{ student['surname'] }}</td>
+                        <td>{{ student['phone'] }}</td>
+                        <td class="">{{ student['money'] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if accounting_type == "Бухгалтерский учет" %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Доход</th>
+                    <th>Скидки</th>
+                    <th>Charity</th>
+                    <th>Оплата студентов</th>
+                    <th>Долги</th>
+                    <th>Зарплата учителя</th>
+                    <th>Зарплата Сотрудников</th>
+                    <th>Накладные расходы</th>
+                    <th>Капитальные затраты</th>
+                    <th>Все преимущества</th>
+                </tr>
+
+                <tr>
+                    <td>{{ doxod }}</td>
+                    <td>{{ combined_discounts }}</td>
+                    <td>{{ attendance_discount }}</td>
+                    <td>{{ all_xoj_pay }}</td>
+                    <td>{{ all_debt_xoj }}</td>
+                    <td>{{ all_xoj_sal }}</td>
+                    <td>{{ staff_money }}</td>
+                    <td>{{ over_money }}</td>
+                    <td>{{ cap_money }}</td>
+                    <td>{{ collected_money }}</td>
+                </tr>
+
+            </table>
+        {% endif %}
+        {% if capital_expenditure %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Название предмета</th>
+                    <th>Сумма</th>
+                    <th>Дата</th>
+                    {% if user.director %}
+                        <th>Delete</th>
+                    {% endif %}
+                </tr>
+                {% for capital in capital_expenditure.items %}
+                    <tr>
+                        <td>{{ capital.type }}</td>
+                        <td>
+                            <a href="">{{ capital.money }}</a>
+                        </td>
+                        <td>{{ capital.chosenData.strftime('%Y-%m-%d') }}</td>
+                        {% if user.director %}
+                            <td><a href="">
+                                <button>&cross;</button>
+                            </a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if overhead %}
+            <table class="list_accounting_tables_item">
+                <tr>
+                    <th>Название предмета</th>
+                    <th>Сумма</th>
+
+                    <th>Delete</th>
+
+                </tr>
+                {% for over in overhead.items %}
+                    <tr>
+                        <td>{{ over.item_name }}</td>
+                        <td>
+                            <a href="">{{ over.item_sum }}</a>
+                        </td>
+
+                        <td><a href="{{ url_for('delete_overhead',overhead_id=over.id) }}">
+                            <button>&cross;</button>
+                        </a></td>
+
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+
+    <div class="tools">
+        <div class="pages_link">
+            {% if charity_list %}
+                {% for link in charity_list.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                    {% if link %}
+                        <form action="{{ url_for('account_info',page=link,location=location) }}" method="post">
+                            {% if charity_list.page == link %}
+                                <button class="pages_link_item pages_link_item_active"
+                                        data-link="{{ link }}">{{ link }}</button>
+                            {% else %}
+                                <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                            {% endif %}
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="extra_month" value="{{ extra_month }}" hidden>
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                        </form>
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if xojakent_payment %}
+                {% for link in xojakent_payment.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                    {% if link %}
+                        <form action="{{ url_for('account_info',page=link,location=location) }}" method="post">
+                            {% if xojakent_payment.page == link %}
+                                <button class="pages_link_item pages_link_item_active"
+                                        data-link="{{ link }}">{{ link }}</button>
+                            {% else %}
+                                <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                            {% endif %}
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="extra_month" value="{{ extra_month }}" hidden>
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                        </form>
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if xojakent_salary %}
+                {% for link in xojakent_salary.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                    {% if link %}
+                        <form action="{{ url_for('account_info',page=link,location=location) }}" method="post">
+                            {% if xojakent_salary.page == link %}
+                                <button class="pages_link_item pages_link_item_active"
+                                        data-link="{{ link }}">{{ link }}</button>
+                            {% else %}
+                                <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                            {% endif %}
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="extra_month" value="{{ extra_month }}" hidden>
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                        </form>
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if student_debts %}
+                {% for link in student_debts.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                    {% if link %}
+                        <form action="{{ url_for('account_info',page=link,location=location) }}" method="post">
+                            {% if student_debts.page == link %}
+                                <button class="pages_link_item pages_link_item_active"
+                                        data-link="{{ link }}">{{ link }}</button>
+                            {% else %}
+                                <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                            {% endif %}
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" value="{{ debt_status }}" hidden class="debt_status"
+                                   name="debt_status">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                        </form>
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if overhead %}
+                {% for link in overhead.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                    {% if link %}
+                        <form action="{{ url_for('account_info',page=link,location=location) }}" method="post">
+                            {% if overhead.page == link %}
+                                <button class="pages_link_item pages_link_item_active"
+                                        data-link="{{ link }}">{{ link }}</button>
+                            {% else %}
+                                <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                            {% endif %}
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="extra_month" value="{{ extra_month }}" hidden>
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                        </form>
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if capital_expenditure %}
+                {% for link in capital_expenditure.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                    {% if link %}
+                        <form action="{{ url_for('account_info',page=link,location=location) }}" method="post">
+                            {% if capital_expenditure.page == link %}
+                                <button class="pages_link_item pages_link_item_active"
+                                        data-link="{{ link }}">{{ link }}</button>
+                            {% else %}
+                                <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                            {% endif %}
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="extra_month" value="{{ extra_month }}" hidden>
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                        </form>
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if staff_salaries %}
+                {% for link in staff_salaries.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+                    {% if link %}
+                        <form action="{{ url_for('account_info',page=link,location=location) }}" method="post">
+                            {% if staff_salaries.page == link %}
+                                <button class="pages_link_item pages_link_item_active"
+                                        data-link="{{ link }}">{{ link }}</button>
+                            {% else %}
+                                <button class="pages_link_item" data-link="{{ link }}">{{ link }}</button>
+                            {% endif %}
+                            <input type="text" hidden name="close_filter" value="{{ close_filter }}" class="closes">
+                            <input type="text" name="payment_type"
+                                   value="{% if payment_type %}{{ payment_type }}{% endif %}" hidden
+                                   class="payment_type">
+                            <input type="text" name="accounting_type" hidden
+                                   value="{% if accounting_type %}{{ accounting_type }}{% endif %}"
+                                   class="student_education_language">
+                            <input type="text" name="extra_month" value="{{ extra_month }}" hidden>
+                            <input type="text" name="type_salary" hidden value="{{ type_salary }}"
+                                   class="type_salary">
+                        </form>
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block overlay %}
+    <div class="overlay_forms">
+        <div class="modal_form overhead_ex">
+            <div class="modal_form_close">
+                <span></span>
+                <span></span>
+            </div>
+            <form action="" method="post"
+                  class="modal_form_info overhead_form">
+                <input class="modal_form_info_input Type_of_item" type="text" required name="name_item"
+                       placeholder="Type of item">
+                <input class="modal_form_info_input sum sums" type="number" required name="sum" placeholder="sum">
+                <br>
+                <div class="modal_form_info_radios">
+                    <label><input type="radio" required class="modal_form_info_radios_item radio_cash" name="location">Cash</label>
+                    <label><input type="radio" required class="modal_form_info_radios_item radio_click" name="location">Click</label>
+                    <label><input type="radio" required class="modal_form_info_radios_item radio_bank" name="location">Bank</label>
+                </div>
+                <select class="overhead_month" name="month">
+                    {% for month in overhead_months %}
+                        <option value="{{ month.date.strftime("%Y-%m") }}">{{ month.date.strftime("%h") }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <select name="day" class="day" required>
+                    {% for  day in overhead_days %}
+                        <option value="{{ day.date.strftime("%Y-%m-%d") }}">{{ day.date.strftime('%d') }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <input type="text" name="type_of_data" class="type_of_data" hidden>
+                <button>Добавить</button>
+            </form>
+
+        </div>
+        <div class="modal_form capital_ex">
+            <div class="modal_form_close">
+                <span></span>
+                <span></span>
+            </div>
+
+            <form action="" method="post" class="modal_form_info capital_form">
+                <input class="modal_form_info_input type_capital" name="type_of_item" type="text"
+                       placeholder="Type of item">
+                <input class="modal_form_info_input sum_capital sums" name="sum" type="number" placeholder="sum">
+                <br>
+                <div class="modal_form_info_radios">
+                    <label><input type="radio" required class="modal_form_info_radios_item radio_cash" name="location">Cash</label>
+                    <label><input type="radio" required class="modal_form_info_radios_item radio_click" name="location">Click</label>
+                    <label><input type="radio" required class="modal_form_info_radios_item radio_bank" name="location">Bank</label>
+                </div>
+                <br>
+                <select name="month" class="capital_month">
+                    {#                <option value="03">March</option>#}
+                    {#                <option value="04">April</option>#}
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    {#                <option value="07">July</option>#}
+                    {#                <option value="08">August</option>#}
+                </select>
+                <select name="day" class="capital_day" required>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                </select>
+                <br>
+                <input type="text" name="type_of_data" class="type_of_data" hidden>
+                <button>Добавить</button>
+            </form>
+
+        </div>
+    </div>
+    {% include 'jinja_templates/overlay.html' %}
+    <section class="user">
+        <div class="user_check">
+            <button>&cross;</button>
+            <label class="controller_password" for="user_check"></label>
+            <input id="user_check" data-user_id="{{ user.id }}" type="password" placeholder="Подтвердите свой пароль">
+        </div>
+    </section>
+    <input type="text" value="{{ location }}" hidden class="location">
+{% endblock %}
+
+{% block js %}
+    <script src="../../static/js/Admin_js/Accounting.js"></script>
+{% endblock %}

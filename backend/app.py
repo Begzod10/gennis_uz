@@ -26,6 +26,8 @@ from backend.teacher.teacher import *
 from backend.account.payment import *
 from backend.account.discount import *
 from backend.account.salary_give import *
+from backend.account.account import *
+from backend.account.overhead import *
 
 if __name__ == '__main__':
     app.run()
