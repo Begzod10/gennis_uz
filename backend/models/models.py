@@ -443,6 +443,22 @@ class StudentPayments(db.Model):
     payment = Column(Boolean)
 
 
+class DeletedStudentPayments(db.Model):
+    __tablename__ = "deletedstudentpayments"
+    id = Column(Integer, primary_key=True)
+    student_id = Column(Integer, ForeignKey('students.id'))
+    attendance_history_id = Column(Integer, ForeignKey('attendancehistorystudent.id'))
+    group_id = Column(Integer, ForeignKey('groups.id'))
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    calendar_day = Column(Integer, ForeignKey('calendarday.id'))
+    calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
+    calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    payment_sum = Column(Integer)
+    payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    payment = Column(Boolean)
+
+
 class TeacherSalaries(db.Model):
     __tablename__ = "teachersalaries"
     id = Column(Integer, primary_key=True)
