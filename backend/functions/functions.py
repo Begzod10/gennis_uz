@@ -83,6 +83,20 @@ def number_of_days_in_month(year, month):
 #
 def update_account(account_id):
     accounting_info = AccountingInfo.query.filter(AccountingInfo.id == account_id).first()
+    old_cash = 0
+    old_month = accounting_info.month.date - relativedelta(months=1)
+    old_month = CalendarMonth.query.filter(CalendarMonth.date == old_month).first()
+    if old_month:
+        old_year = CalendarMonth.query.filter(CalendarYear.id == old_month.year_id).first()
+
+        old_accounting_info = AccountingInfo.query.filter(AccountingInfo.calendar_month == old_month.id,
+                                                          AccountingInfo.calendar_year == old_year.id,
+                                                          AccountingInfo.payment_type_id == accounting_info.payment_type_id,
+                                                          AccountingInfo.location_id == accounting_info.location_id,
+                                                          AccountingInfo.account_period_id == accounting_info.account_period_id).first()
+        if old_accounting_info and old_accounting_info.current_cash:
+            old_cash = old_accounting_info.current_cash
+
     all_payments = 0
     teachers_salaries = 0
     all_staff_salaries = 0
@@ -98,8 +112,8 @@ def update_account(account_id):
         all_overhead = accounting_info.all_overhead
     if accounting_info.all_capital:
         all_capital = accounting_info.all_capital
-    result = all_payments - (teachers_salaries + all_staff_salaries + all_overhead + all_capital)
+    result = (all_payments + old_cash) - (teachers_salaries + all_staff_salaries + all_overhead + all_capital)
 
     AccountingInfo.query.filter(AccountingInfo.id == accounting_info.id).update(
-        {'current_cash': result})
+        {'current_cash': result, "old_cash": old_cash})
     db.session.commit()

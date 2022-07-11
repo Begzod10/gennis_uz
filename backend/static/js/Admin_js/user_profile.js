@@ -254,7 +254,8 @@ window.addEventListener('DOMContentLoaded', () => {
     $('[data-img=open-modal-payment]').on('click', function () {
         user_check2.style.display = "none"
         user_check.style.display = "initial"
-        document.querySelector('.user').classList.add('user_active');
+        $('.overlay_change, .overlay_change_payment_modal').fadeIn();
+        // document.querySelector('.user').classList.add('user_active');
         $('.controller_password').click()
     });
     user_check.addEventListener('input', () => {

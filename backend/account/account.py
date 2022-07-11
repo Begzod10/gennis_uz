@@ -62,7 +62,7 @@ def account_info(page, location):
                                               ).order_by(CalendarDay.date).all()
         student_payments = StudentPayments.query.filter(
             StudentPayments.account_period_id == account_period.id,
-            StudentPayments.payment_type_id == payment_types_first.id).paginate(
+            StudentPayments.payment_type_id == payment_types_first.id, StudentPayments.payment == True).paginate(
             page,
             per_page=50)
         accounting_type = "Оплата студентов"
@@ -135,7 +135,7 @@ def account_info(page, location):
 
             student_payments = StudentPayments.query.filter(
                 StudentPayments.account_period_id == account_period.id,
-                StudentPayments.payment_type_id == payment_type.id).paginate(
+                StudentPayments.payment_type_id == payment_type.id, StudentPayments.payment == True).paginate(
                 page,
                 per_page=50)
             if accounting_info and accounting_info.all_payments:
@@ -223,20 +223,20 @@ def account_info(page, location):
                                    payment_types=payment_types, payment_type=payment_type.name,
                                    close_filter=close_filter, result=result,
                                    accounting_info=accounting_info)
-        # elif accounting_type == "Список скидок":
-        #
-        #     student_discounts = StudentDiscount.query.filter(
-        #         StudentDiscount.account_period_id == account_period.id).paginate(
-        #         page,
-        #         per_page=50)
-        #     return render_template('account_folder/Accounting.html', user=user, form=form, location=location,
-        #                            current_day=current_day, current_month=current_month, current_year=current_year,
-        #                            other_months=other_months, other_years=other_years, other_days=other_days,
-        #                            student_discounts=student_discounts, accounting_type=accounting_type,
-        #                            locations=locations, location_name=location_name, year=year, month=month,
-        #                            day=day, payment_types=payment_types, payment_type=payment_type.name,
-        #                            close_filter=close_filter, result=result,
-        #                            accounting_info=accounting_info)
+        elif accounting_type == "Список скидок":
+
+            student_discounts = StudentPayments.query.filter(
+                StudentPayments.account_period_id == account_period.id, StudentPayments.payment == False).paginate(
+                page,
+                per_page=50)
+            return render_template('account_folder/Accounting.html', user=user, form=form, location=location,
+                                   current_day=current_day, current_month=current_month, current_year=current_year,
+                                   other_months=other_months, other_years=other_years, other_days=other_days,
+                                   student_discounts=student_discounts, accounting_type=accounting_type,
+                                   locations=locations, location_name=location_name, year=year, month=month,
+                                   day=day, payment_types=payment_types, payment_type=payment_type.name,
+                                   close_filter=close_filter, result=result,
+                                   accounting_info=accounting_info)
 
 
 @app.route('/delete_payment/<int:payment_id>')
@@ -278,6 +278,16 @@ def delete_payment(payment_id):
         remaining_debt = None
     AttendanceHistoryStudent.query.filter(AttendanceHistoryStudent.id == attendance_history.id).update(
         {'payment': result, 'remaining_debt': remaining_debt})
+    deleted_payment = DeletedStudentPayments(student_id=payment.id, attendance_history_id=payment.attendance_history_id,
+                                             group_id=payment.group_id, location_id=payment.location_id,
+                                             calendar_day=payment.calendar_day, calendar_month=payment.calendar_month,
+                                             calendar_year=payment.calendar_year,
+                                             payment_type_id=payment.payment_type_id,
+                                             payment_sum=payment.payment_sum,
+                                             account_period_id=payment.account_period_id,
+                                             payment=payment.payment)
+    db.session.add(deleted_payment)
+    db.session.commit()
     db.session.delete(payment)
     db.session.commit()
 

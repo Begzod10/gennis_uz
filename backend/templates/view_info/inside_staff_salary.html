@@ -42,7 +42,9 @@
               method="post">
             <div class="list_salary_form_number">{{ staff.user.name }} {{ staff.user.surname }} ning shu
                 oydagi {{ staff_salary.month.date.strftime("%h") }} qolgan oyligi:
-                <span>{{ staff_salary.remaining_salary }} va olingan oylik {{ staff_salary.taken_money }}</span></div>
+                <span>{% if staff_salary.remaining_salary %}{{ staff_salary.remaining_salary }}{% else %}
+                    {{ staff_salary.total_salary }}{% endif %} va olingan oylik {{ staff_salary.taken_money }}</span>
+            </div>
             <label class="number_salary_input sums" for="number_salary"><input id="number_salary"
                                                                                value="{{ staff_salary.salary }}"
                                                                                name="teacher_salary"
@@ -57,26 +59,26 @@
                     <th>Type</th>
                     <th>Дата</th>
                 </tr>
-                {#                {% for salary in teacher_salary %}#}
-                {#                    <form action="" method="post">#}
-                {#                        <tr>#}
-                {#                            <td>{{ salary.payment }}</td>#}
-                {#                            <td>{{ salary.reason }}</td>#}
-                {#                            <td>#}
-                {#                                <a href="">#}
-                {#                                    {% if salary.payment_type == "bank" %}#}
-                {#                                        click{% elif salary.payment_type == "real_bank" %}#}
-                {#                                        bank {% else %} {{ salary.payment_type }} {% endif %}</a>#}
-                {#                            </td>#}
-                {#                            <td>{{ salary.payment_data.strftime("%m-%d") }}</td>#}
-                {#                            {% if user.director or user.accountant %}#}
-                {#                                <td>#}
-                {#                                    <button class="salary_delete">Delete</button>#}
-                {#                                </td>#}
-                {#                            {% endif %}#}
-                {#                        </tr>#}
-                {#                    </form>#}
-                {#                {% endfor %}#}
+                {% for salary in staff_salaries %}
+
+                    <tr>
+                        <td>{{ salary.payment_sum }}</td>
+                        <td>{{ salary.reason }}</td>
+                        <td>
+                            <a href="">
+                                {% if salary.payment_type == "bank" %}
+                                    click{% elif salary.payment_type == "real_bank" %}
+                                    bank {% else %} {{ salary.payment_type.name }} {% endif %}</a>
+                        </td>
+                        <td>{{ salary.day.date.strftime("%m-%d") }}</td>
+                        <td>
+                            <button class="salary_delete"><a
+                                    href="{{ url_for('delete_staff_salary',salary_id=salary.id) }}">Delete</a></button>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
             </table>
         </div>
     </div>

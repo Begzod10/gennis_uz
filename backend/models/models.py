@@ -39,6 +39,12 @@ class CalendarYear(db.Model):
     staff_given_salary = relationship("StaffSalaries", backref="year", order_by="StaffSalaries.id")
     overhead_data = relationship('Overhead', backref="year", order_by="Overhead.id")
     accounting = relationship("AccountingInfo", backref="year", order_by="AccountingInfo.id")
+    deleted_payments = relationship("DeletedStudentPayments", backref="year", order_by="DeletedStudentPayments.id")
+    deleted_teacher_salaries = relationship("DeletedTeacherSalaries", backref="year",
+                                            order_by="DeletedTeacherSalaries.id")
+    staff_deleted_salary = relationship("DeletedStaffSalaries", backref="year", order_by="DeletedStaffSalaries.id")
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="year",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class CalendarMonth(db.Model):
@@ -63,6 +69,12 @@ class CalendarMonth(db.Model):
     staff_given_salary = relationship("StaffSalaries", backref="month", order_by="StaffSalaries.id")
     overhead_data = relationship('Overhead', backref="month", order_by="Overhead.id")
     accounting = relationship("AccountingInfo", backref="month", order_by="AccountingInfo.id")
+    deleted_payments = relationship("DeletedStudentPayments", backref="month", order_by="DeletedStudentPayments.id")
+    deleted_teacher_salaries = relationship("DeletedTeacherSalaries", backref="month",
+                                            order_by="DeletedTeacherSalaries.id")
+    staff_deleted_salary = relationship("DeletedStaffSalaries", backref="month", order_by="DeletedStaffSalaries.id")
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="month",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class AccountingPeriod(db.Model):
@@ -71,6 +83,7 @@ class AccountingPeriod(db.Model):
     from_date = Column(DateTime)
     to_date = Column(DateTime)
     student_payments = relationship("StudentPayments", backref="period", order_by="StudentPayments.id")
+    deleted_payments = relationship("DeletedStudentPayments", backref="period", order_by="DeletedStudentPayments.id")
     teacher_salaries = relationship("TeacherSalaries", backref="period", order_by="TeacherSalaries.id")
     staff_salaries = relationship("StaffSalaries", backref="period", order_by="StaffSalaries.id")
     overhead = relationship("Overhead", backref="period", order_by="Overhead.id")
@@ -78,6 +91,11 @@ class AccountingPeriod(db.Model):
     charity = relationship('StudentCharity', backref="period", order_by="StudentCharity.id")
     year_id = Column(Integer, ForeignKey('calendaryear.id'))
     month_id = Column(Integer, ForeignKey('calendarmonth.id'))
+    deleted_teacher_salaries = relationship("DeletedTeacherSalaries", backref="period",
+                                            order_by="DeletedTeacherSalaries.id")
+    staff_deleted_salary = relationship("DeletedStaffSalaries", backref="period", order_by="DeletedStaffSalaries.id")
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="period",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class CalendarDay(db.Model):
@@ -95,6 +113,12 @@ class CalendarDay(db.Model):
     staff_given_salary = relationship("StaffSalaries", backref="day", order_by="StaffSalaries.id")
     overhead_data = relationship('Overhead', backref="day", order_by="Overhead.id")
     account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    deleted_payments = relationship("DeletedStudentPayments", backref="day", order_by="DeletedStudentPayments.id")
+    deleted_teacher_salaries = relationship("DeletedTeacherSalaries", backref="day",
+                                            order_by="DeletedTeacherSalaries.id")
+    staff_deleted_salary = relationship("DeletedStaffSalaries", backref="day", order_by="DeletedStaffSalaries.id")
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="day",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class Locations(db.Model):
@@ -120,6 +144,12 @@ class Locations(db.Model):
     attendance_days_get = relationship("AttendanceDays", backref="location", order_by="AttendanceDays.id")
     accounting = relationship("AccountingInfo", backref="location", order_by="AccountingInfo.id")
     charity = relationship('StudentCharity', backref="location", order_by="StudentCharity.id")
+    deleted_payments = relationship("DeletedStudentPayments", backref="location", order_by="DeletedStudentPayments.id")
+    deleted_teacher_salaries = relationship("DeletedTeacherSalaries", backref="location",
+                                            order_by="DeletedTeacherSalaries.id")
+    staff_deleted_salary = relationship("DeletedStaffSalaries", backref="location", order_by="DeletedStaffSalaries.id")
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="location",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class EducationLanguage(db.Model):
@@ -172,6 +202,8 @@ class Staff(db.Model):
     profession_id = Column(Integer, ForeignKey('professions.id'))
     stuff_salary = relationship('StaffSalary', backref="staff", order_by="StaffSalary.id")
     staff_given_salary = relationship("StaffSalaries", backref="staff", order_by="StaffSalaries.id")
+    staff_deleted_salary = relationship("DeletedStaffSalaries", backref="staff", order_by="DeletedStaffSalaries.id")
+
     salary = Column(Integer)
 
 
@@ -198,6 +230,7 @@ class Students(db.Model):
                                       order_by="AttendanceHistoryStudent.id")
     charity = relationship('StudentCharity', backref="student", order_by="StudentCharity.id")
     history_group = relationship('StudentHistoryGroups', backref="student", order_by="StudentHistoryGroups.id")
+    deleted_payments = relationship("DeletedStudentPayments", backref="student", order_by="DeletedStudentPayments.id")
 
 
 class Teachers(db.Model):
@@ -212,7 +245,11 @@ class Teachers(db.Model):
     attendance_location = relationship("TeacherSalary", backref="teacher", order_by="TeacherSalary.id")
     history_group = relationship('StudentHistoryGroups', backref="teacher", order_by="StudentHistoryGroups.id")
     teacher_cash = relationship('TeacherSalaries', backref="teacher", order_by="TeacherSalaries.id")
+    deleted_teacher_salaries = relationship("DeletedTeacherSalaries", backref="teacher",
+                                            order_by="DeletedTeacherSalaries.id")
     attendance_days_get = relationship("AttendanceDays", backref="teacher", order_by="AttendanceDays.id")
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="teacher",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 db.Table('student_subject',
@@ -282,6 +319,11 @@ class Groups(db.Model):
     charity = relationship('StudentCharity', backref="group", order_by="StudentCharity.id")
     history_group = relationship('StudentHistoryGroups', backref="group", order_by="StudentHistoryGroups.id")
     attendance_days_get = relationship("AttendanceDays", backref="group", order_by="AttendanceDays.id")
+    deleted_payments = relationship("DeletedStudentPayments", backref="group", order_by="DeletedStudentPayments.id")
+    deleted_teacher_salary = relationship("DeletedTeacherSalaries", backref="group",
+                                          order_by="DeletedTeacherSalaries.id")
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="group",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class StudentHistoryGroups(db.Model):
@@ -366,6 +408,8 @@ class AttendanceHistoryStudent(db.Model):
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
     status = Column(Boolean, default=False)
     student_payment = relationship('StudentPayments', backref="attendance_history", order_by="StudentPayments.id")
+    deleted_payments = relationship("DeletedStudentPayments", backref="attendance_history",
+                                    order_by="DeletedStudentPayments.id")
     total_discount = Column(Integer)
 
 
@@ -383,6 +427,8 @@ class AttendanceHistoryTeacher(db.Model):
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
     status = Column(Boolean, default=False)
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="hsitory_teacher",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class TeacherSalary(db.Model):
@@ -397,7 +443,11 @@ class TeacherSalary(db.Model):
     status = Column(Boolean, default=False)
     salary_from_payment = Column(Integer)
     teacher_cash = relationship('TeacherSalaries', backref="salary", order_by="TeacherSalaries.id")
+    deleted_teacher_salary = relationship("DeletedTeacherSalaries", backref="salary",
+                                          order_by="DeletedTeacherSalaries.id")
     taken_money = Column(Integer)
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="salary",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class StaffSalary(db.Model):
@@ -412,6 +462,8 @@ class StaffSalary(db.Model):
     status = Column(Boolean, default=False)
     taken_money = Column(Integer)
     staff_given_salary = relationship("StaffSalaries", backref="staff_salary", order_by="StaffSalaries.id")
+    staff_deleted_salary = relationship("DeletedStaffSalaries", backref="staff_salary",
+                                        order_by="DeletedStaffSalaries.id")
 
 
 # accounting
@@ -425,6 +477,11 @@ class PaymentTypes(db.Model):
     teacher_salaries = relationship('TeacherSalaries', backref="payment_type", order_by="TeacherSalaries.id")
     overhead_data = relationship('Overhead', backref="payment_type", order_by="Overhead.id")
     accounting = relationship("AccountingInfo", backref="payment_type", order_by="AccountingInfo.id")
+    staff_salaries = relationship("StaffSalaries", backref="payment_type", order_by="StaffSalaries.id")
+    staff_deleted_salary = relationship("DeletedStaffSalaries", backref="payment_type",
+                                        order_by="DeletedStaffSalaries.id")
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="payment_type",
+                                             order_by="TeacherSalaryGroup.id")
 
 
 class StudentPayments(db.Model):
@@ -457,6 +514,8 @@ class DeletedStudentPayments(db.Model):
     payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
     account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
     payment = Column(Boolean)
+    deleted_date = Column(DateTime)
+    reason = Column(String)
 
 
 class TeacherSalaries(db.Model):
@@ -465,13 +524,51 @@ class TeacherSalaries(db.Model):
     payment_sum = Column(Integer)
     reason = Column(String)
     payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
-    salary_id = Column(Integer, ForeignKey('teachersalary.id'))
+    salary_location_id = Column(Integer, ForeignKey("teachersalary.id"))
     teacher_id = Column(Integer, ForeignKey('teachers.id'))
     location_id = Column(Integer, ForeignKey('locations.id'))
     calendar_day = Column(Integer, ForeignKey('calendarday.id'))
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
     account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    attendance_history_salary = relationship("TeacherSalaryGroup", backref="teachersalaries",
+                                             order_by="TeacherSalaryGroup.id")
+
+
+class DeletedTeacherSalaries(db.Model):
+    __tablename__ = "deletedteachersalaries"
+    id = Column(Integer, primary_key=True)
+    payment_sum = Column(Integer)
+    reason = Column(String)
+    payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
+    group_id = Column(Integer, ForeignKey("groups.id"))
+    salary_location_id = Column(Integer, ForeignKey("teachersalary.id"))
+    teacher_id = Column(Integer, ForeignKey('teachers.id'))
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    calendar_day = Column(Integer, ForeignKey('calendarday.id'))
+    calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
+    calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    deleted_date = Column(DateTime)
+    reason_deleted = Column(String)
+
+
+class TeacherSalaryGroup(db.Model):
+    __tablename__ = "teachersalarygroup"
+    id = Column(Integer, primary_key=True)
+    payment_sum = Column(Integer)
+    reason = Column(String)
+    payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
+    salary_location_id = Column(Integer, ForeignKey("teachersalary.id"))
+    teacher_id = Column(Integer, ForeignKey('teachers.id'))
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    calendar_day = Column(Integer, ForeignKey('calendarday.id'))
+    calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
+    calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    group_id = Column(Integer, ForeignKey("groups.id"))
+    attendance_history = Column(Integer, ForeignKey("attendancehistoryteacher.id"))
+    main_salary_id = Column(Integer, ForeignKey("teachersalaries.id"))
 
 
 class StaffSalaries(db.Model):
@@ -490,6 +587,24 @@ class StaffSalaries(db.Model):
     account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
 
 
+class DeletedStaffSalaries(db.Model):
+    __tablename__ = "deletedstaffsalaries"
+    id = Column(Integer, primary_key=True)
+    payment_sum = Column(Integer)
+    reason = Column(String)
+    payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
+    salary_id = Column(Integer, ForeignKey('staffsalary.id'))
+    staff_id = Column(Integer, ForeignKey('staff.id'))
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    calendar_day = Column(Integer, ForeignKey('calendarday.id'))
+    calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
+    calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    profession_id = Column(Integer, ForeignKey("professions.id"))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    deleted_date = Column(DateTime)
+    reason_deleted = Column(String)
+
+
 class Overhead(db.Model):
     __tablename__ = "overhead"
     id = Column(Integer, primary_key=True)
@@ -501,6 +616,21 @@ class Overhead(db.Model):
     calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
     calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
     account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+
+
+class DeletedOverhead(db.Model):
+    __tablename__ = "deletedoverhead"
+    id = Column(Integer, primary_key=True)
+    item_sum = Column(Integer)
+    item_name = Column(String)
+    payment_type_id = Column(Integer, ForeignKey('paymenttypes.id'))
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    calendar_day = Column(Integer, ForeignKey('calendarday.id'))
+    calendar_month = Column(Integer, ForeignKey("calendarmonth.id"))
+    calendar_year = Column(Integer, ForeignKey("calendaryear.id"))
+    account_period_id = Column(Integer, ForeignKey('accountingperiod.id'))
+    deleted_date = Column(DateTime)
+    reason = Column(String)
 
 
 class AccountingInfo(db.Model):

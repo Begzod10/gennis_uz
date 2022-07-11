@@ -90,7 +90,8 @@ window.addEventListener('DOMContentLoaded', () => {
         window.location.reload()
     })
     $('[data-img=open-modal-payment]').on('click', function () {
-        document.querySelector('.user').classList.add('user_active');
+        $('.overlay_change, .overlay_change_payment_modal').fadeIn();
+        // document.querySelector('.user').classList.add('user_active');
         $('.controller_password').click()
     });
     user_check.addEventListener('input', () => {
@@ -126,4 +127,20 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.user').classList.remove('user_active');
     });
 
+    let list_salary_form_number = document.querySelector('.list_salary_form_number'),
+        salary_payment = document.querySelector('.salary'),
+        not_allowed = ['0', '-', ""],
+        salary_from_payment = list_salary_form_number.dataset.salary;
+    salary_payment.value = salary_from_payment;
+    if (salary_from_payment) {
+        salary_payment.addEventListener('input', () => {
+            if (salary_payment.value > salary_from_payment) {
+                salary_payment.value = ""
+            } else if (salary_payment.value.length > salary_from_payment.length) {
+                salary_payment.value = ""
+            } else if (not_allowed.includes(salary_payment.value)) {
+                salary_payment.value = ""
+            }
+        })
+    }
 })

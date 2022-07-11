@@ -401,8 +401,11 @@ def inside_teacher_salary(salary_id):
     locations = Locations.query.order_by('id').all()
     teacher_salary = TeacherSalary.query.filter(TeacherSalary.id == salary_id).first()
     teacher = Teachers.query.filter(Teachers.id == teacher_salary.teacher_id).first()
+    teacher_salaries = TeacherSalaries.query.filter(TeacherSalaries.salary_location_id == salary_id,
+                                                    TeacherSalaries.teacher_id == teacher.id).order_by('id').all()
     return render_template('view_info/Teacher_salary_payment.html', user=user, form=form, locations=locations,
-                           teacher_salary=teacher_salary, teacher=teacher, salary_id=salary_id)
+                           teacher_salary=teacher_salary, teacher=teacher, salary_id=salary_id,
+                           teacher_salaries=teacher_salaries)
 
 
 @app.route('/staff_profile/<staff_id>')
@@ -443,5 +446,7 @@ def inside_salary_staff(salary_id):
     locations = Locations.query.order_by('id').all()
     staff_salary = StaffSalary.query.filter(StaffSalary.id == salary_id).first()
     staff = Staff.query.filter(Staff.id == staff_salary.staff_id).first()
+    staff_salaries = StaffSalaries.query.filter(StaffSalaries.salary_id == salary_id,
+                                                StaffSalaries.staff_id == staff.id).order_by('id').all()
     return render_template('view_info/inside_staff_salary.html', user=user, form=form, locations=locations,
-                           staff_salary=staff_salary, staff=staff)
+                           staff_salary=staff_salary, staff=staff, staff_salaries=staff_salaries)

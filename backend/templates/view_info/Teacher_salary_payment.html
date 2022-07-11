@@ -40,9 +40,11 @@
     <div class="list_salary">
         <form class="list_salary_form" action=""
               method="post">
-            <div class="list_salary_form_number">{{ teacher.user.name }} {{ teacher.user.surname }} ning shu
+            <div class="list_salary_form_number" data-salary="{{ teacher_salary.salary_from_payment }}">{{ teacher.user.name }} {{ teacher.user.surname }} ning shu
                 oydagi {{ teacher_salary.month.date.strftime("%h") }} qolgan oyligi:
-                <span>{{ teacher_salary.remaining_salary }} va olingan oylik {{ teacher_salary.taken_money }}</span></div>
+                <span>{% if teacher_salary.remaining_salary %}{{ teacher_salary.remaining_salary }}{% else %}
+                    {{ teacher_salary.total_salary }}{% endif %} va olingan oylik {{ teacher_salary.taken_money }}</span>
+            </div>
             <label class="number_salary_input sums" for="number_salary"><input id="number_salary"
                                                                                value="{{ teacher_salary.salary }}"
                                                                                name="teacher_salary"
@@ -57,26 +59,27 @@
                     <th>Type</th>
                     <th>Дата</th>
                 </tr>
-                {#                {% for salary in teacher_salary %}#}
-                {#                    <form action="" method="post">#}
-                {#                        <tr>#}
-                {#                            <td>{{ salary.payment }}</td>#}
-                {#                            <td>{{ salary.reason }}</td>#}
-                {#                            <td>#}
-                {#                                <a href="">#}
-                {#                                    {% if salary.payment_type == "bank" %}#}
-                {#                                        click{% elif salary.payment_type == "real_bank" %}#}
-                {#                                        bank {% else %} {{ salary.payment_type }} {% endif %}</a>#}
-                {#                            </td>#}
-                {#                            <td>{{ salary.payment_data.strftime("%m-%d") }}</td>#}
-                {#                            {% if user.director or user.accountant %}#}
-                {#                                <td>#}
-                {#                                    <button class="salary_delete">Delete</button>#}
-                {#                                </td>#}
-                {#                            {% endif %}#}
-                {#                        </tr>#}
-                {#                    </form>#}
-                {#                {% endfor %}#}
+                {% for salary in teacher_salaries %}
+
+                    <tr>
+                        <td>{{ salary.payment_sum }}</td>
+                        <td>{{ salary.reason }}</td>
+                        <td>
+                            <a href="">
+                                {% if salary.payment_type == "bank" %}
+                                    click{% elif salary.payment_type == "real_bank" %}
+                                    bank {% else %} {{ salary.payment_type.name }} {% endif %}</a>
+                        </td>
+                        <td>{{ salary.day.date.strftime("%m-%d") }}</td>
+                        <td>
+                            <button class="salary_delete"><a
+                                    href="{{ url_for('delete_salary_teacher',salary_id=salary.id,location="inside_salary") }}">Delete</a>
+                            </button>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
             </table>
         </div>
     </div>
@@ -106,7 +109,7 @@
                 <input type="text" hidden name="payment_type" class="payment_type">
                 <br>
                 <input type="text" class="overlay_change_payment_modal_form_input" name="reason" placeholder="Причина">
-                <input class="overlay_change_payment_modal_form_input sums" type="number" name="teacher_salary"
+                <input class="overlay_change_payment_modal_form_input sums salary" type="number" name="teacher_salary"
                        placeholder="Сумма">
                 <input class="overlay_change_payment_modal_form_submit" type="submit" value="Дать зарплату">
             </form>

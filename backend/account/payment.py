@@ -340,5 +340,21 @@ def get_payment(user_id, status):
                 {'all_payments': all_payments})
             db.session.commit()
             update_account(accounting_info.id)
+    # else:
+    #     if not accounting_info:
+    #         accounting_info = AccountingInfo(payment_type_id=payment.payment_type_id, location_id=group.location_id,
+    #                                          all_discount=payment_sum, calendar_month=calendar_month.id,
+    #                                          calendar_year=calendar_year.id, account_period_id=accounting_period.id)
+    #         db.session.add(accounting_info)
+    #         db.session.commit()
+    #     else:
+    #         if accounting_info.all_discount:
+    #             all_discount = accounting_info.all_discount + payment_sum
+    #         else:
+    #             all_discount = payment_sum
+    #         AccountingInfo.query.filter(AccountingInfo.id == accounting_info.id).update(
+    #             {'all_discount': all_discount})
+    #         db.session.commit()
+    #         update_account(accounting_info.id)
     flash('Payment was successful')
     return redirect(url_for('user_profile', user_id=user_id))

@@ -76,6 +76,14 @@ def delete_overhead(overhead_id):
         })
         db.session.commit()
         update_account(accounting_info.id)
+    deleted_overhead = DeletedOverhead(item_sum=overhead.item_sum, item_name=overhead.item_name,
+                                       payment_type_id=overhead.payment_type_id, location_id=overhead.location_id,
+                                       calendar_day=overhead.calendar_day, calendar_month=overhead.calendar_month,
+                                       calendar_year=overhead.calendar_year,
+                                       account_period_id=overhead.account_period_id, deleted_date=calendar_day.date,
+                                       reason="reason qoshish kere frontendga")
+    db.session.add(deleted_overhead)
+    db.session.commit()
     db.session.delete(overhead)
     db.session.commit()
     flash("Overhead item was successfully deleted")
