@@ -5,6 +5,7 @@ from backend.functions.functions import *
 
 @app.route('/salary_give_teacher/<salary_id>', methods=['POST'])
 def salary_give_teacher(salary_id):
+    refreshdatas()
     teacher_salary = int(request.form.get('teacher_salary'))
     reason = request.form.get('reason')
     payment_type = request.form.get('payment_type')
@@ -39,55 +40,6 @@ def salary_give_teacher(salary_id):
             {'remaining_salary': 0, "taken_money": teacher_cash.total_salary, 'status': True})
         db.session.commit()
 
-    while salary_sum > 0:
-        attendance_teacher = AttendanceHistoryTeacher.query.filter(
-            AttendanceHistoryTeacher.calendar_year == teacher_cash.calendar_year,
-            AttendanceHistoryTeacher.calendar_month == teacher_cash.calendar_month,
-            AttendanceHistoryTeacher.teacher_id == teacher_cash.teacher_id,
-            AttendanceHistoryTeacher.status == False).order_by(desc(AttendanceHistoryTeacher.calendar_month)).first()
-        if not attendance_teacher:
-            break
-        if not attendance_teacher.remaining_salary:
-            result = -attendance_teacher.total_salary + salary_sum
-        else:
-            result = -attendance_teacher.remaining_salary + salary_sum
-
-        if result < 0:
-            remaining_salary = abs(result)
-            AttendanceHistoryTeacher.query.filter(AttendanceHistoryTeacher.id == attendance_teacher.id).update(
-                {'remaining_salary': remaining_salary})
-            db.session.commit()
-            taken_money = attendance_teacher.salary_from_payment - attendance_teacher.remaining_salary
-            AttendanceHistoryTeacher.query.filter(AttendanceHistoryTeacher.id == attendance_teacher.id).update(
-                {'taken_money': taken_money})
-            db.session.commit()
-            payment_sum = attendance_teacher.total_salary - remaining_salary
-            add_salary = TeacherSalaryGroup(payment_sum=payment_sum, reason=reason, payment_type_id=payment_type_id.id,
-                                            salary_location_id=teacher_cash.id, teacher_id=teacher_cash.teacher_id,
-                                            location_id=teacher_cash.location_id, calendar_day=calendar_day.id,
-                                            calendar_month=calendar_month.id, calendar_year=calendar_year.id,
-                                            account_period_id=accounting_period.id,
-                                            group_id=attendance_teacher.group_id, main_salary_id=add.id,
-                                            attendance_history=attendance_teacher.id
-                                            )
-            db.session.add(add_salary)
-            db.session.commit()
-        else:
-            AttendanceHistoryTeacher.query.filter(AttendanceHistoryTeacher.id == attendance_teacher.id).update(
-                {'remaining_salary': 0, "taken_money": attendance_teacher.total_salary, 'status': True})
-            db.session.commit()
-            add_salary = TeacherSalaryGroup(payment_sum=attendance_teacher.total_salary, reason=reason,
-                                            payment_type_id=payment_type_id.id,
-                                            salary_location_id=teacher_cash.id, teacher_id=teacher_cash.teacher_id,
-                                            location_id=teacher_cash.location_id, calendar_day=calendar_day.id,
-                                            calendar_month=calendar_month.id, calendar_year=calendar_year.id,
-                                            account_period_id=accounting_period.id,
-                                            group_id=attendance_teacher.group_id, main_salary_id=add.id,
-                                            attendance_history=attendance_teacher.id
-                                            )
-            db.session.add(add_salary)
-            db.session.commit()
-        salary_sum = result
     accounting_info = AccountingInfo.query.filter(AccountingInfo.payment_type_id == payment_type_id.id,
                                                   AccountingInfo.location_id == add.location_id,
                                                   AccountingInfo.calendar_month == calendar_month.id,
@@ -132,50 +84,6 @@ def delete_salary_teacher(salary_id, location):
     TeacherSalary.query.filter(TeacherSalary.id == teacher_cash.id).update(
         {"taken_money": result, "remaining_salary": remaining_salary, "status": False})
 
-    salary = teacher_salary.payment_sum
-    while salary > 0:
-        attendance_teacher = AttendanceHistoryTeacher.query.filter(
-            AttendanceHistoryTeacher.calendar_year == teacher_cash.calendar_year,
-            AttendanceHistoryTeacher.calendar_month == teacher_cash.calendar_month,
-            AttendanceHistoryTeacher.teacher_id == teacher_cash.teacher_id,
-            AttendanceHistoryTeacher.location_id == teacher_cash.location_id).order_by(
-            desc(AttendanceHistoryTeacher.calendar_month, AttendanceHistoryTeacher.salary_from_payment != None,
-                 AttendanceHistoryTeacher.taken_money != None)).first()
-        if not attendance_teacher:
-            attendance_teacher = AttendanceHistoryTeacher.query.filter(
-                AttendanceHistoryTeacher.calendar_year == teacher_cash.calendar_year,
-                AttendanceHistoryTeacher.calendar_month == teacher_cash.calendar_month,
-                AttendanceHistoryTeacher.teacher_id == teacher_cash.teacher_id,
-                AttendanceHistoryTeacher.location_id == teacher_cash.location_id).order_by(
-                desc(AttendanceHistoryTeacher.calendar_month)).filter(
-                or_(AttendanceHistoryTeacher.salary_from_payment != None,
-                    AttendanceHistoryTeacher.taken_money != None)).first()
-        print(attendance_teacher.taken_money)
-        salary_attendance = TeacherSalaryGroup.query.filter(TeacherSalaryGroup.main_salary_id == teacher_salary.id,
-                                                            TeacherSalaryGroup.attendance_history == attendance_teacher.id,
-                                                            TeacherSalaryGroup.salary_location_id == teacher_cash.id,
-                                                            TeacherSalaryGroup.location_id == teacher_cash.location_id,
-                                                            TeacherSalaryGroup.calendar_day == teacher_salary.calendar_day,
-                                                            TeacherSalaryGroup.calendar_month == teacher_salary.calendar_month,
-                                                            TeacherSalaryGroup.calendar_year == teacher_salary.calendar_year,
-                                                            TeacherSalaryGroup.account_period_id == teacher_salary.account_period_id,
-                                                            TeacherSalaryGroup.teacher_id == teacher_salary.teacher_id,
-                                                            TeacherSalaryGroup.payment_sum <= attendance_teacher.taken_money).first()
-        print(salary_attendance.payment_sum)
-        result = attendance_teacher.taken_money - salary_attendance.payment_sum
-        if result:
-            remaining_salary = attendance_teacher.total_salary - result
-        else:
-            remaining_salary = 0
-        AttendanceHistoryTeacher.query.filter(AttendanceHistoryTeacher.id == attendance_teacher.id).update({
-            "remaining_salary": remaining_salary,
-            "taken_money": result,
-            "status": False})
-        db.session.delete(salary_attendance)
-        db.session.commit()
-
-        salary = salary - salary_attendance.payment_sum
-        print(salary)
     accounting_info = AccountingInfo.query.filter(AccountingInfo.payment_type_id == teacher_salary.payment_type_id,
                                                   AccountingInfo.location_id == teacher_salary.location_id,
                                                   AccountingInfo.calendar_month == calendar_month.id,
